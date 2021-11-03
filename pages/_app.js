@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/carousel.css';
 
 type Props = {
   Component: any,
