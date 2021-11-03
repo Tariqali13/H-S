@@ -1,0 +1,41 @@
+{
+  "name": "photographer-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3200",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "start:prod": "next start -p 80",
+    "heroku-postbuild": "npm run build"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-flow": "^7.12.1",
+    "next": "12.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-next": "12.0.2",
+    "eslint-config-nextjs": "^1.0.6",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-flowtype": "^2.35.1",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.54.1"
+  }
+}
