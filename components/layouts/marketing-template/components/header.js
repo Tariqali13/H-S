@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import {useRouter} from "next/router";
 
 const Header = () => {
+    const [navOpen, setNavOpen] = useState(false);
     const router = useRouter();
     const {pathname} = router;
+    const toggleNav = () => setNavOpen(!navOpen);
     return (
         <header>
             <div className="w3layouts-top-strip">
@@ -34,15 +36,15 @@ const Header = () => {
             <nav className="navbar navbar-default">
                 <div className="container">
                     <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" className={`navbar-toggle ${navOpen && "collapsed"}`} data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1" aria-expanded={navOpen ? "true" : "false"} onClick={toggleNav}>
                             <span className="sr-only">Toggle navigation</span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
                     </div>
-                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div className={`collapse navbar-collapse ${navOpen && "in"}`} id="bs-example-navbar-collapse-1" aria-expanded={navOpen ? "true" : "false"} >
                         <ul className="nav navbar-nav">
                             <li><Link href="/"><a className={pathname === "/" && "active"}>Home</a></Link></li>
                             <li><Link href="/about"><a className={pathname === "/about" && "active"} >About</a></Link></li>
