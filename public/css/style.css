@@ -26,14 +26,14 @@ input[type="button"],input[type="submit"]{
 	-ms-transition:0.5s all;
 }
 h1,h2,h3,h4,h5,h6{
-	margin:0;		
+	margin:0;
 	font-weight:400;
     transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
-}	
+}
 p{
 	margin:0;
 	font-family: 'Open Sans', sans-serif;
@@ -265,7 +265,7 @@ header {
     animation-delay: 30s;
 }
 /* Animation for the slideshow images *
-@-webkit-keyframes imageAnimation { 
+@-webkit-keyframes imageAnimation {
 	0% {
 	    opacity: 0;
 	    -webkit-animation-timing-function: ease-in;
@@ -285,7 +285,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-moz-keyframes imageAnimation { 
+@-moz-keyframes imageAnimation {
 	0% {
 	    opacity: 0;
 	    -moz-animation-timing-function: ease-in;
@@ -305,7 +305,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-o-keyframes imageAnimation { 
+@-o-keyframes imageAnimation {
 	0% {
 	    opacity: 0;
 	    -o-animation-timing-function: ease-in;
@@ -325,7 +325,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-ms-keyframes imageAnimation { 
+@-ms-keyframes imageAnimation {
 	0% {
 	    opacity: 0;
 	    -ms-animation-timing-function: ease-in;
@@ -345,7 +345,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@keyframes imageAnimation { 
+@keyframes imageAnimation {
 	0% {
 	    opacity: 0;
 	    animation-timing-function: ease-in;
@@ -366,7 +366,7 @@ header {
 	100% { opacity: 0 }
 }
 /* Animation for the title *
-@-webkit-keyframes titleAnimation { 
+@-webkit-keyframes titleAnimation {
 	0% {
 	    opacity: 0;
 	    -webkit-transform: translateY(200px);
@@ -386,7 +386,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-moz-keyframes titleAnimation { 
+@-moz-keyframes titleAnimation {
 	0% {
 	    opacity: 0;
 	    -moz-transform: translateY(200px);
@@ -406,7 +406,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-o-keyframes titleAnimation { 
+@-o-keyframes titleAnimation {
 	0% {
 	    opacity: 0;
 	    -o-transform: translateY(200px);
@@ -426,7 +426,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@-ms-keyframes titleAnimation { 
+@-ms-keyframes titleAnimation {
 	0% {
 	    opacity: 0;
 	    -ms-transform: translateY(200px);
@@ -446,7 +446,7 @@ header {
 	}
 	100% { opacity: 0 }
 }
-@keyframes titleAnimation { 
+@keyframes titleAnimation {
 	0% {
 	    opacity: 0;
 	    transform: translateY(200px);
@@ -470,10 +470,10 @@ header {
 .no-cssanimations .cb-slideshow li span{
 	opacity: 1;
 }
-@media screen and (max-width: 1140px) { 
+@media screen and (max-width: 1140px) {
 	.cb-slideshow li div h3 { font-size: 100px }
 }
-@media screen and (max-width: 600px) { 
+@media screen and (max-width: 600px) {
 	.cb-slideshow li div h3 { font-size: 50px }
 }
 
@@ -591,8 +591,8 @@ p.para span {
 	-moz-border-radius: 50%;
 	-ms-border-radius: 50%;
 	content: '';
-	-webkit-box-sizing: content-box; 
-	-moz-box-sizing: content-box; 
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 }
 
@@ -609,7 +609,7 @@ p.para span {
 .hi-icon-effect-7 .hi-icon {
 	-webkit-transition: background 0.2s, color 0.2s;
 	-moz-transition: background 0.2s, color 0.2s;
-	transition: background 0.2s, color 0.2s;	
+	transition: background 0.2s, color 0.2s;
 }
 
 .hi-icon-effect-7 .hi-icon:hover {
@@ -772,7 +772,7 @@ a.hi-icon.icon3 {
 	-ms-background-size: cover;
     background-attachment: fixed;
 }
-/*-- Stats Section --*/
+/*-- RecentWork Section --*/
 .stats {
 	background: url(../images/stat.jpg) no-repeat 0px 0px;
     padding: 100px 0;
@@ -804,7 +804,7 @@ a.hi-icon.icon3 {
 h4.stats-info {
 	margin-top: 20px;
 }
-/*-- //Stats Section --*/
+/*-- //RecentWork Section --*/
 .what-left {
     float: left;
     width: 15%;
@@ -1098,7 +1098,7 @@ i.fa.fa-arrow-right {
 }
 .contact-bottom p {
     font-size: 1em;
-    line-height: 1.8em; 
+    line-height: 1.8em;
 	color: #A0A0A0;
 }
 .agile-info-map iframe {
@@ -1133,7 +1133,7 @@ i.fa.fa-arrow-right {
     -ms-transition: 0.5s all;
     -moz-transition: 0.5s all;
     cursor: pointer;
-} 
+}
 .icon-box:hover {
     background: #000;
 	transition:0.5s all;
@@ -1152,11 +1152,11 @@ i.fa.fa-arrow-right {
     float: left;
     width: 12.5%;
     height: 115px;
-    padding: 10px; 
+    padding: 10px;
     line-height: 1.4;
-    text-align: center;  
+    text-align: center;
     font-size: 12px;
-    list-style-type: none;	
+    list-style-type: none;
 }
 .codes .bs-glyphicons .glyphicon {
     margin-top: 5px;
@@ -1174,7 +1174,7 @@ i.fa.fa-arrow-right {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 	color: #777;
-} 
+}
 .codes .bs-glyphicons .glyphicon-class {
     display: block;
     text-align: center;
@@ -1231,7 +1231,7 @@ h3.agileits-icons-title {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 	color: #777;
-} 
+}
 .bs-glyphicons .glyphicon-class {
     display: block;
     text-align: center;
@@ -1342,7 +1342,7 @@ li.list-group-item1 {
 .label {
 	font-weight: 300 !important;
 	border-radius:4px;
-}  
+}
 .grid_5{
 	background:none;
 	padding:2em 0;

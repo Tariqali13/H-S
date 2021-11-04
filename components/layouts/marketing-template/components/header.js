@@ -9,8 +9,9 @@ const Header = () => {
         <header>
             <div className="w3layouts-top-strip">
                 <div className="container">
-                    <div className="logo">
-                        <h1><a href="index.html"><span>Solar </span>Panel</a></h1>
+                    <div className="logo" >
+                        <img src="/images/logo.jpg" />
+                        {/*<h1><a href="index.html"><span>Solar </span>Panel</a></h1>*/}
                     </div>
                     <div className="w3ls-social-icons">
                         <a className="facebook" href="#"><i className="fa fa-facebook"></i></a>

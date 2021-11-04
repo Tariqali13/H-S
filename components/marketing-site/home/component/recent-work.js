@@ -1,6 +1,6 @@
 import React from "react";
 
-const Stats = () => {
+const RecentWork = () => {
     return (
         <div className="agileinfo-work-top">
             <div className="container">
@@ -68,4 +68,4 @@ const Stats = () => {
         </div>
     )
 }
-export {Stats};
+export {RecentWork};

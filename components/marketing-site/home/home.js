@@ -1,7 +1,8 @@
 import React from 'react';
 import MarketingTemplate from '@/layouts/marketing-template';
 import { Slider } from "./component";
-import {SpecializeSection, Clients,Advantage,Stats } from "./component";
+import {SpecializeSection, Clients,Advantage,RecentWork } from "./component";
+import { Stats } from '@/marketingSite/common';
 
 const Home = () => {
     return (
@@ -10,7 +11,8 @@ const Home = () => {
             <SpecializeSection />
             <Clients />
             <Advantage />
-            <Stats />
+            <Stats/>
+            <RecentWork />
         </MarketingTemplate>
     );
 };

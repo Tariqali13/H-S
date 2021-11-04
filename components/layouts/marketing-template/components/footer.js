@@ -1,4 +1,5 @@
 import  React  from 'react'
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -7,11 +8,11 @@ const Footer = () => {
                 <div className="col-md-3 w3ls-footer-top">
                     <h3>QUICK <span>LINKS</span></h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><Link href="/">Home</Link></li>
+                        <li><Link href="/about">About</Link></li>
+                        <li><Link href="/product">Products</Link></li>
+                        <li><Link href="/services">Services</Link></li>
+                        <li><Link href="/contact">Contact</Link></li>
                     </ul>
                 </div>
                 <div className="col-md-4 wthree-footer-top">
@@ -39,8 +40,8 @@ const Footer = () => {
                 <div className="clearfix"></div>
                 <div className="footer-w3layouts">
                     <div className="agile-copy">
-                        <p>© 2017 Solar Panel. All rights reserved | Design by <a
-                            href="http://w3layouts.com/">W3layouts</a></p>
+                        <p>© 2021 Solar Panel. All rights reserved | Design by <a
+                            href="#">Aries Developers</a></p>
                     </div>
                 </div>
             </div>
