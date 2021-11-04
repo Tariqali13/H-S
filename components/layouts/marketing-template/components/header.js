@@ -43,21 +43,11 @@ const Header = () => {
                     </div>
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                            <li><a className="active" href="index.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="products.html">Products</a></li>
-                            <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">Short Codes <span
-                                    className="caret"></span></a>
-                                <ul className="dropdown-menu">
-                                    <li><a href="icons.html">Icons Page</a></li>
-                                    <li><a href="typo.html">Typography</a></li>
-
-                                </ul>
-                            </li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><Link href="/"><a className={pathname === "/" && "active"}>Home</a></Link></li>
+                            <li><Link href="/about"><a className={pathname === "/about" && "active"} >About</a></Link></li>
+                            <li><Link href="/services"><a className={pathname === "/services" && "active"}>Services</a></Link></li>
+                            <li><Link href="/products"><a className={pathname === "/products" && "active"}> Products</a></Link></li>
+                            <li><Link href="/contact"><a className={pathname === "/contact" && "active"}>Contact</a></Link></li>
                         </ul>
                     </div>
                 </div>
