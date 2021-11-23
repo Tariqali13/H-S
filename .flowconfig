@@ -12,9 +12,10 @@ node_modules/*
 emoji=true
 module.name_mapper='@/components' -> '<PROJECT_ROOT>/components'
 module.name_mapper='@/constants' -> '<PROJECT_ROOT>/constants'
-module.name_mapper='@/utils' -> '<PROJECT_ROOT>/components/util'
+module.name_mapper='@/utils' -> '<PROJECT_ROOT>/components/utils'
 module.name_mapper='@/layouts' -> '<PROJECT_ROOT>/components/layouts'
 module.name_mapper='@/marketingSite' -> '<PROJECT_ROOT>/components/marketing-site'
+module.name_mapper='@/adminSite' -> '<PROJECT_ROOT>/components/admin-site'
 module.name_mapper='@/icons' -> '<PROJECT_ROOT>/icons'
 module.name_mapper='@/modals' -> '<PROJECT_ROOT>/components/modals'
 module.name_mapper='@/commons' -> '<PROJECT_ROOT>/components/common'
