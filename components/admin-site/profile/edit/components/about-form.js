@@ -19,7 +19,7 @@ import SvgIcons from "@/components/icons";
 import UppyFileUploader from "@/components/uppy-file-uploader";
 import {imageTypes} from "@/constants/file-types";
 import {useMutation} from "react-query";
-import {UPDATE_STORAGE_FILE} from "@/adminSite/blog/queries";
+import {UPDATE_STORAGE_FILE} from "@/components/uppy-file-uploader/queries";
 import {ProcessingModal} from "@/components/modal";
 
 type Props = {

@@ -12,7 +12,7 @@ import {
 import {Field} from 'formik';
 import {fieldValidateBool} from "@/components/utils/form";
 import {useMutation} from "react-query";
-import {UPDATE_STORAGE_FILE} from "@/adminSite/blog/queries";
+import {UPDATE_STORAGE_FILE} from "@/components/uppy-file-uploader/queries";
 import _get from "lodash.get";
 import LazyLoadImages from "@/components/images";
 import SvgIcons from "@/components/icons";
