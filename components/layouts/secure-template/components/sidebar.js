@@ -1,18 +1,8 @@
 import React from 'react';
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import {
   Collapse,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Media,
   NavbarBrand,
   Navbar,
   NavItem,
@@ -22,6 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import {removeLocalStorageCred} from "@/utils/local-storage";
 
 type Props = {
   routes: Array<any>,
@@ -43,6 +34,10 @@ const SideBar = (props: Props) => {
   const activeRoute = routeName => {
     return router.route.indexOf(routeName) > -1;
   };
+  const handleLogout = () => {
+    removeLocalStorageCred();
+    Router.push('/admin/login', '/admin/login');
+  }
   const createLinks = routes => {
     return routes.map((prop, key) => {
       return (
@@ -121,32 +116,19 @@ const SideBar = (props: Props) => {
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <Nav className="mb-md-3" navbar>
-            <UncontrolledDropdown nav>
-              <DropdownToggle nav>
-                <NavItem>
-                  <i
-                    className="ni ni-settings"
-                    style={{ minWidth: '2.25rem' }}
-                  />
-                    Website Settings
-                </NavItem>
-              </DropdownToggle>
-              <DropdownMenu className="dropdown-menu-arrow" right>
-                <Link href="/admin/home-slider">
-                  <DropdownItem>
-                    <i className="ni ni-building" />
-                    <span>Home Slider</span>
-                  </DropdownItem>
-                </Link>
-                <Link href="/admin/portfolio">
-                  <DropdownItem>
-                    <i className="ni ni-album-2" />
-                    <span>Portfolio</span>
-                  </DropdownItem>
-                </Link>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+          <Nav navbar>
+            <NavItem
+                className={isRouting && "disabled-link"}
+            >
+              <Link href={"/admin/login"}>
+                <NavLink
+                    onClick={handleLogout}
+                >
+                  <i className="ni ni-user-run"/>
+                  Logout
+                </NavLink>
+              </Link>
+            </NavItem>
           </Nav>
         </Collapse>
       </Container>

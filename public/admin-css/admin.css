@@ -10637,7 +10637,7 @@ button.bg-lighter:focus {
     background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important; }
 
 .bg-gradient-info {
-    background: linear-gradient(87deg, #d7b8c0 0, #d7b8c0 100%) !important; }
+    background: linear-gradient(87deg, #000000 0, #000000 100%) !important; }
 
 .bg-gradient-warning {
     background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important; }
@@ -10652,7 +10652,7 @@ button.bg-lighter:focus {
     background: linear-gradient(87deg, #212529 0, #212229 100%) !important; }
 
 .bg-gradient-default {
-    background: linear-gradient(87deg, #d7b8c0 0, #d7b8c0 100%) !important; }
+    background: linear-gradient(87deg, #000000 0, #000000 100%) !important; }
 
 .bg-gradient-white {
     background: linear-gradient(87deg, #fff 0, white 100%) !important; }
@@ -10854,7 +10854,7 @@ button.section-darker:focus {
     background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important; }
 
 .bg-gradient-info {
-    background: linear-gradient(87deg, #d7b8c0 0, #d7b8c0 100%) !important; }
+    background: linear-gradient(87deg, #000000 0, #000000 100%) !important; }
 
 .bg-gradient-warning {
     background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important; }
@@ -10869,7 +10869,7 @@ button.section-darker:focus {
     background: linear-gradient(87deg, #212529 0, #212229 100%) !important; }
 
 .bg-gradient-default {
-    background: linear-gradient(87deg, #d7b8c0 0, #d7b8c0 100%) !important; }
+    background: linear-gradient(87deg, #000000 0, #000000 100%) !important; }
 
 .bg-gradient-white {
     background: linear-gradient(87deg, #fff 0, white 100%) !important; }

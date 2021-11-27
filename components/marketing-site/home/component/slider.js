@@ -7,7 +7,7 @@ const Slider = () => {
             <Carousel fade indicators={false}>
                 <Carousel.Item>
                     <img
-                        className="d-block w-100"
+                        className="d-block w-100 home-slider-img"
                         src="/images/bg-1.jpeg"
                         alt="First slide"
                     />
@@ -18,7 +18,7 @@ const Slider = () => {
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className="d-block w-100"
+                        className="d-block w-100 home-slider-img"
                         src="/images/2.jpg"
                         alt="Second slide"
                     />
@@ -30,7 +30,7 @@ const Slider = () => {
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className="d-block w-100"
+                        className="d-block w-100 home-slider-img"
                         src="/images/3.jpg"
                         alt="Third slide"
                     />

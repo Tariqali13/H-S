@@ -65,11 +65,11 @@ const Stats = () => {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Total Subscribtions
+                        Total Employees
                       </CardTitle>
                       <span className="h2 font-weight-bold mb-0">
                         {numberFormat(
-                          _get(dashboardData, 'data.totalSubscribtions', 0),
+                          _get(dashboardData, 'data.totalEmployees', 0),
                         )}
                       </span>
                     </div>
@@ -84,7 +84,7 @@ const Stats = () => {
                     </Col>
                   </Row>
                   <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-nowrap">This month</span>
+                    <span className="text-nowrap">All Time</span>
                   </p>
                 </CardBody>
               </Card>
@@ -98,11 +98,11 @@ const Stats = () => {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                        Total Images
+                        Total Videos
                       </CardTitle>
                       <span className="h2 font-weight-bold mb-0">
                         {numberFormat(
-                          _get(dashboardData, 'data.totalImages', 0),
+                          _get(dashboardData, 'data.totalVideos', 0),
                         )}
                       </span>
                     </div>
@@ -117,7 +117,7 @@ const Stats = () => {
                     </Col>
                   </Row>
                   <p className="mt-3 mb-0 text-muted text-sm">
-                    <span className="text-nowrap">This month</span>
+                    <span className="text-nowrap">All Time</span>
                   </p>
                 </CardBody>
               </Card>

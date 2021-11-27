@@ -55,12 +55,12 @@ const SecureTemplate = (props: Props) => {
       <SecureHead title={title} />
       <SideBar
         {...props}
-        routes={routes}
+        routes={routes(_get(userData, 'data.is_admin', false))}
         isRouting={isRouting}
         logo={{
           innerLink: "/admin/dashboard",
           outterLink: "/admin/dashboard",
-          imgSrc: "/images/new-logo.png",
+          imgSrc: "/images/logo.jpg",
           imgAlt: "...",
         }}
       />

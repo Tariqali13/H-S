@@ -17,7 +17,7 @@ type Props = {
 
 function MyApp(props: Props) {
   const { Component, pageProps } = props;
-  // VerifyUserToken();
+  VerifyUserToken();
   return (
       <React.Fragment>
         <QueryClientProvider client={queryClient}>

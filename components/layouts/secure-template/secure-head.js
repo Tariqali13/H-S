@@ -10,7 +10,7 @@ const SecureHead = (props: Props) => {
   const { title } = props;
   return (
     <Head>
-      <title>{title ? `${title} | ` : ''}The beautiful birth</title>
+      <title>{title ? `${title} | ` : ''}H & S</title>
       <link
         /* eslint-disable-next-line max-len */
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
