@@ -1,6 +1,5 @@
 export const tableHeadings = [
-  'Image Name',
-  'Category Name',
+  'Title',
   'Date',
   'Actions',
 ];
