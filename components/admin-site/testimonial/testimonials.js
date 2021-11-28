@@ -178,17 +178,22 @@ const Testimonials = () => {
                 {_get(testimonial, 'title', '-')}
               </div>
             </td>
+            <td scope="row">
+              <div className="table-data" style={{ maxWidth: "350px"}}>
+                {_get(testimonial, 'testimonial_by_name', '-')}
+              </div>
+            </td>
             <td>
               {moment(_get(testimonial, 'createdAt', '')).format('YYYY-MM-DD')}
             </td>
-            <td>
-              <input
-                aria-label="Checkbox for following text input"
-                type="checkbox"
-                checked={_get(testimonial, 'is_top_review', false)}
-                onChange={e => handleTopReview(e, testimonial)}
-              />
-            </td>
+            {/*<td>*/}
+            {/*  <input*/}
+            {/*    aria-label="Checkbox for following text input"*/}
+            {/*    type="checkbox"*/}
+            {/*    checked={_get(testimonial, 'is_top_review', false)}*/}
+            {/*    onChange={e => handleTopReview(e, testimonial)}*/}
+            {/*  />*/}
+            {/*</td>*/}
             <TableActions
               dataId={_get(testimonial, '_id')}
               isView={true}

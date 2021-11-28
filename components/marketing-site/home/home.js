@@ -4,7 +4,7 @@ import { Slider } from "./component";
 import {SpecializeSection, Clients,Advantage,RecentWork, Testimonials } from "./component";
 import { Stats } from '@/marketingSite/common';
 
-const Home = () => {
+const Home = props => {
     return (
         <MarketingTemplate>
             <Slider />
@@ -13,7 +13,7 @@ const Home = () => {
             <Advantage />
             <Stats/>
             <RecentWork />
-            <Testimonials />
+            <Testimonials {...props} />
         </MarketingTemplate>
     );
 };

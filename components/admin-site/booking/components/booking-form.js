@@ -19,10 +19,10 @@ import { State, City }  from 'country-state-city';
 import ReactSelect from "@/components/react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {GET_ALL_PRICING_PLANS} from "@/adminSite/pricing-plans/queries";
-import {useQuery} from "react-query";
-import reactQueryConfig from "@/constants/react-query-config";
-import _get from 'lodash.get';
+// import {GET_ALL_PRICING_PLANS} from "@/adminSite/pricing-plans/queries";
+// import {useQuery} from "react-query";
+// import reactQueryConfig from "@/constants/react-query-config";
+// import _get from 'lodash.get';
 
 type Props = {
   values: any,
@@ -52,15 +52,15 @@ const BookingForm = (props: Props) => {
   } = props;
   const states = State.getStatesOfCountry('US');
   const cities = City.getCitiesOfState('US', values.state);
-  const {
-    data: planData,
-    isLoading,
-    isFetching,
-  } = useQuery(
-    ['ALL_PRICING_PLANS', {}],
-    GET_ALL_PRICING_PLANS, {
-      ...reactQueryConfig,
-    });
+  // const {
+  //   data: planData,
+  //   isLoading,
+  //   isFetching,
+  // } = useQuery(
+  //   ['ALL_PRICING_PLANS', {}],
+  //   GET_ALL_PRICING_PLANS, {
+  //     ...reactQueryConfig,
+  //   });
   return (
     <Container className="mt--7" fluid>
       <Row>
@@ -356,54 +356,54 @@ const BookingForm = (props: Props) => {
                         }}
                       </Field>
                     </Col>
-                    <Col lg="6">
-                      <Field name="pricing_plan">
-                        {({field, form}) => {
-                          return (
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-country"
-                              >
-                              Pricing Plan
-                              </label>
-                              <ReactSelect
-                                isMulti={false}
-                                isCreateable={false}
-                                isDisabled={isView || isLoadingSave}
-                                isLoading={isLoading || isFetching}
-                                defaultValue={values.pricing_plan_obj}
-                                options={_get(planData, 'data', [])}
-                                getOptionLabel="heading"
-                                getOptionValue="_id"
-                                isSearchable={false}
-                                placeholder="Select Pricing Plan"
-                                handleChange={value => {
-                                  form.setFieldValue(
-                                    field.name, value._id, true,
-                                  );
-                                  form.setFieldValue(
-                                    "pricing_plan_obj", value, true,
-                                  );
-                                }}
-                                handleBlur={handleBlur}
-                                classes="react-msd"
-                                noOptionsMessage={() => (
-                                  <div className="no-results">
-                                  No Pricing Plans found
-                                  </div>
-                                )}
-                              />
-                              {fieldValidateBool(field, form) && (
-                                <FormFeedback>
-                                  {errors.pricing_plan}
-                                </FormFeedback>
-                              )}
-                            </FormGroup>
-                          );
-                        }}
-                      </Field>
-                    </Col>
+                    {/*<Col lg="6">*/}
+                    {/*  <Field name="pricing_plan">*/}
+                    {/*    {({field, form}) => {*/}
+                    {/*      return (*/}
+                    {/*        <FormGroup>*/}
+                    {/*          <label*/}
+                    {/*            className="form-control-label"*/}
+                    {/*            htmlFor="input-country"*/}
+                    {/*          >*/}
+                    {/*          Pricing Plan*/}
+                    {/*          </label>*/}
+                    {/*          <ReactSelect*/}
+                    {/*            isMulti={false}*/}
+                    {/*            isCreateable={false}*/}
+                    {/*            isDisabled={isView || isLoadingSave}*/}
+                    {/*            isLoading={isLoading || isFetching}*/}
+                    {/*            defaultValue={values.pricing_plan_obj}*/}
+                    {/*            options={_get(planData, 'data', [])}*/}
+                    {/*            getOptionLabel="heading"*/}
+                    {/*            getOptionValue="_id"*/}
+                    {/*            isSearchable={false}*/}
+                    {/*            placeholder="Select Pricing Plan"*/}
+                    {/*            handleChange={value => {*/}
+                    {/*              form.setFieldValue(*/}
+                    {/*                field.name, value._id, true,*/}
+                    {/*              );*/}
+                    {/*              form.setFieldValue(*/}
+                    {/*                "pricing_plan_obj", value, true,*/}
+                    {/*              );*/}
+                    {/*            }}*/}
+                    {/*            handleBlur={handleBlur}*/}
+                    {/*            classes="react-msd"*/}
+                    {/*            noOptionsMessage={() => (*/}
+                    {/*              <div className="no-results">*/}
+                    {/*              No Pricing Plans found*/}
+                    {/*              </div>*/}
+                    {/*            )}*/}
+                    {/*          />*/}
+                    {/*          {fieldValidateBool(field, form) && (*/}
+                    {/*            <FormFeedback>*/}
+                    {/*              {errors.pricing_plan}*/}
+                    {/*            </FormFeedback>*/}
+                    {/*          )}*/}
+                    {/*        </FormGroup>*/}
+                    {/*      );*/}
+                    {/*    }}*/}
+                    {/*  </Field>*/}
+                    {/*</Col>*/}
                   </Row>
                 </div>
                 <hr className="my-4"/>
