@@ -47,9 +47,8 @@ const Videos = () => {
       setPaginationData({});
     },
   });
-  console.log("VideoData", videoData)
   const handleCreate = () => {
-    if (_get(videoData, 'total_number_of_Video', 0) < 50) {
+    if (_get(videoData, 'total_number_of_videos', 0) < 50) {
       Router.push(
         '/admin/training-videos/create',
         '/admin/training-videos/create',
