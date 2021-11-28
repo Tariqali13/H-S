@@ -53,6 +53,7 @@ const Profile = () => {
               {...formikProps}
               isLoadingSave={isLoadingUserData || isLoadingSave}
               buttonText="Update"
+              is_admin={_get(userData, 'is_admin', false)}
             />
           );
         }}

@@ -19,12 +19,12 @@ function MyApp(props: Props) {
   const { Component, pageProps } = props;
   VerifyUserToken();
   return (
-      <React.Fragment>
-        <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
-        </QueryClientProvider>
-        <ToastContainer autoClose={2000} />
-      </React.Fragment>
+    <React.Fragment>
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
+      <ToastContainer autoClose={2000} />
+    </React.Fragment>
   );
 }
 export default MyApp;

@@ -4,13 +4,12 @@ import {Contacts }  from '@/marketingSite/contact/components';
 import {Banner} from "@/marketingSite/common";
 
 const  Products = () => {
-    return (
-        <MarketingTemplate>
-            <Banner/>
-            <Contacts />
-        </MarketingTemplate>
-
-    );
+  return (
+    <MarketingTemplate>
+      <Banner/>
+      <Contacts />
+    </MarketingTemplate>
+  );
 };
 
 export default Products;

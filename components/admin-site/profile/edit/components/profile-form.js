@@ -32,6 +32,7 @@ type Props = {
   isView: boolean,
   buttonText: string,
   setFieldValue: any,
+  is_admin: boolean,
 };
 
 const ProfileForm = (props: Props) => {
@@ -47,6 +48,7 @@ const ProfileForm = (props: Props) => {
     isView,
     buttonText,
     setFieldValue,
+    is_admin,
   } = props;
   const {
     mutate: updateFile,
@@ -184,7 +186,7 @@ const ProfileForm = (props: Props) => {
                       placeholder=" "
                       type="text"
                       name="email"
-                      disabled={isView || isLoadingSave}
+                      disabled={isView || isLoadingSave || !is_admin}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}

@@ -59,18 +59,15 @@ const EditBooking = () => {
           city: _get(bookingData, 'data.city', ''),
           cityObj: findCity,
           address: _get(bookingData, 'data.address', ''),
-          event_date: moment(
-            _get(bookingData, 'data.event_date'),
-          ).toDate() || new Date(),
-          pricing_plan: _get(bookingData, 'data.pricing_plan._id', ''),
-          pricing_plan_obj: _get(bookingData, 'data.pricing_plan', ''),
+          product_id: _get(bookingData, 'data.product_id', {}),
           updated_by: user_id,
         }}
         validationSchema={validateUpdateBookingForm}
         onSubmit={async (values, actions) => {
+          values.product_id = values.product_id._id;
           await updateBooking({
             id: bookingId,
-            data: _omit(values, 'stateObj', 'cityObj', 'pricing_plan_obj'),
+            data: _omit(values, 'stateObj', 'cityObj'),
           }, {
             onSuccess: res => {
               Message.success(res);

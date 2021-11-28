@@ -31,15 +31,14 @@ const CreateBooking = () => {
           city: "",
           cityObj: {},
           address: "",
-          event_date: new Date(),
-          pricing_plan: "",
-          pricing_plan_obj: {},
+          product_id: {},
           created_by: user_id,
         }}
         validationSchema={validateCreateBookingForm}
         onSubmit={async (values, actions) => {
+          values.product_id = values.product_id._id;
           await createBooking(
-            _omit(values, 'stateObj', 'cityObj', 'pricing_plan_obj'), {
+            _omit(values, 'stateObj', 'cityObj'), {
               onSuccess: res => {
                 Message.success(res);
                 Router.push(

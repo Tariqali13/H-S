@@ -10,7 +10,6 @@ import _get from 'lodash.get';
 type Props = {
     allRes: {
         testimonialsRes: any,
-        topTestimonialRes: any,
     }
 }
 

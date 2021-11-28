@@ -51,10 +51,7 @@ const ViewBooking = () => {
           city: _get(bookingData, 'data.city', ''),
           cityObj: findCity,
           address: _get(bookingData, 'data.address', ''),
-          event_date: moment(
-            _get(bookingData, 'data.event_date'),
-          ).toDate() || new Date(),
-          pricing_plan: _get(bookingData, 'data.pricing_plan', ''),
+          product_id: _get(bookingData, 'data.product_id', {}),
           created_by: _get(bookingData, 'data.created_by', ''),
         }}
         onSubmit={() => {}}

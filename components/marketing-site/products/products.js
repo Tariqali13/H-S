@@ -1,16 +1,16 @@
 import React from 'react';
 import MarketingTemplate from '@/layouts/marketing-template';
 import { ProductsMine }  from '@/marketingSite/products/components';
-import {Banner} from "@/marketingSite/common";
+import {Banner, Booking} from "@/marketingSite/common";
 
-const  Products = () => {
-    return (
-        <MarketingTemplate>
-            <Banner/>
-            <ProductsMine />
-        </MarketingTemplate>
-
-    );
+const Products = props => {
+  return (
+    <MarketingTemplate>
+      <Banner/>
+      <ProductsMine {...props} />
+      <Booking />
+    </MarketingTemplate>
+  );
 };
 
 export default Products;

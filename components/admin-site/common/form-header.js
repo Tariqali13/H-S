@@ -7,25 +7,16 @@ import _get from 'lodash.get';
 type Props = {
   heading: string,
   isProfile?: boolean,
-  isDoulaService?: boolean,
 };
 
 const FormHeader = (props: Props) => {
-  const { heading, isProfile = false, isDoulaService = false  } = props;
+  const { heading, isProfile = false } = props;
   const { userData } = useContext(TemplateContext);
   const handleEditProfile = e => {
     e.preventDefault();
     Router.push(
       '/admin/profile/edit',
       '/admin/profile/edit',
-      { shallow: true },
-    );
-  };
-  const handleEditDoulaService = e => {
-    e.preventDefault();
-    Router.push(
-      '/admin/doula-service/edit',
-      '/admin/doula-service/edit',
       { shallow: true },
     );
   };
@@ -43,7 +34,7 @@ const FormHeader = (props: Props) => {
       >
         <span className="mask bg-gradient-default opacity-8" />
         <Container className="d-flex align-items-center" fluid>
-          {!isProfile && !isDoulaService && (
+          {!isProfile && (
             <Row className="form-header-row w-100">
               <Col lg="1">
                 <Button
@@ -61,42 +52,19 @@ const FormHeader = (props: Props) => {
           )}
           {isProfile && (
             <Row>
-              <Col lg="7" md="10">
+              <Col lg="12" md="10">
                 <h1 className="display-2 text-white">
                   Hello {_get(userData, 'first_name', '')}{" "}
                   {_get(userData, 'last_name', '')}
                 </h1>
                 <p className="text-white mt-0 mb-5">
-                  This is your profile page.
-                  You can update your profile which can be
-                  show on your about page on marketing website.
+                  This is your profile page. You can update your profile here.
                 </p>
                 <Button
                   color="primary"
                   onClick={handleEditProfile}
                 >
                   Edit profile
-                </Button>
-              </Col>
-            </Row>
-          )}
-          {isDoulaService && (
-            <Row>
-              <Col lg="7" md="10">
-                <h1 className="display-2 text-white">
-                  Hello {_get(userData, 'first_name', '')}{" "}
-                  {_get(userData, 'last_name', '')}
-                </h1>
-                <p className="text-white mt-0 mb-5">
-                  This is your doula service.
-                  You can update your content and images which can be
-                  show on your doula service page on marketing website.
-                </p>
-                <Button
-                  color="primary"
-                  onClick={handleEditDoulaService}
-                >
-                  Edit Doula Service
                 </Button>
               </Col>
             </Row>

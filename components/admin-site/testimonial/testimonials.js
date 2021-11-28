@@ -155,10 +155,10 @@ const Testimonials = () => {
     }
   };
   return (
-    <SecureTemplate title="Testimonials">
+    <SecureTemplate title="Products">
       <Stats />
       <DynamicTable
-        heading="Testimonials"
+        heading="Products"
         tableHeadings={tableHeadings}
         isCreateButton={true}
         handleCreate={handleCreate}

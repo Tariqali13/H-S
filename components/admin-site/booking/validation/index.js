@@ -11,8 +11,9 @@ export const validateCreateBookingForm = Yup.object().shape({
   phone_number: Yup.string()
     .matches(PHONE_NUMBER_REGEX, 'Only numeric values are allowed.')
     .optional(),
-  event_date: Yup.string().required('Event Date is mandatory'),
-  pricing_plan: Yup.string().required('Pricing Plan is mandatory'),
+  product_id: Yup.object().shape({
+    _id: Yup.string().required('Product is mandatory'),
+  }),
   created_by: Yup.string().required('Created by is mandatory'),
 });
 
@@ -26,7 +27,8 @@ export const validateUpdateBookingForm = Yup.object().shape({
   phone_number: Yup.string()
     .matches(PHONE_NUMBER_REGEX, 'Only numeric values are allowed.')
     .optional(),
-  event_date: Yup.string().required('Event Date is mandatory'),
-  pricing_plan: Yup.string().required('Pricing Plan is mandatory'),
+  product_id: Yup.object().shape({
+    _id: Yup.string().required('Product is mandatory'),
+  }),
   updated_by: Yup.string().required('Updated by is mandatory'),
 });

@@ -139,10 +139,10 @@ const Booking = () => {
               {_get(booking, 'city', '-')}
             </td>
             <td>
-              {moment(_get(booking, 'event_date', '')).format('YYYY-MM-DD')}
+              {moment(_get(booking, 'createdAt', '')).format('YYYY-MM-DD')}
             </td>
             <td>
-              {_get(booking, 'pricing_plan.heading', '-')}
+              {_get(booking, 'product_id.title', '-')}
             </td>
             <TableActions
               dataId={_get(booking, '_id')}

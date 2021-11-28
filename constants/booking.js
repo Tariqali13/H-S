@@ -4,6 +4,6 @@ export const tableHeadings = [
   'State',
   'City',
   'Date',
-  'Pricing Plan',
+  'Product',
   'Actions',
 ];

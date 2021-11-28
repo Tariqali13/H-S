@@ -2,9 +2,9 @@ import React from 'react';
 import About from '@/marketingSite/about';
 
 const AboutMain = () => {
-    return (
-        <About />
-    );
+  return (
+    <About />
+  );
 };
 
 export default AboutMain;
