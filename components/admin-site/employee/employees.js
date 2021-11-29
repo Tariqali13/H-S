@@ -123,36 +123,29 @@ const Employees = () => {
         Message.error(err);
       },
     });
-  // };
-  // const handleTopReview = async (e, employee) => {
-  //   const { checked } = e.target;
-  //   if (_get(employeesData, 'is_top_review_employee', 0) > 0 && checked) {
-  //     const otherOptions = {
-  //       message: "Only 1 top review employee is allowed",
-  //     };
-  //     Message.error(null, otherOptions);
-  //   } else {
-  //     const data = {
-  //       title: employee.title,
-  //       content: employee.content,
-  //       employee_by_name: employee.employee_by_name,
-  //       employee_by_image_id: employee.image_id._id,
-  //       is_top_review: checked,
-  //       updated_by: user_id,
-  //     };
-  //     await updateEmployee({
-  //       id: employee._id,
-  //       data: data,
-  //     }, {
-  //       onSuccess: async res => {
-  //         await refetch();
-  //         Message.success(res);
-  //       },
-  //       onError: err => {
-  //         Message.error(err);
-  //       },
-  //     });
-  //   }
+  }
+  const handleActive = async (e, employee) => {
+    const { checked } = e.target;
+      const data = {
+        first_name: employee.first_name,
+        last_name: employee.last_name,
+        email: employee.email,
+        image_id: employee.image_id._id,
+        is_active: checked,
+        updated_by: user_id,
+      };
+      await updateEmployee({
+        id: employee._id,
+        data: data,
+      }, {
+        onSuccess: async res => {
+          await refetch();
+          Message.success(res);
+        },
+        onError: err => {
+          Message.error(err);
+        },
+      });
   };
   return (
     <SecureTemplate title="Employees">
@@ -175,18 +168,21 @@ const Employees = () => {
           <tr key={i}>
             <td scope="row">
               <div className="table-data" style={{ maxWidth: "350px"}}>
-                {_get(employee , 'title', '-')}
+                {_get(employee , 'first_name', '_')}
               </div>
             </td>
             <td>
-              {moment(_get(employee, 'createdAt', '')).format('YYYY-MM-DD')}
+              {_get(employee, 'last_name', '-')}
+            </td>
+            <td>
+              {_get(employee, 'email', '-')}
             </td>
             <td>
               <input
                 aria-label="Checkbox for following text input"
                 type="checkbox"
-                checked={_get(employee, 'is_top_review', false)}
-                onChange={e => handleTopReview(e, employee)}
+                checked={_get(employee, 'is_active', false)}
+                onChange={e => handleActive(e, employee)}
               />
             </td>
             <TableActions
@@ -213,11 +209,11 @@ const Employees = () => {
       >
         <p>
           Are you sure you want to delete Employee
-          <strong> {employeeToDelete?.title}</strong>
+          <strong> {employeeToDelete?.first_name}</strong>
         </p>
       </ConfirmationModal>
       {(isLoadingDelete || isLoadingSave) && <ProcessingModal />}
     </SecureTemplate>
   );
 };
-export default Employees ;
+export default Employees;

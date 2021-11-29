@@ -37,6 +37,7 @@ type Props = {
   isView: boolean,
   buttonText: string,
   setFieldValue: any,
+  isEdit: boolean,
 };
 
 const EmployeeForm = (props: Props) => {
@@ -53,6 +54,7 @@ const EmployeeForm = (props: Props) => {
       isView,
       buttonText,
       setFieldValue,
+      isEdit = false,
     } = props;
   const {
     mutate: updateFile,
@@ -193,7 +195,8 @@ const EmployeeForm = (props: Props) => {
                       </Field>
                     </Col>
                     <Col lg="6">
-                      <Field name="password">
+                      {!isEdit && (
+                          <Field name="password">
                         {({field, form}) => {
                           return (
                               <FormGroup>
@@ -224,6 +227,40 @@ const EmployeeForm = (props: Props) => {
                           );
                         }}
                       </Field>
+                      )}
+                      {isEdit && (
+                          <Field name="new_password">
+                            {({field, form}) => {
+                              return (
+                                  <FormGroup>
+                                    <label
+                                        className="form-control-label"
+                                        htmlFor="input-username"
+                                    >
+                                      New Password
+                                    </label>
+                                    <Input
+                                        className="form-control-alternative"
+                                        id="input-username"
+                                        placeholder="******"
+                                        type="password"
+                                        name="new_password"
+                                        disabled={isView || isLoadingSave}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.new_password}
+                                        invalid={fieldValidateBool(field, form)}
+                                    />
+                                    {fieldValidateBool(field, form) && (
+                                        <FormFeedback>
+                                          {errors.new_password}
+                                        </FormFeedback>
+                                    )}
+                                  </FormGroup>
+                              );
+                            }}
+                          </Field>
+                      )}
                     </Col>
                   </Row>
                   <Row>

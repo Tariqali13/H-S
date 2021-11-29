@@ -23,15 +23,15 @@ export const validateUpdateEmployeeForm = Yup.object().shape({
   last_name: Yup.string().required('Last Name is mandatory'),
   email: Yup.string()
       .email('Please enter valid email address').required('Email is mandatory'),
-  password: Yup.string()
+  new_password: Yup.string()
       .matches(PASSWORD_REGEX, PASSWORD_VALIDATION_MESSAGE)
-      .required('Password is Mandatory'),
+      .optional(),
   confirm_password: Yup.string()
-      .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), null], 'Password does not match'),
+      .optional('Confirm Password is required')
+      .oneOf([Yup.ref('new_password'), null], 'Password does not match'),
   image_id: Yup.object().shape({
     _id: Yup.string().required('Image is mandatory'),
     file_url: Yup.string().required('Image is mandatory'),
   }),
-  created_by: Yup.string().required('Created by is mandatory'),
+  updated_by: Yup.string().required('Updated by is mandatory'),
 });

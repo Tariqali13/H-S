@@ -43,20 +43,20 @@ const EditEmployee = () => {
       <Formik
         enableReinitialize={true}
         initialValues={{
-          title: _get(employeeData, 'data.title', ''),
-          content: _get(employeeData, 'data.content', ''),
-          employee_by_name: _get(employeeData,
-            'data.employee_by_name', ''),
-          employee_by_image_id: _get(employeeData,
-            'data.employee_by_image_id', {}),
+          first_name: _get(employeeData, 'data.first_name', ''),
+          last_name: _get(employeeData, 'data.last_name', ''),
+          email: _get(employeeData, 'data.email', ''),
+          new_password: "",
+          confirm_password: "",
+          image_id: _get(employeeData, 'data.image_id', []),
           updated_by: user_id,
         }}
         validationSchema={validateUpdateEmployeeForm}
         onSubmit={async (values, actions) => {
-          values.employee_by_image_id = values.employee_by_image_id._id;
+          values.image_id = values.image_id._id;
           await updateEmployee({
             id: employeeId,
-            data: values,
+            data: _omit(values, 'confirm_password'),
           }, {
             onSuccess: res => {
               Message.success(res);
@@ -79,6 +79,7 @@ const EditEmployee = () => {
               {...formikProps}
               isLoadingSave={isLoadingSave}
               buttonText="Update"
+              isEdit={true}
             />
           );}}
       </Formik>
