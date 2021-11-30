@@ -24,18 +24,26 @@ const CreateEmployee = () => {
         initialValues={{
           first_name: "",
           last_name: "",
-            email: "",
-            password: "",
-            confirm_password: "",
-            is_active: true,
-            image_id: {},
-            created_by: user_id,
+          state: "",
+          stateObj: {},
+          city: "",
+          cityObj: {},
+          address: "",
+          phone_number: "",
+          email: "",
+          password: "",
+          confirm_password: "",
+          position: "",
+          is_active: true,
+          image_id: {},
+          created_by: user_id,
 
         }}
         validationSchema={validateCreateEmployeeForm}
         onSubmit={async (values, actions) => {
           values.image_id = values.image_id._id;
-          await createEmployee(_omit(values, 'confirm_password'), {
+          await createEmployee(
+              _omit(values, 'confirm_password', 'stateObj', 'cityObj'), {
             onSuccess: res => {
               Message.success(res);
               Router.push(

@@ -27,6 +27,7 @@ const Employees = () => {
   const [employeeQueryParams, setEmployeeQueryParams] = useState({
     page_no: 1,
     records_per_page: 10,
+    is_admin: false,
   });
   const [paginationData, setPaginationData] = useState({});
   const {
