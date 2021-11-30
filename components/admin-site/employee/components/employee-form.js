@@ -28,8 +28,6 @@ import { UPDATE_STORAGE_FILE} from '../queries';
 import { useMutation } from "react-query";
 import {Message} from "@/components/alert/message";
 import ReactSelect from "@/components/react-select";
-
-
 type Props = {
   values: any,
   errors: any,
@@ -221,7 +219,7 @@ const EmployeeForm = (props: Props) => {
                                     placeholder="Email"
                                     type="text"
                                     name="email"
-                                    disabled={isView || isLoadingSave}
+                                    disabled={isView || isLoadingSave || isEdit}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
@@ -240,7 +238,7 @@ const EmployeeForm = (props: Props) => {
                   </Row>
                   <Row>
                     <Col lg="6">
-                      {!isEdit && (
+                      {(!isEdit && !isView) && (
                           <Field name="password">
                             {({field, form}) => {
                               return (
@@ -308,6 +306,7 @@ const EmployeeForm = (props: Props) => {
                       )}
                     </Col>
                     <Col lg="6">
+                      { !isView && (
                       <Field name="confirm_password">
                         {({field, form}) => {
                           return (
@@ -339,6 +338,7 @@ const EmployeeForm = (props: Props) => {
                           );
                         }}
                       </Field>
+                      )}
                     </Col>
                   </Row>
                   <Row>

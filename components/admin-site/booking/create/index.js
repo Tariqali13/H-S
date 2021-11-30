@@ -31,12 +31,15 @@ const CreateBooking = () => {
           city: "",
           cityObj: {},
           address: "",
-          product_id: {},
+          bill_range: {},
+          credit_score: true,
           created_by: user_id,
         }}
         validationSchema={validateCreateBookingForm}
         onSubmit={async (values, actions) => {
           values.product_id = values.product_id._id;
+          values.bill_range = values.bill_range.value;
+          values.credit_score = values.credit_score.value;
           await createBooking(
             _omit(values, 'stateObj', 'cityObj'), {
               onSuccess: res => {

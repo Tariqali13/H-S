@@ -15,6 +15,7 @@ import { ProcessingModal } from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 import {validateUpdateBookingForm} from "@/adminSite/booking/validation";
 import _omit from "lodash.omit";
+import { billRangeOptions, creditScoreOptions} from '@/constants/booking';
 
 const EditBooking = () => {
   const router = useRouter();
@@ -65,6 +66,8 @@ const EditBooking = () => {
         validationSchema={validateUpdateBookingForm}
         onSubmit={async (values, actions) => {
           values.product_id = values.product_id._id;
+          values.bill_range = values.bill_range.value;
+          values.credit_score = values.credit_score.value;
           await updateBooking({
             id: bookingId,
             data: _omit(values, 'stateObj', 'cityObj'),

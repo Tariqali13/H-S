@@ -15,6 +15,7 @@ import {getLocalStorageValues} from "@/constants/local-storage";
 import { validateUpdateEmployeeForm} from
   "@/adminSite/employee/validation";
 import _omit from "lodash.omit";
+import {City, State} from "country-state-city";
 
 const EditEmployee = () => {
   const router = useRouter();
@@ -37,6 +38,15 @@ const EditEmployee = () => {
       router.back();
     },
   });
+    const state = State.getStateByCodeAndCountry(
+        _get(employeeData, 'data.state', ''), 'US',
+    );
+    const cities = City.getCitiesOfState(
+        'US', _get(employeeData, 'data.state', ''),
+    );
+    const findCity = cities?.find(
+        city => city.name === _get(employeeData, 'data.city', ''),
+    );
   return (
     <SecureTemplate title="Edit Employee">
       <FormHeader heading="Edit Employee" />
@@ -48,15 +58,22 @@ const EditEmployee = () => {
           email: _get(employeeData, 'data.email', ''),
           new_password: "",
           confirm_password: "",
-          image_id: _get(employeeData, 'data.image_id', []),
-          updated_by: user_id,
+            phone_number: _get(employeeData, 'data.phone_number', ''),
+            state: _get(employeeData, 'data.state', ''),
+            stateObj: state,
+            city: _get(employeeData, 'data.city', ''),
+            cityObj: findCity,
+            address: _get(employeeData, 'data.address', ''),
+            position:_get(employeeData, 'data.position', ''),
+            image_id: _get(employeeData, 'data.image_id', []),
+            updated_by: user_id,
         }}
         validationSchema={validateUpdateEmployeeForm}
         onSubmit={async (values, actions) => {
           values.image_id = values.image_id._id;
           await updateEmployee({
             id: employeeId,
-            data: _omit(values, 'confirm_password'),
+            data: _omit(values, 'confirm_password','stateObj','cityObj', 'email'),
           }, {
             onSuccess: res => {
               Message.success(res);

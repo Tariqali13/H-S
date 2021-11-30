@@ -22,6 +22,7 @@ import {GET_ALL_PRODUCTS} from "@/adminSite/products/queries";
 import {useQuery} from "react-query";
 import reactQueryConfig from "@/constants/react-query-config";
 import _get from 'lodash.get';
+import { billRangeOptions, creditScoreOptions} from '@/constants/booking';
 
 type Props = {
   values: any,
@@ -326,9 +327,104 @@ const BookingForm = (props: Props) => {
                 </div>
                 <hr className="my-4"/>
                 <h6 className="heading-small text-muted mb-4">
-                    Product Information
+                    Billing Information
                 </h6>
                 <div className="pl-lg-4">
+                  <Row>
+                    <Col lg="6">
+                      <Field name="bill_range">
+                        {({field, form}) => {
+                          return (
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-country"
+                              >
+                            Monthly Utility Bill Range
+                              </label>
+                              <ReactSelect
+                                isMulti={false}
+                                isCreateable={false}
+                                isDisabled={isView || isLoadingSave}
+                                isLoading={isLoading || isFetching}
+                                defaultValue={values.bill_range}
+                                options={billRangeOptions}
+                                getOptionLabel="value"
+                                getOptionValue="id"
+                                isSearchable={false}
+                                placeholder="Select Bill Range"
+                                handleChange={value => {
+                                  form.setFieldValue(
+                                    field.name, value, true,
+                                  );
+                                }}
+                                handleBlur={handleBlur}
+                                classes="react-msd"
+                                noOptionsMessage={() => (
+                                  <div className="no-results">
+                                  No Bill Range found
+                                  </div>
+                                )}
+                              />
+                              {fieldValidateBool(field, form) && (
+                                <FormFeedback>
+                                  {errors.bill_range._id}
+                                </FormFeedback>
+                              )}
+                            </FormGroup>
+                          );
+                        }}
+                      </Field>
+                    </Col>
+                    <Col lg="6">
+                      <Field name="credit_score">
+                        {({field, form}) => {
+                          return (
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-country"
+                              >
+                                Credit Score
+                              </label>
+                              <ReactSelect
+                                isMulti={false}
+                                isCreateable={false}
+                                isDisabled={isView || isLoadingSave}
+                                isLoading={isLoading || isFetching}
+                                defaultValue={values.credit_score}
+                                options={creditScoreOptions}
+                                getOptionLabel="name"
+                                getOptionValue="id"
+                                isSearchable={false}
+                                placeholder="Select Credit Score"
+                                handleChange={value => {
+                                  form.setFieldValue(
+                                    field.name, value, true,
+                                  );
+                                }}
+                                handleBlur={handleBlur}
+                                classes="react-msd"
+                                noOptionsMessage={() => (
+                                  <div className="no-results">
+                                          No Bill Range found
+                                  </div>
+                                )}
+                              />
+                              {fieldValidateBool(field, form) && (
+                                <FormFeedback>
+                                  {errors.credit_score._id}
+                                </FormFeedback>
+                              )}
+                            </FormGroup>
+                          );
+                        }}
+                      </Field>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="pl-lg-4">
+
                   <Row>
                     <Col lg="6">
                       <Field name="product_id">
@@ -339,7 +435,8 @@ const BookingForm = (props: Props) => {
                                 className="form-control-label"
                                 htmlFor="input-country"
                               >
-                              Product
+                                Product
+                                Monthly Utility Bill Range
                               </label>
                               <ReactSelect
                                 isMulti={false}
@@ -355,13 +452,12 @@ const BookingForm = (props: Props) => {
                                 handleChange={value => {
                                   form.setFieldValue(
                                     field.name, value, true,
-                                  );
-                                }}
-                                handleBlur={handleBlur}
-                                classes="react-msd"
+                                  );}
+                                }
                                 noOptionsMessage={() => (
                                   <div className="no-results">
-                                  No Products found
+                                      No Products found
+                                      No Bill Range found
                                   </div>
                                 )}
                               />
@@ -371,8 +467,7 @@ const BookingForm = (props: Props) => {
                                 </FormFeedback>
                               )}
                             </FormGroup>
-                          );
-                        }}
+                          );}}
                       </Field>
                     </Col>
                   </Row>
