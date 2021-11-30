@@ -33,7 +33,8 @@ export const billRangeOptions = [
     id: 6,
     value: "300+",
   },
-]
+];
+
 export const creditScoreOptions = [
   {
     id: 1,
@@ -45,4 +46,4 @@ export const creditScoreOptions = [
     value: false,
     name: "No",
   },
-]
+];

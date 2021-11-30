@@ -12,6 +12,7 @@ import _get from 'lodash.get';
 import moment from "moment";
 import { City, State } from "country-state-city";
 import { ProcessingModal } from "@/components/modal";
+import {billRangeOptions, creditScoreOptions} from "@/constants/booking";
 
 const ViewBooking = () => {
   const router = useRouter();
@@ -37,6 +38,10 @@ const ViewBooking = () => {
   const findCity = cities?.find(
     city => city.name === _get(bookingData, 'data.city', ''),
   );
+  const findBillRange = billRangeOptions.find(
+    range => range.value === _get(bookingData, 'data.bill_range', ''));
+  const findCreditScore = creditScoreOptions.find(
+    range => range.value === _get(bookingData, 'data.credit_score', ''));
   return (
     <SecureTemplate title="View Booking">
       <FormHeader heading="View Booking" />
@@ -52,6 +57,8 @@ const ViewBooking = () => {
           cityObj: findCity,
           address: _get(bookingData, 'data.address', ''),
           product_id: _get(bookingData, 'data.product_id', {}),
+          bill_range: findBillRange,
+          credit_score: findCreditScore,
           created_by: _get(bookingData, 'data.created_by', ''),
         }}
         onSubmit={() => {}}

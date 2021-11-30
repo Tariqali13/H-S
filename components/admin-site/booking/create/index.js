@@ -11,6 +11,8 @@ import {Message} from "@/components/alert/message";
 import Router from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
+import _get from "lodash.get";
+import {creditScoreOptions} from "@/constants/booking";
 
 const CreateBooking = () => {
   const {
@@ -32,12 +34,16 @@ const CreateBooking = () => {
           cityObj: {},
           address: "",
           bill_range: {},
-          credit_score: true,
+          credit_score: creditScoreOptions[0],
           created_by: user_id,
         }}
         validationSchema={validateCreateBookingForm}
         onSubmit={async (values, actions) => {
-          values.product_id = values.product_id._id;
+          if (_get(values, 'product_id._id', '')) {
+            values.product_id = values.product_id._id;
+          } else {
+            delete values.product_id;
+          }
           values.bill_range = values.bill_range.value;
           values.credit_score = values.credit_score.value;
           await createBooking(

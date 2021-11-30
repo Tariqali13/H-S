@@ -11,7 +11,6 @@ import SecureTemplate from "@/layouts/secure-template";
 import {Stats} from "@/adminSite/common";
 import DynamicTable, {TableActions} from "@/components/table";
 import {tableHeadings} from "@/constants/employee";
-import moment from "moment";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 
@@ -46,7 +45,7 @@ const Employees = () => {
       onSuccess: res => {
         const { result } = Pagination(
           res.records_per_page,
-          res.total_number_of_employees,
+          res.total_number_of_users,
           res.page_no,
           res.data.length,
         );
@@ -124,29 +123,29 @@ const Employees = () => {
         Message.error(err);
       },
     });
-  }
+  };
   const handleActive = async (e, employee) => {
     const { checked } = e.target;
-      const data = {
-        first_name: employee.first_name,
-        last_name: employee.last_name,
-        email: employee.email,
-        image_id: employee.image_id._id,
-        is_active: checked,
-        updated_by: user_id,
-      };
-      await updateEmployee({
-        id: employee._id,
-        data: data,
-      }, {
-        onSuccess: async res => {
-          await refetch();
-          Message.success(res);
-        },
-        onError: err => {
-          Message.error(err);
-        },
-      });
+    const data = {
+      first_name: employee.first_name,
+      last_name: employee.last_name,
+      email: employee.email,
+      image_id: employee.image_id._id,
+      is_active: checked,
+      updated_by: user_id,
+    };
+    await updateEmployee({
+      id: employee._id,
+      data: data,
+    }, {
+      onSuccess: async res => {
+        await refetch();
+        Message.success(res);
+      },
+      onError: err => {
+        Message.error(err);
+      },
+    });
   };
   return (
     <SecureTemplate title="Employees">
@@ -169,7 +168,7 @@ const Employees = () => {
           <tr key={i}>
             <td scope="row">
               <div className="table-data" style={{ maxWidth: "350px"}}>
-                {_get(employee , 'first_name', '_')}
+                {_get(employee, 'first_name', '_')}
               </div>
             </td>
             <td>
@@ -177,6 +176,9 @@ const Employees = () => {
             </td>
             <td>
               {_get(employee, 'email', '-')}
+            </td>
+            <td>
+              {_get(employee, 'position', '-')}
             </td>
             <td>
               <input

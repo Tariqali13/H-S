@@ -10,6 +10,7 @@ import {GET_ALL_PRODUCTS} from "@/adminSite/products/queries";
 import reactQueryConfig from "@/constants/react-query-config";
 import { useRouter} from 'next/router';
 import _get from 'lodash.get';
+import {creditScoreOptions} from "@/constants/booking";
 
 const Booking = () => {
   const router = useRouter();
@@ -49,11 +50,15 @@ const Booking = () => {
                 city: "",
                 cityObj: {},
                 address: "",
+                bill_range: {},
+                credit_score: creditScoreOptions[0],
                 product_id: findProduct || {},
               }}
               validationSchema={validateCreateBookingForm}
               onSubmit={async (values, actions) => {
                 values.product_id = values.product_id._id;
+                values.bill_range = values.bill_range.value;
+                values.credit_score = values.credit_score.value;
                 await createBooking(
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {

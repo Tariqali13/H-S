@@ -9,7 +9,6 @@ import reactQueryConfig from "@/constants/react-query-config";
 import Router, { useRouter } from "next/router";
 import { Message } from "@/components/alert/message";
 import _get from 'lodash.get';
-import moment from "moment";
 import { City, State } from "country-state-city";
 import { ProcessingModal } from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
@@ -46,6 +45,10 @@ const EditBooking = () => {
   const findCity = cities?.find(
     city => city.name === _get(bookingData, 'data.city', ''),
   );
+  const findBillRange = billRangeOptions.find(
+    range => range.value === _get(bookingData, 'data.bill_range', ''));
+  const findCreditScore = creditScoreOptions.find(
+    range => range.value === _get(bookingData, 'data.credit_score', ''));
   return (
     <SecureTemplate title="Edit Booking">
       <FormHeader heading="Edit Booking" />
@@ -61,11 +64,17 @@ const EditBooking = () => {
           cityObj: findCity,
           address: _get(bookingData, 'data.address', ''),
           product_id: _get(bookingData, 'data.product_id', {}),
+          bill_range: findBillRange,
+          credit_score: findCreditScore,
           updated_by: user_id,
         }}
         validationSchema={validateUpdateBookingForm}
         onSubmit={async (values, actions) => {
-          values.product_id = values.product_id._id;
+          if (_get(values, 'product_id._id', '')) {
+            values.product_id = values.product_id._id;
+          } else {
+            delete values.product_id;
+          }
           values.bill_range = values.bill_range.value;
           values.credit_score = values.credit_score.value;
           await updateBooking({

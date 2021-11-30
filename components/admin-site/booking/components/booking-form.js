@@ -22,7 +22,7 @@ import {GET_ALL_PRODUCTS} from "@/adminSite/products/queries";
 import {useQuery} from "react-query";
 import reactQueryConfig from "@/constants/react-query-config";
 import _get from 'lodash.get';
-import { billRangeOptions, creditScoreOptions} from '@/constants/booking';
+import { billRangeOptions, creditScoreOptions, positionOptions} from '@/constants/booking';
 
 type Props = {
   values: any,
@@ -346,7 +346,6 @@ const BookingForm = (props: Props) => {
                                 isMulti={false}
                                 isCreateable={false}
                                 isDisabled={isView || isLoadingSave}
-                                isLoading={isLoading || isFetching}
                                 defaultValue={values.bill_range}
                                 options={billRangeOptions}
                                 getOptionLabel="value"
@@ -385,19 +384,18 @@ const BookingForm = (props: Props) => {
                                 className="form-control-label"
                                 htmlFor="input-country"
                               >
-                                Credit Score
+                                Is Credit Score 650 or higher
                               </label>
                               <ReactSelect
                                 isMulti={false}
                                 isCreateable={false}
                                 isDisabled={isView || isLoadingSave}
-                                isLoading={isLoading || isFetching}
                                 defaultValue={values.credit_score}
                                 options={creditScoreOptions}
                                 getOptionLabel="name"
                                 getOptionValue="id"
                                 isSearchable={false}
-                                placeholder="Select Credit Score"
+                                placeholder="Is your Credit Score 650 or higher? "
                                 handleChange={value => {
                                   form.setFieldValue(
                                     field.name, value, true,
@@ -405,11 +403,6 @@ const BookingForm = (props: Props) => {
                                 }}
                                 handleBlur={handleBlur}
                                 classes="react-msd"
-                                noOptionsMessage={() => (
-                                  <div className="no-results">
-                                          No Bill Range found
-                                  </div>
-                                )}
                               />
                               {fieldValidateBool(field, form) && (
                                 <FormFeedback>
@@ -424,7 +417,6 @@ const BookingForm = (props: Props) => {
                   </Row>
                 </div>
                 <div className="pl-lg-4">
-
                   <Row>
                     <Col lg="6">
                       <Field name="product_id">
@@ -436,7 +428,6 @@ const BookingForm = (props: Props) => {
                                 htmlFor="input-country"
                               >
                                 Product
-                                Monthly Utility Bill Range
                               </label>
                               <ReactSelect
                                 isMulti={false}
@@ -457,7 +448,6 @@ const BookingForm = (props: Props) => {
                                 noOptionsMessage={() => (
                                   <div className="no-results">
                                       No Products found
-                                      No Bill Range found
                                   </div>
                                 )}
                               />

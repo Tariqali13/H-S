@@ -12,7 +12,13 @@ export const validateCreateBookingForm = Yup.object().shape({
     .matches(PHONE_NUMBER_REGEX, 'Only numeric values are allowed.')
     .optional(),
   product_id: Yup.object().shape({
-    _id: Yup.string().required('Product is mandatory'),
+    _id: Yup.string().optional(),
+  }),
+  bill_range: Yup.object().shape({
+    id: Yup.string().required('Billing Range is mandatory'),
+  }),
+  credit_score: Yup.object().shape({
+    id: Yup.string().required('Credit Score is 650 or higher or not is mandatory'),
   }),
   created_by: Yup.string().required('Created by is mandatory'),
 });
@@ -29,6 +35,12 @@ export const validateUpdateBookingForm = Yup.object().shape({
     .optional(),
   product_id: Yup.object().shape({
     _id: Yup.string().required('Product is mandatory'),
+  }),
+  bill_range: Yup.object().shape({
+    id: Yup.string().required('Billing Range is mandatory'),
+  }),
+  credit_score: Yup.object().shape({
+    id: Yup.string().required('Credit Score is 650 or higher or not is mandatory'),
   }),
   updated_by: Yup.string().required('Updated by is mandatory'),
 });

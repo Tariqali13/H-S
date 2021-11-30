@@ -11,6 +11,8 @@ import Router from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
 import _omit from 'lodash.omit';
+import _get from 'lodash.get';
+
 const CreateEmployee = () => {
   const {
     mutate: createEmployee,
@@ -37,26 +39,30 @@ const CreateEmployee = () => {
           is_active: true,
           image_id: {},
           created_by: user_id,
-
         }}
         validationSchema={validateCreateEmployeeForm}
         onSubmit={async (values, actions) => {
-          values.image_id = values.image_id._id;
+          if (_get(values, 'image_id._id', '')) {
+            values.image_id = values.image_id._id;
+          } else {
+            delete values.image_id;
+          }
+          values.position = values.position.value;
           await createEmployee(
-              _omit(values, 'confirm_password', 'stateObj', 'cityObj'), {
-            onSuccess: res => {
-              Message.success(res);
-              Router.push(
-                "/admin/employees",
-                "/admin/employees",
-                { shallow: true },
-              );
-            },
-            onError: err => {
-              Message.error(err);
-              actions.resetForm();
-            },
-          });
+            _omit(values, 'confirm_password', 'stateObj', 'cityObj'), {
+              onSuccess: res => {
+                Message.success(res);
+                Router.push(
+                  "/admin/employees",
+                  "/admin/employees",
+                  { shallow: true },
+                );
+              },
+              onError: err => {
+                Message.error(err);
+                actions.resetForm();
+              },
+            });
         }}
       >
         {formikProps => {

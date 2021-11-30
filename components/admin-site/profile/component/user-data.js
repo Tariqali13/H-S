@@ -43,13 +43,28 @@ const UserData = () => {
               <CardBody className="pt-0 pt-md-4">
                 <div className="text-center">
                   <h3>
-                    {_get(userData, 'first_name', '')}{' '}
+                    Name: {_get(userData, 'first_name', '')}{' '}
                     {_get(userData, 'last_name', '')}
                   </h3>
                   <div className="h5 font-weight-300">
-                    <i className="ni location_pin mr-2" />
+                    Email: <i className="ni location_pin mr-2" />
                     {_get(userData, 'email', '')}
                   </div>
+                  {_get(userData, 'phone_number', '') && (
+                    <div className="h5 font-weight-300">
+                        Phone Number: {_get(userData, 'phone_number', '')}
+                    </div>
+                  )}
+                  {_get(userData, 'address', '') && (
+                    <div className="h5 font-weight-300">
+                    Address: {_get(userData, 'address', '')}
+                    </div>
+                  )}
+                  {_get(userData, 'position', '') && (
+                    <div className="h5 font-weight-300">
+                        Position: {_get(userData, 'position', '')}
+                    </div>
+                  )}
                 </div>
               </CardBody>
             </Card>

@@ -19,6 +19,10 @@ import SvgIcons from "@/components/icons";
 import UppyFileUploader from "@/components/uppy-file-uploader";
 import {imageTypes} from "@/constants/file-types";
 import {ProcessingModal} from "@/components/modal";
+import PhoneInput from "react-phone-input-2";
+import ReactSelect from "@/components/react-select";
+import {positionOptions} from "@/constants/employee";
+import {City, State} from "country-state-city";
 
 type Props = {
   values: any,
@@ -65,6 +69,8 @@ const ProfileForm = (props: Props) => {
   const handleRemoveImage = async id => {
     await updateFile(id);
   };
+  const states = State.getStatesOfCountry('US');
+  const cities = City.getCitiesOfState('US', values.state);
   return (
     <Form>
       <h6 className="heading-small text-muted mb-4 mt-4">
@@ -169,7 +175,43 @@ const ProfileForm = (props: Props) => {
           </Col>
         </Row>
         <Row>
-          <Col lg="12">
+          <Col lg="6">
+            <Field name="phone_number">
+              {({field, form}) => {
+                return (
+                  <FormGroup>
+                    <label
+                      className="form-control-label"
+                      htmlFor="input-last-name"
+                    >
+                        Phone Number
+                    </label>
+                    <PhoneInput
+                      inputStyle={{
+                        width: '100%',
+                      }}
+                      inputClass="form-control-alternative
+                                 admin-phone-input"
+                      country={'us'}
+                      value={values.phone_number}
+                      onChange={value =>
+                        form.setFieldValue(field.name, value)
+                      }
+                      onBlur={handleBlur}
+                      disabled={isView || isLoadingSave}
+                      onlyCountries={['us']}
+                    />
+                    {fieldValidateBool(field, form) && (
+                      <FormFeedback>
+                        {errors.phone_number}
+                      </FormFeedback>
+                    )}
+                  </FormGroup>
+                );
+              }}
+            </Field>
+          </Col>
+          <Col lg="6">
             <Field name="email">
               {({field, form}) => {
                 return (
@@ -195,6 +237,151 @@ const ProfileForm = (props: Props) => {
                     {fieldValidateBool(field, form) && (
                       <FormFeedback>
                         {errors.email}
+                      </FormFeedback>
+                    )}
+                  </FormGroup>
+                );
+              }}
+            </Field>
+          </Col>
+        </Row>
+      </div>
+      <hr className="my-4"/>
+      <h6 className="heading-small text-muted mb-4">
+        Address Information
+      </h6>
+      <div className="pl-lg-4">
+        <Row>
+          <Col md="12">
+            <Field name="address">
+              {({field, form}) => {
+                return (
+                  <FormGroup>
+                    <label
+                      className="form-control-label"
+                      htmlFor="input-username"
+                    >
+                        Address
+                    </label>
+                    <Input
+                      className="form-control-alternative"
+                      id="input-username"
+                      placeholder="Your Address"
+                      type="text"
+                      name="address"
+                      disabled={isView || isLoadingSave}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.address}
+                      invalid={fieldValidateBool(field, form)}
+                    />
+                    {fieldValidateBool(field, form) && (
+                      <FormFeedback>
+                        {errors.address}
+                      </FormFeedback>
+                    )}
+                  </FormGroup>
+                );
+              }}
+            </Field>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="6">
+            <Field name="state">
+              {({field, form}) => {
+                return (
+                  <FormGroup>
+                    <label
+                      className="form-control-label"
+                      htmlFor="input-country"
+                    >
+                        State
+                    </label>
+                    <ReactSelect
+                      isMulti={false}
+                      isCreateable={false}
+                      defaultValue={values.stateObj}
+                      isDisabled={isView || isLoadingSave}
+                      options={states || []}
+                      getOptionLabel="name"
+                      getOptionValue="isoCode"
+                      isSearchable={false}
+                      placeholder="Select State"
+                      handleChange={value => {
+                        form.setFieldValue(
+                          field.name, value.isoCode, true,
+                        );
+                        form.setFieldValue(
+                          "stateObj", value, true,
+                        );
+                        form.setFieldValue(
+                          "cityObj", {}, true,
+                        );
+                        form.setFieldValue(
+                          "city", "", true,
+                        );
+                      }}
+                      handleBlur={handleBlur}
+                      // isLoading={isUserDataLoading}
+                      classes="react-msd"
+                      noOptionsMessage={() => (
+                        <div className="no-results">
+                                No States found
+                        </div>
+                      )}
+                    />
+                    {fieldValidateBool(field, form) && (
+                      <FormFeedback>
+                        {errors.state}
+                      </FormFeedback>
+                    )}
+                  </FormGroup>
+                );
+              }}
+            </Field>
+          </Col>
+          <Col lg="6">
+            <Field name="city">
+              {({field, form}) => {
+                return (
+                  <FormGroup>
+                    <label
+                      className="form-control-label"
+                      htmlFor="input-country"
+                    >
+                        City
+                    </label>
+                    <ReactSelect
+                      isMulti={false}
+                      isCreateable={false}
+                      defaultValue={values.cityObj}
+                      isDisabled={isView || isLoadingSave}
+                      options={cities || []}
+                      getOptionLabel="name"
+                      getOptionValue="name"
+                      isSearchable={false}
+                      placeholder="Select City"
+                      handleChange={value => {
+                        form.setFieldValue(
+                          field.name, value.name, true,
+                        );
+                        form.setFieldValue(
+                          "cityObj", value, true,
+                        );
+                      }}
+                      handleBlur={handleBlur}
+                      // isLoading={isUserDataLoading}
+                      classes="react-msd"
+                      noOptionsMessage={() => (
+                        <div className="no-results">
+                                No City found
+                        </div>
+                      )}
+                    />
+                    {fieldValidateBool(field, form) && (
+                      <FormFeedback>
+                        {errors.city}
                       </FormFeedback>
                     )}
                   </FormGroup>
