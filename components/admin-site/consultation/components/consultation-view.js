@@ -73,7 +73,7 @@ const ConsultationView = ( props: Props) => {
                 <br />
                 <Row>
                   <Col lg="2">
-                    Adress:
+                    Address:
                   </Col>
                   <Col lg="10">
                     {_get(consultationData, 'address', '')}
