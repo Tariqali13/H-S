@@ -129,8 +129,10 @@ const Employees = () => {
     const data = {
       first_name: employee.first_name,
       last_name: employee.last_name,
-      email: employee.email,
-      image_id: employee.image_id._id,
+      state: employee.state,
+      city: employee.city,
+      address: employee.address,
+      position: employee.position,
       is_active: checked,
       updated_by: user_id,
     };
