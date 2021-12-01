@@ -20,6 +20,7 @@ import UppyFileUploader from "@/components/uppy-file-uploader";
 import {imageTypes} from "@/constants/file-types";
 import {ProcessingModal} from "@/components/modal";
 import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
 import ReactSelect from "@/components/react-select";
 import {positionOptions} from "@/constants/employee";
 import {City, State} from "country-state-city";

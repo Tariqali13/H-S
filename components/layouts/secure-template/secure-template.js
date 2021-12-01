@@ -12,6 +12,7 @@ import {getLocalStorageValues} from "@/constants/local-storage";
 import TemplateContext from './context';
 import _get from 'lodash.get';
 import { removeLocalStorageCred } from '@/utils/local-storage';
+import { useRouter } from "next/router";
 
 type Props = {
   children: any,
@@ -19,6 +20,8 @@ type Props = {
 }
 const SecureTemplate = (props: Props) => {
   const { children, title } = props;
+  const router = useRouter();
+  const { pathname } = router;
   const { user_id } = getLocalStorageValues();
   const TemplateProvider = TemplateContext.Provider;
   const isEnabled = typeof user_id === "string";
@@ -29,6 +32,26 @@ const SecureTemplate = (props: Props) => {
   } = useQuery(['GET_USER_BY_ID',  { userId: user_id }], GET_USER_BY_ID, {
     ...reactQueryConfig,
     enabled: isEnabled,
+    onSuccess: res => {
+      const pathsAllowed = [
+        '/admin/login',
+        '/admin/profile',
+        '/admin/profile/edit',
+        '/admin/dashboard',
+        '/admin/training-videos',
+        `/admin/training-videos/[videoId]/view`,
+      ];
+      if (!_get(res, 'data.is_admin')) {
+        if (!pathsAllowed.includes(pathname)) {
+          Router.push('/admin/dashboard', '/admin/dashboard', { shallow: true });
+        }
+      }
+      if (_get(res, 'data.is_admin')) {
+        if (pathname === '/admin/training-videos/[videoId]/view') {
+          Router.push('/admin/dashboard', '/admin/dashboard', { shallow: true });
+        }
+      }
+    },
     onError: async () => {
       await removeLocalStorageCred();
       Router.push('/admin/login', '/admin/login', { shallow: true });

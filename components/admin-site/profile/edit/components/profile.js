@@ -38,7 +38,7 @@ const Profile = () => {
           first_name: _get(userData, 'first_name', ''),
           last_name: _get(userData, 'last_name', ''),
           email: _get(userData, 'email', ''),
-          phone_number: _get(userData, 'data.phone_number', ''),
+          phone_number: _get(userData, 'phone_number', ''),
           state: _get(userData, 'state', ''),
           stateObj: state,
           city: _get(userData, 'city', ''),
