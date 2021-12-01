@@ -30,7 +30,7 @@ export class Message {
   static success(res, otherOption: Object<any>) {
     toast.success(
       <AlertMessage
-        message={res?.message || "Your changes have been saved successfully."}
+        message={res?.message || otherOption?.message || "Your changes have been saved successfully."}
         heading={otherOption?.heading || 'Great Success!'}
       />,
     );

@@ -1,22 +1,25 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useMutation, useQuery} from "react-query";
-import {DELETE_VIDEO, GET_ALL_VIDEOS} from "@/adminSite/videos/queries";
+import {DELETE_VIDEO, GET_ALL_VIDEOS, GET_EMPLOYEE_PROGRESS_BY_ID} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
 import Pagination from "@/utils/pagination";
 import Router from "next/router";
 import _get from "lodash.get";
 import {Message} from "@/components/alert/message";
-import SecureTemplate from "@/layouts/secure-template";
 import {Stats} from "@/adminSite/common";
 import DynamicTable, {TableActions} from "@/components/table";
-import {tableHeadings} from "@/constants/video";
+import {tableHeadings, tableHeadingsEmployee} from "@/constants/video";
 import moment from "moment";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
+import TemplateContext from "@/layouts/secure-template/context";
 
 const Videos = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [videoToDelete, setVideoToDelete] = useState({});
   const toggleDeleteModal = () => setDeleteModal(!deleteModal);
+  const {
+    userData,
+  } = useContext(TemplateContext);
   const {
     mutate: deleteVideo,
     isLoading: isLoadingDelete,
@@ -47,6 +50,15 @@ const Videos = () => {
       setPaginationData({});
     },
   });
+  const enabledProgressQuery = _get(userData, 'is_admin', false) === false &&
+      _get(userData, '_id', '') !== '';
+  const {
+    data: employeeProgressData,
+  } = useQuery(['EMPLOYEE_PROGRESS_BY_ID', { employeeId: _get(userData, '_id', '') }],
+    GET_EMPLOYEE_PROGRESS_BY_ID, {
+      ...reactQueryConfig,
+      enabled: enabledProgressQuery,
+    });
   const handleCreate = () => {
     if (_get(videoData, 'total_number_of_videos', 0) < 50) {
       Router.push(
@@ -82,11 +94,19 @@ const Videos = () => {
   };
 
   const handleView = id => {
-    Router.push(
-      `/admin/training-videos/${id}`,
-      `/admin/training-videos/${id}`,
-      { shallow: true },
-    );
+    if (_get(userData, 'is_admin', false)) {
+      Router.push(
+        `/admin/training-videos/${id}`,
+        `/admin/training-videos/${id}`,
+        { shallow: true },
+      );
+    } else {
+      Router.push(
+        `/admin/training-videos/${id}/view`,
+        `/admin/training-videos/${id}/view`,
+        { shallow: true },
+      );
+    }
   };
 
   const handleEdit = id => {
@@ -116,12 +136,13 @@ const Videos = () => {
     });
   };
   return (
-    <SecureTemplate title="Videos">
+    <>
       <Stats />
       <DynamicTable
         heading="Training Videos"
-        tableHeadings={tableHeadings}
-        isCreateButton={true}
+        tableHeadings={_get(userData, 'is_admin', false) ?
+          tableHeadings : tableHeadingsEmployee}
+        isCreateButton={_get(userData, 'is_admin', false)}
         handleCreate={handleCreate}
         createButtonText="Add Training Video"
         paginationData={paginationData}
@@ -136,6 +157,14 @@ const Videos = () => {
             <td scope="row">
               {_get(video, 'title', '-')}
             </td>
+            {!_get(userData, 'is_admin', false) && (
+              <td scope="row">
+                {_get(employeeProgressData, 'data.video_ids', '-').includes(
+                  _get(video, 'video_id._id')) &&
+              <i className="ni ni-check-bold" />
+                }
+              </td>
+            )}
             <td>
               {moment(_get(video, 'createdAt', '')).format('YYYY-MM-DD')}
             </td>
@@ -143,9 +172,9 @@ const Videos = () => {
               dataId={_get(video, '_id')}
               isView={true}
               handleView={handleView}
-              isEdit={true}
+              isEdit={_get(userData, 'is_admin', false)}
               handleEdit={handleEdit}
-              isDelete={true}
+              isDelete={_get(userData, 'is_admin', false)}
               handleDelete={handleDelete}
             />
           </tr>
@@ -167,7 +196,7 @@ const Videos = () => {
         </p>
       </ConfirmationModal>
       {isLoadingDelete && <ProcessingModal />}
-    </SecureTemplate>
+    </>
   );
 };
 

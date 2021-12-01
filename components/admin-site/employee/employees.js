@@ -10,7 +10,7 @@ import {Message} from "@/components/alert/message";
 import SecureTemplate from "@/layouts/secure-template";
 import {Stats} from "@/adminSite/common";
 import DynamicTable, {TableActions} from "@/components/table";
-import {tableHeadings} from "@/constants/employee";
+import {positionOptions, tableHeadings} from "@/constants/employee";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 
@@ -164,41 +164,47 @@ const Employees = () => {
         noDataFound={isError || _get(employeesData, 'data', []).length === 0}
       >
         {!isError && _get(employeesData, 'data',
-          []).map((employee, i) => (
-          <tr key={i}>
-            <td scope="row">
-              <div className="table-data" style={{ maxWidth: "350px"}}>
-                {_get(employee, 'first_name', '_')}
-              </div>
-            </td>
-            <td>
-              {_get(employee, 'last_name', '-')}
-            </td>
-            <td>
-              {_get(employee, 'email', '-')}
-            </td>
-            <td>
-              {_get(employee, 'position', '-')}
-            </td>
-            <td>
-              <input
-                aria-label="Checkbox for following text input"
-                type="checkbox"
-                checked={_get(employee, 'is_active', false)}
-                onChange={e => handleActive(e, employee)}
+          []).map((employee, i) =>{
+          const findPosition = positionOptions.find(
+            pos => pos.value === _get(employee, 'position', '-'));
+          return (
+            <tr key={i}>
+              <td scope="row">
+                <div className="table-data" style={{ maxWidth: "350px"}}>
+                  {_get(employee, 'first_name', '_')}
+                </div>
+              </td>
+              <td>
+                {_get(employee, 'last_name', '-')}
+              </td>
+              <td>
+                {_get(employee, 'email', '-')}
+              </td>
+              <td>
+                {_get(findPosition, 'name', '-')}
+              </td>
+              <td>
+                {_get(employee, 'employee_progress', '0')}%
+              </td>
+              <td>
+                <input
+                  aria-label="Checkbox for following text input"
+                  type="checkbox"
+                  checked={_get(employee, 'is_active', false)}
+                  onChange={e => handleActive(e, employee)}
+                />
+              </td>
+              <TableActions
+                dataId={_get(employee, '_id')}
+                isView={true}
+                handleView={handleView}
+                isEdit={true}
+                handleEdit={handleEdit}
+                isDelete={true}
+                handleDelete={handleDelete}
               />
-            </td>
-            <TableActions
-              dataId={_get(employee, '_id')}
-              isView={true}
-              handleView={handleView}
-              isEdit={true}
-              handleEdit={handleEdit}
-              isDelete={true}
-              handleDelete={handleDelete}
-            />
-          </tr>
-        ))}
+            </tr>
+          );})}
       </DynamicTable>
       <ConfirmationModal
         heading="Confirm Delete"

@@ -3,3 +3,10 @@ export const tableHeadings = [
   'Date',
   'Actions',
 ];
+
+export const tableHeadingsEmployee = [
+  'Title',
+  'Is Watched',
+  'Date',
+  'Actions',
+];

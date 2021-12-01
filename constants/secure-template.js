@@ -1,4 +1,4 @@
-const routes = (isAdmin) =>{
+const routes = isAdmin =>{
   let customRoutes = [];
   if (isAdmin) {
     customRoutes = [
@@ -65,7 +65,7 @@ const routes = (isAdmin) =>{
         icon: "ni ni-image text-yellow",
         layout: "/admin",
       },
-    ]
+    ];
   }
   return customRoutes;
 };

@@ -14,6 +14,11 @@ export const CREATE_VIDEO_MULTI = async data => {
   return res?.data;
 };
 
+export const CREATE_EMPLOYEE_PROGRESS = async data => {
+  const res = await axios.post(`${baseURL}/v1/employee-progress/create-progress`, data);
+  return res?.data;
+};
+
 export const GET_ALL_VIDEOS = async (key: any) => {
   const params = _get(key, 'queryKey[1]', {});
   const res = await axios.get(
@@ -42,5 +47,12 @@ export const UPDATE_VIDEO = async data => {
 
 export const DELETE_VIDEO = async VIDEOId => {
   const res = await axios.delete(`${baseURL}/v1/video/${VIDEOId}`);
+  return res?.data;
+};
+
+export const GET_EMPLOYEE_PROGRESS_BY_ID = async (key: any) => {
+  const params = _get(key, 'queryKey[1]', {});
+  const res = await axios.get(
+    baseURL + `/v1/employee-progress/${params.employeeId}`);
   return res?.data;
 };

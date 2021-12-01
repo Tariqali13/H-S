@@ -1,14 +1,18 @@
-import React from 'react';
-import SecureTemplate from '@/layouts/secure-template';
+import React, {useContext} from 'react';
 import { StatsChart } from "@/adminSite/dashboard/components";
 import { Stats } from '@/adminSite/common';
+import TemplateContext from "@/layouts/secure-template/context";
+import _get from 'lodash.get';
 
 const Dashboard = () => {
+  const {
+    userData,
+  } = useContext(TemplateContext);
   return (
-    <SecureTemplate title="Dashboard">
+    <>
       <Stats />
-      <StatsChart />
-    </SecureTemplate>
+      {_get(userData, 'is_admin', false) && ( <StatsChart/> )}
+    </>
   );
 };
 
