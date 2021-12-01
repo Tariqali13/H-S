@@ -110,7 +110,8 @@ const Consultation = () => {
           <tr key={i}>
             <td scope="row">
               <div className="table-data">
-                {_get(consultation, 'full_name', '-')}
+                {_get(consultation, 'first_name', '-')}{" "}
+                {_get(consultation, 'last_name', '-')}
               </div>
             </td>
             <td scope="row">
@@ -120,7 +121,17 @@ const Consultation = () => {
             </td>
             <td scope="row">
               <div className="table-data">
-                {_get(consultation, 'subject', '-')}
+                {_get(consultation, 'state', '-')}
+              </div>
+            </td>
+            <td scope="row">
+              <div className="table-data">
+                {_get(consultation, 'city', '-')}
+              </div>
+            </td>
+            <td scope="row">
+              <div className="table-data">
+                {_get(consultation, 'phone_number', '-')}
               </div>
             </td>
             <TableActions

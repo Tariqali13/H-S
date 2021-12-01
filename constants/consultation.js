@@ -1,6 +1,8 @@
 export const tableHeadings = [
-  'User Name',
+  'Full Name',
   'Email',
-  'Subject',
+  'State',
+  'City',
+  'Phone Number',
   'Actions',
 ];
