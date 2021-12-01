@@ -63,7 +63,7 @@ const Booking = () => {
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {
                       const otherOption = {
-                        message: "Your Consultation is submitted." +
+                        message: "Your Booking is submitted." +
                               " We will contact you soon.",
                       };
                       Message.successUserSite(null, otherOption);

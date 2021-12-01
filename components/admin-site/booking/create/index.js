@@ -21,8 +21,8 @@ const CreateBooking = () => {
   } = useMutation(CREATE_BOOKING);
   const { user_id } = getLocalStorageValues();
   return (
-    <SecureTemplate title="Create Consultation">
-      <FormHeader heading="Create Consultation" />
+    <SecureTemplate title="Create Booking">
+      <FormHeader heading="Create Booking" />
       <Formik
         initialValues={{
           full_name: "",

@@ -50,8 +50,8 @@ const EditBooking = () => {
   const findCreditScore = creditScoreOptions.find(
     range => range.value === _get(bookingData, 'data.credit_score', ''));
   return (
-    <SecureTemplate title="Edit Consultation">
-      <FormHeader heading="Edit Consultation" />
+    <SecureTemplate title="Edit Booking">
+      <FormHeader heading="Edit Booking" />
       <Formik
         enableReinitialize={true}
         initialValues={{

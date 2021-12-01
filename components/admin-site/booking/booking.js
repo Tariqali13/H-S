@@ -13,7 +13,7 @@ import moment from "moment";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
 import {Message} from "@/components/alert/message";
 
-const Consultation = () => {
+const Booking = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [bookingToDelete, setBookingToDelete] = useState({});
   const toggleDeleteModal = () => setDeleteModal(!deleteModal);
@@ -116,7 +116,7 @@ const Consultation = () => {
         tableHeadings={tableHeadings}
         isCreateButton={true}
         handleCreate={handleCreate}
-        createButtonText="Create Consultation"
+        createButtonText="Create Booking"
         paginationData={paginationData}
         handleNext={handleNext}
         handlePrevious={handlePrevious}
