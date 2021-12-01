@@ -53,6 +53,6 @@ export const DELETE_VIDEO = async VIDEOId => {
 export const GET_EMPLOYEE_PROGRESS_BY_ID = async (key: any) => {
   const params = _get(key, 'queryKey[1]', {});
   const res = await axios.get(
-    baseURL + `/v1/employee-progress/${params.employeeId}`);
+    baseURL + `/v1/employee-progress/${params.employeeId}`, { params: params?.params });
   return res?.data;
 };

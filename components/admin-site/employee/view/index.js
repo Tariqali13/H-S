@@ -12,6 +12,7 @@ import _get from 'lodash.get';
 import { ProcessingModal } from "@/components/modal";
 import {City, State} from "country-state-city";
 import {positionOptions} from "@/constants/employee";
+import {GET_EMPLOYEE_PROGRESS_BY_ID} from "@/adminSite/videos/queries";
 
 const ViewEmployee = () => {
   const router = useRouter();
@@ -40,9 +41,16 @@ const ViewEmployee = () => {
   );
   const findPosition = positionOptions.find(
     pos => pos.value === _get(employeeData, 'data.position', ''));
+  const {
+    data: employeeProgressData,
+  } = useQuery(['EMPLOYEE_PROGRESS_BY_ID', { employeeId: employeeId, params: { is_populate: true } }],
+    GET_EMPLOYEE_PROGRESS_BY_ID, {
+      ...reactQueryConfig,
+      enabled: isEnabled,
+    });
   return (
     <SecureTemplate title="View Employee">
-      <FormHeader heading="View Employee" />
+      <FormHeader heading={`View Employee - Progress ${_get(employeeData, 'data.employee_progress', 0)}%`} />
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -64,7 +72,11 @@ const ViewEmployee = () => {
       >
         {formikProps => {
           return (
-            <EmployeeForm {...formikProps} isView={true} />
+            <EmployeeForm
+              {...formikProps}
+              isView={true}
+              employeeProgressData={_get(employeeProgressData, 'data', {})}
+            />
           );}}
       </Formik>
       {isLoading && <ProcessingModal />}

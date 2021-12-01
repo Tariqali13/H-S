@@ -29,6 +29,7 @@ import { useMutation } from "react-query";
 import {Message} from "@/components/alert/message";
 import ReactSelect from "@/components/react-select";
 import {positionOptions} from "@/constants/employee";
+import ReactPlayer from "react-player/lazy";
 
 type Props = {
   values: any,
@@ -43,6 +44,7 @@ type Props = {
   buttonText: string,
   setFieldValue: any,
   isEdit: boolean,
+  employeeProgressData: any,
 };
 
 const EmployeeForm = (props: Props) => {
@@ -60,6 +62,7 @@ const EmployeeForm = (props: Props) => {
       buttonText,
       setFieldValue,
       isEdit = false,
+      employeeProgressData,
     } = props;
   const states = State.getStatesOfCountry('US');
   const cities = City.getCitiesOfState('US', values.state);
@@ -598,9 +601,36 @@ const EmployeeForm = (props: Props) => {
                         </FormGroup>
                       </Col>
                     )}
+                    {!_get(values,
+                      'image_id.file_url',
+                      '')
+                    && <Col lg="4">No Profile Image</Col>}
                   </Row>
-                  <hr className="my-4 mt-3"/>
                 </div>
+                {isView && (
+                  <>
+                    <hr className="my-4 mt-5"/>
+                    <div className="pl-lg-4">
+                      <h6 className="heading-small text-muted mb-4">
+                      Videos Watched
+                      </h6>
+                      <Row>
+                        {_get(employeeProgressData, 'video_ids', []).map((video, i) => (
+                          <Col lg="4" key={i}>
+                            <div className="img-fluid rounded shadow" style={{width: "600px", height: "300px"}}>
+                              <ReactPlayer controls={true} url={_get(video, 'file_url', '')} width={"100%"}
+                                height={"100%"}/>
+                            </div>
+                          </Col>
+                        ))}
+                        {_get(employeeProgressData, 'video_ids', []).length === 0 && (
+                          <Col lg="4">No Video Watched Yet!</Col>
+                        )}
+                      </Row>
+                    </div>
+                  </>
+                )}
+                <hr className="my-4 mt-5"/>
                 {!isView && (
                   <Button
                     className="btn-icon btn-3 my-4"
