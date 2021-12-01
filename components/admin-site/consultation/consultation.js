@@ -2,42 +2,41 @@ import React, {useState} from 'react';
 import SecureTemplate from "@/layouts/secure-template";
 import DynamicTable, { TableActions } from '@/components/table';
 import { Stats } from '@/adminSite/common';
-import { tableHeadings } from '@/constants/booking';
+import { tableHeadings } from '@/constants/consultation';
 import Router from 'next/router';
-import { GET_ALL_BOOKINGS, DELETE_BOOKING } from './queries';
+import { GET_ALL_CONSULTATIONS, DELETE_CONSULTATION } from './queries';
 import { useQuery, useMutation } from "react-query";
 import reactQueryConfig from "@/constants/react-query-config";
 import Pagination from "@/utils/pagination";
 import _get from 'lodash.get';
-import moment from "moment";
-import {ConfirmationModal, ProcessingModal} from "@/components/modal";
+import { ConfirmationModal, ProcessingModal } from "@/components/modal";
 import {Message} from "@/components/alert/message";
 
 const Consultation = () => {
   const [deleteModal, setDeleteModal] = useState(false);
-  const [bookingToDelete, setBookingToDelete] = useState({});
+  const [consultationToDelete, setConsultationToDelete] = useState({});
   const toggleDeleteModal = () => setDeleteModal(!deleteModal);
   const {
-    mutate: deleteBooking,
+    mutate: deleteConsultation,
     isLoading: isLoadingDelete,
-  } = useMutation(DELETE_BOOKING);
-  const [bookingQueryParams, setBookingQueryParams] = useState({
+  } = useMutation(DELETE_CONSULTATION);
+  const [consultationQueryParams, setConsultationQueryParams] = useState({
     page_no: 1,
     records_per_page: 10,
   });
   const [paginationData, setPaginationData] = useState({});
   const {
-    data: bookingData,
+    data: consultationData,
     refetch,
     isLoading,
     isFetching,
     isError,
-  } = useQuery(['ALL_BOOKINGS', bookingQueryParams], GET_ALL_BOOKINGS, {
+  } = useQuery(['ALL_CONSULTATIONS', consultationQueryParams], GET_ALL_CONSULTATIONS, {
     ...reactQueryConfig,
     onSuccess: res => {
       const { result } = Pagination(
         res.records_per_page,
-        res.total_number_of_bookings,
+        res.total_number_of_consultation,
         res.page_no,
         res.data.length,
       );
@@ -47,58 +46,43 @@ const Consultation = () => {
       setPaginationData({});
     },
   });
-  const handleCreate = () => {
-    Router.push(
-      '/admin/bookings/create',
-      '/admin/bookings/create',
-      { shallow: true },
-    );
-  };
 
   const handleNext = currentPage => {
-    setBookingQueryParams({
-      ...bookingQueryParams,
+    setConsultationQueryParams({
+      ...consultationQueryParams,
       page_no: parseInt(currentPage) + 1,
     });
   };
   const handlePrevious = currentPage => {
-    setBookingQueryParams({
-      ...bookingQueryParams,
+    setConsultationQueryParams({
+      ...consultationQueryParams,
       page_no: parseInt(currentPage) - 1,
     });
   };
   const handlePageSelect = page => {
-    setBookingQueryParams({
-      ...bookingQueryParams,
+    setConsultationQueryParams({
+      ...consultationQueryParams,
       page_no: page,
     });
   };
 
   const handleView = id => {
     Router.push(
-      `/admin/bookings/${id}`,
-      `/admin/bookings/${id}`,
-      { shallow: true },
-    );
-  };
-
-  const handleEdit = id => {
-    Router.push(
-      `/admin/bookings/${id}/edit`,
-      `/admin/bookings/${id}/edit`,
+      `/admin/consultation/${id}`,
+      `/admin/consultation/${id}`,
       { shallow: true },
     );
   };
 
   const handleDelete = id => {
     setDeleteModal(true);
-    const findBooking = _get(bookingData, 'data', []).find(
-      booking => booking._id === id);
-    setBookingToDelete(findBooking);
+    const findConsultation = _get(consultationData, 'data', []).find(
+      consultation => consultation._id === id);
+    setConsultationToDelete(findConsultation);
   };
   const handleConfirmDelete = async () => {
     toggleDeleteModal();
-    await deleteBooking(_get(bookingToDelete, '_id', ''), {
+    await deleteConsultation(_get(consultationToDelete, '_id', ''), {
       onSuccess: async res => {
         await refetch();
         Message.success(res);
@@ -109,47 +93,40 @@ const Consultation = () => {
     });
   };
   return (
-    <SecureTemplate title="Bookings">
+    <SecureTemplate title="Consultation">
       <Stats />
       <DynamicTable
-        heading="Bookings"
+        heading="Consultation"
         tableHeadings={tableHeadings}
-        isCreateButton={true}
-        handleCreate={handleCreate}
-        createButtonText="Create Consultation"
+        isCreateButton={false}
         paginationData={paginationData}
         handleNext={handleNext}
         handlePrevious={handlePrevious}
         handlePageSelect={handlePageSelect}
         isLoadingData={isLoading || isFetching}
-        noDataFound={isError || _get(bookingData, 'data', []).length === 0}
+        noDataFound={isError || _get(consultationData, 'data', []).length === 0}
       >
-        {!isError && _get(bookingData, 'data', []).map((booking, i) => (
+        {!isError && _get(consultationData, 'data', []).map((consultation, i) => (
           <tr key={i}>
             <td scope="row">
-              {_get(booking, 'full_name', '-')}
+              <div className="table-data">
+                {_get(consultation, 'full_name', '-')}
+              </div>
             </td>
-            <td>
-              {_get(booking, 'email', '-')}
+            <td scope="row">
+              <div className="table-data">
+                {_get(consultation, 'email', '-')}
+              </div>
             </td>
-            <td>
-              {_get(booking, 'state', '-')}
-            </td>
-            <td>
-              {_get(booking, 'city', '-')}
-            </td>
-            <td>
-              {moment(_get(booking, 'createdAt', '')).format('YYYY-MM-DD')}
-            </td>
-            <td>
-              {_get(booking, 'product_id.title', '-')}
+            <td scope="row">
+              <div className="table-data">
+                {_get(consultation, 'subject', '-')}
+              </div>
             </td>
             <TableActions
-              dataId={_get(booking, '_id')}
+              dataId={_get(consultation, '_id')}
               isView={true}
               handleView={handleView}
-              isEdit={true}
-              handleEdit={handleEdit}
               isDelete={true}
               handleDelete={handleDelete}
             />
@@ -167,8 +144,8 @@ const Consultation = () => {
         handleConfirmButton={handleConfirmDelete}
       >
         <p>
-          Are you sure you want to delete booking of
-          <strong> {bookingToDelete?.full_name}</strong>
+            Are you sure you want to delete contact of
+          <strong> {consultationToDelete?.full_name}</strong>
         </p>
       </ConfirmationModal>
       {isLoadingDelete && <ProcessingModal />}
@@ -176,4 +153,4 @@ const Consultation = () => {
   );
 };
 
-export default Booking;
+export default Consultation;

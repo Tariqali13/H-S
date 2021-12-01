@@ -1,39 +1,21 @@
 import React from 'react';
-import { BookingForm } from './components';
-import {validateCreateBookingForm} from "./validation";
+import { ConsultationForm } from './index';
+import {validateCreateConsultationForm} from "../validation";
 import {Message} from "@/components/alert/message";
 import {Formik} from "formik";
-import {useMutation, useQuery} from "react-query";
-import {CREATE_BOOKING} from "@/adminSite/booking/queries";
+import {useMutation} from "react-query";
+import {CREATE_CONSULTATION} from "@/adminSite/consultation/queries";
 import _omit from "lodash.omit";
-import {GET_ALL_PRODUCTS} from "@/adminSite/products/queries";
-import reactQueryConfig from "@/constants/react-query-config";
-import { useRouter} from 'next/router';
-import _get from 'lodash.get';
-import {creditScoreOptions} from "@/constants/booking";
 
-const Booking = () => {
-  const router = useRouter();
-  const { productId = "" } = router.query;
+const Consultation = () => {
   const {
-    mutate: createBooking,
+    mutate: createConsultation,
     isLoading: isLoadingSave,
-  } = useMutation(CREATE_BOOKING);
-  const {
-    data: productsData,
-    isLoading,
-    isFetching,
-  } = useQuery(
-    ['ALL_PRODUCTS', {}],
-    GET_ALL_PRODUCTS, {
-      ...reactQueryConfig,
-    });
-  const findProduct = _get(productsData, 'data', []).find(product => product._id === productId);
-
+  } = useMutation(CREATE_CONSULTATION);
   return (
     <div className="contact w3l-2">
-      <div className="container" id="booking-form">
-        <h2 className="w3ls_head">Book <span>Now</span></h2>
+      <div className="container" id="consultation-form">
+        <h2 className="w3ls_head">Consultation </h2>
         <div className="contact-grids">
           <div className="col-md-12 contact-grid agileinfo-5">
             <p>Lorem Ipsum is inting and typesetting in simply dummy text of the printing and typesetting
@@ -42,7 +24,8 @@ const Booking = () => {
             <Formik
               enableReinitialize={true}
               initialValues={{
-                full_name: "",
+                first_name: "",
+                last_name: "",
                 email: "",
                 phone_number: "",
                 state: "",
@@ -50,16 +33,10 @@ const Booking = () => {
                 city: "",
                 cityObj: {},
                 address: "",
-                bill_range: {},
-                credit_score: creditScoreOptions[0],
-                product_id: findProduct || {},
               }}
-              validationSchema={validateCreateBookingForm}
+              validationSchema={validateCreateConsultationForm}
               onSubmit={async (values, actions) => {
-                values.product_id = values.product_id._id;
-                values.bill_range = values.bill_range.value;
-                values.credit_score = values.credit_score.value;
-                await createBooking(
+                await createConsultation(
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {
                       const otherOption = {
@@ -78,12 +55,9 @@ const Booking = () => {
             >
               {formikProps => {
                 return (
-                  <BookingForm
+                  <ConsultationForm
                     {...formikProps}
                     isLoadingSave={isLoadingSave}
-                    productsData={productsData}
-                    isLoading={isLoading}
-                    isFetching={isFetching}
                   />
                 );}}
             </Formik>
@@ -94,4 +68,4 @@ const Booking = () => {
   );
 };
 
-export {Booking};
+export {Consultation};
