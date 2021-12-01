@@ -48,8 +48,8 @@ export const validateUpdateEmployeeForm = Yup.object().shape({
     id: Yup.string().required('Position is mandatory'),
   }),
   image_id: Yup.object().shape({
-    _id: Yup.string().optional(),
-    file_url: Yup.string().optional(),
-  }),
+    _id: Yup.string().optional().nullable(),
+    file_url: Yup.string().optional().nullable(),
+  }).nullable(),
   updated_by: Yup.string().required('Updated by is mandatory'),
 });
