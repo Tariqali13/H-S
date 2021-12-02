@@ -23,7 +23,7 @@ const routes = isAdmin =>{
       {
         path: "/training-videos",
         name: "H&S ACADEMY",
-        icon: "ni ni-image text-yellow",
+        icon: "ni ni-button-play text-yellow",
         layout: "/admin",
       },
       {
