@@ -2749,3 +2749,7 @@ h4.stats-info {
     width: 80%;
     margin: 0px auto;
 }
+.custom-para {
+    width: 100%;
+    text-align: center;
+}

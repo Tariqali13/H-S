@@ -4,7 +4,9 @@ const Advantage = () => {
   return (
     <div className="what-w3ls">
       <div className="container">
-        <h3 className="w3ls_head">What <span>We Do</span></h3>
+        <h3 className="w3ls_head">Rainwater Harvesting<br/>
+          <span> with Residential Solar</span> </h3>
+        <p className="para custom-para">Equip your home with state of the art solar and save money.</p>
         <div className="what-grids">
           <div className="col-md-6 what-grid">
             <div className="list-img">

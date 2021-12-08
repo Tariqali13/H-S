@@ -17,14 +17,12 @@ const Header = () => {
           </div>
           <div className="w3ls-social-icons">
             <a className="facebook" href="#"><i className="fa fa-facebook"></i></a>
-            <a className="twitter" href="#"><i className="fa fa-twitter"></i></a>
-            <a className="pinterest" href="#"><i className="fa fa-pinterest-p"></i></a>
-            <a className="linkedin" href="#"><i className="fa fa-linkedin"></i></a>
+            <a className="instagram" href="#"><i className="fa fa-instagram"></i></a>
           </div>
           <div className="agileits-contact-info text-right">
             <ul>
               <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
-                href="mailto:info@example.com">mail@example.com</a></li>
+                href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
               <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>+080 264 995
               </li>
             </ul>

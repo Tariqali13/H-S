@@ -24,7 +24,7 @@ const Footer = () => {
                             City, Australia.
             </li>
             <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
-              href="mailto:info@example.com">info@example.com</a></li>
+              href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
             <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span> +080 264 995
             </li>
           </ul>
