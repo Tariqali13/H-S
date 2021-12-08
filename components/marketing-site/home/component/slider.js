@@ -4,7 +4,7 @@ import {Carousel} from "react-bootstrap";
 const Slider = () => {
   return (
     <div className="slider">
-      <Carousel fade indicators={false} interval={null}>
+      <Carousel fade indicators={false}>
         <Carousel.Item>
           <div className="flex-div">
             <img
@@ -20,8 +20,9 @@ const Slider = () => {
           </div>
           <Carousel.Caption>
             <div className="slider-caption">
-            <h3>House with Solar</h3>
-            <p>Industry Leading Equipment and Materials Ensure The Highest Quality Installation Possible</p>
+              <h3>House with Solar</h3>
+              <p>Industry Leading Equipment and Materials
+              Ensure The Highest Quality Installation Possible</p>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -40,8 +41,9 @@ const Slider = () => {
           </div>
           <Carousel.Caption>
             <div className="slider-caption">
-            <h3>Ground Mounted Solar</h3>
-            <p>Ground Mounted Solar For Areas Where the Roof Of The Home Isn't The Ideal Location</p>
+              <h3>Ground Mounted Solar</h3>
+              <p>Ground Mounted Solar For Areas Where
+              the Roof Of The Home Isn't The Ideal Location</p>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
