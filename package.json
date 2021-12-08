@@ -1,13 +1,11 @@
 {
-  "name": "photographer-frontend",
+  "name": "hs-frontend",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3200",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "start:prod": "next start -p 80",
-    "heroku-postbuild": "npm run build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@babel/core": "^7.11.4",
