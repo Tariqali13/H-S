@@ -2729,3 +2729,23 @@ h4.stats-info {
         transform: scale(0.005);
     }
 }
+.blur-image {
+    -webkit-filter: blur(5px) !important;
+    filter: blur(5px) !important;
+    -o-object-fit: cover !important;
+    object-fit: cover !important;
+}
+.main-image {
+    position: absolute;
+    margin: 0px auto;
+}
+.flex-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slider-caption {
+    background-color: rgba(0,0,0, 0.4);
+    width: 80%;
+    margin: 0px auto;
+}
