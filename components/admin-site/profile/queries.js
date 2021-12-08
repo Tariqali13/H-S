@@ -1,12 +1,9 @@
-import _get from "lodash.get";
 import axios from "axios";
 import {baseURL} from "@/constants/env";
 
-export const GET_ABOUT_DATA = async key => {
-  const params = _get(key, 'queryKey[1]', {});
+export const GET_ABOUT_DATA = async () => {
   const res = await axios.get(
     baseURL + `/v1/about`,
-    { params: params },
   );
   return res?.data;
 };

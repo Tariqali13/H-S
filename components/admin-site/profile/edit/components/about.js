@@ -22,22 +22,21 @@ const About = (props: Props) => {
     mutate: updateAboutData,
     isLoading: isLoadingSave,
   } = useMutation(UPDATE_ABOUT_DATA);
-  const findAboutData = aboutData.find(about => about.type === type);
   return (
     <>
       <Formik
         enableReinitialize={true}
         initialValues={{
-          heading: _get(findAboutData, 'heading', ''),
-          description: _get(findAboutData, 'description', ''),
-          image_id: _get(findAboutData, 'image_id', ''),
+          heading: _get(aboutData, 'heading', ''),
+          description: _get(aboutData, 'description', ''),
+          image_id: _get(aboutData, 'image_id', ''),
           type: type,
           updated_by: user_id,
         }}
         validationSchema={validateUpdateAboutForm}
         onSubmit={async (values, actions) => {
           await updateAboutData({
-            id: _get(findAboutData, '_id', ''),
+            id: _get(aboutData, '_id', ''),
             data: {...values, image_id: _get(values, 'image_id._id', '')},
           }, {
             onSuccess: async res => {
