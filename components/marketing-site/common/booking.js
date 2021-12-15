@@ -50,6 +50,7 @@ const Booking = () => {
                 cityObj: {},
                 address: "",
                 bill_range: {},
+                booking_type: {},
                 credit_score: creditScoreOptions[0],
                 product_id: findProduct || {},
               }}
@@ -58,6 +59,7 @@ const Booking = () => {
                 values.product_id = values.product_id._id;
                 values.bill_range = values.bill_range.value;
                 values.credit_score = values.credit_score.value;
+                values.booking_type = values.booking_type.value;
                 await createBooking(
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {

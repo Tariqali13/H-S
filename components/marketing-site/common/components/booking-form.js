@@ -7,7 +7,7 @@ import 'react-phone-input-2/lib/style.css';
 import {City, State} from "country-state-city";
 import ReactSelect from "@/components/react-select";
 import _get from "lodash.get";
-import {billRangeOptions, creditScoreOptions} from "@/constants/booking";
+import {billRangeOptions, creditScoreOptions, bookingTypeOptions} from "@/constants/booking";
 
 type Props = {
     values: any,
@@ -287,6 +287,35 @@ const BookingForm = (props: Props) => {
                 getOptionValue="id"
                 isSearchable={false}
                 placeholder="Is your Credit Score 650 or higher? "
+                handleChange={value => {
+                  form.setFieldValue(
+                    field.name, value, true,
+                  );
+                }}
+                handleBlur={handleBlur}
+                classes="react-msd"
+              />
+            </div>
+          );
+        }}
+      </Field>
+      <Field name="booking_type">
+        {({field, form}) => {
+          return (
+            <div className={fieldValidate(field, form)} style={{ marginBottom: "14px" }}>
+              <label className="form-label">
+                {fieldValidateBool(field, form) ? errors.booking_type.id : "Booking Type"}
+              </label>
+              <ReactSelect
+                isMulti={false}
+                isCreateable={false}
+                isDisabled={isLoadingSave}
+                defaultValue={values.booking_type}
+                options={bookingTypeOptions}
+                getOptionLabel="name"
+                getOptionValue="id"
+                isSearchable={false}
+                placeholder="Your Booking Type.. "
                 handleChange={value => {
                   form.setFieldValue(
                     field.name, value, true,

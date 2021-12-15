@@ -17,6 +17,9 @@ export const validateCreateBookingForm = Yup.object().shape({
   bill_range: Yup.object().shape({
     id: Yup.string().required('Billing Range is mandatory'),
   }),
+  booking_type: Yup.object().shape({
+    id: Yup.string().required('Booking Type is mandatory'),
+  }),
   credit_score: Yup.object().shape({
     id: Yup.string().required('Credit Score is 650 or higher or not is mandatory'),
   }),

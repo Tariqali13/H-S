@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import SecureTemplate from "@/layouts/secure-template";
 import DynamicTable, { TableActions } from '@/components/table';
 import { Stats } from '@/adminSite/common';
-import { tableHeadings } from '@/constants/booking';
+import {bookingTypeOptions, tableHeadings} from '@/constants/booking';
 import Router from 'next/router';
 import { GET_ALL_BOOKINGS, DELETE_BOOKING } from './queries';
 import { useQuery, useMutation } from "react-query";
@@ -124,37 +124,44 @@ const Booking = () => {
         isLoadingData={isLoading || isFetching}
         noDataFound={isError || _get(bookingData, 'data', []).length === 0}
       >
-        {!isError && _get(bookingData, 'data', []).map((booking, i) => (
-          <tr key={i}>
-            <td scope="row">
-              {_get(booking, 'full_name', '-')}
-            </td>
-            <td>
-              {_get(booking, 'email', '-')}
-            </td>
-            <td>
-              {_get(booking, 'state', '-')}
-            </td>
-            <td>
-              {_get(booking, 'city', '-')}
-            </td>
-            <td>
-              {moment(_get(booking, 'createdAt', '')).format('YYYY-MM-DD')}
-            </td>
-            <td>
-              {_get(booking, 'product_id.title', '-')}
-            </td>
-            <TableActions
-              dataId={_get(booking, '_id')}
-              isView={true}
-              handleView={handleView}
-              isEdit={true}
-              handleEdit={handleEdit}
-              isDelete={true}
-              handleDelete={handleDelete}
-            />
-          </tr>
-        ))}
+        {!isError && _get(bookingData, 'data', []).map((booking, i) => {
+          let findBookingType = bookingTypeOptions.find(type =>
+            type.value === _get(booking, 'booking_type', ''));
+          return (
+            <tr key={i}>
+              <td scope="row">
+                {_get(booking, 'full_name', '-')}
+              </td>
+              <td>
+                {_get(booking, 'email', '-')}
+              </td>
+              <td>
+                {_get(booking, 'state', '-')}
+              </td>
+              <td>
+                {_get(booking, 'city', '-')}
+              </td>
+              <td>
+                {moment(_get(booking, 'createdAt', '')).format('YYYY-MM-DD')}
+              </td>
+              <td>
+                {_get(booking, 'product_id.title', '-')}
+              </td>
+              <td>
+                {_get(findBookingType, 'name', '-')}
+              </td>
+              <TableActions
+                dataId={_get(booking, '_id')}
+                isView={true}
+                handleView={handleView}
+                isEdit={true}
+                handleEdit={handleEdit}
+                isDelete={true}
+                handleDelete={handleDelete}
+              />
+            </tr>
+          );},
+        )}
       </DynamicTable>
       <ConfirmationModal
         heading="Confirm Delete"

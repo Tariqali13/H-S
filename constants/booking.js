@@ -5,6 +5,7 @@ export const tableHeadings = [
   'City',
   'Date',
   'Product',
+  'Type',
   'Actions',
 ];
 
@@ -45,5 +46,18 @@ export const creditScoreOptions = [
     id: 2,
     value: false,
     name: "No",
+  },
+];
+
+export const bookingTypeOptions = [
+  {
+    id: 1,
+    value: "in_home",
+    name: "In Home",
+  },
+  {
+    id: 2,
+    value: "virtual",
+    name: "Virtual",
   },
 ];

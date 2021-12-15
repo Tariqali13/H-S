@@ -12,5 +12,7 @@ export const validateCreateConsultationForm = Yup.object().shape({
   phone_number: Yup.string()
     .matches(PHONE_NUMBER_REGEX, 'Only numeric values are allowed.')
     .optional(),
-
+  booking_type: Yup.object().shape({
+    id: Yup.string().required('Booking Type is mandatory'),
+  }),
 });

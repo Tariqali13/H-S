@@ -20,6 +20,9 @@ export const validateCreateBookingForm = Yup.object().shape({
   credit_score: Yup.object().shape({
     id: Yup.string().required('Credit Score is 650 or higher or not is mandatory'),
   }),
+  booking_type: Yup.object().shape({
+    id: Yup.string().required('Booking Type is mandatory'),
+  }),
   created_by: Yup.string().required('Created by is mandatory'),
 });
 
@@ -41,6 +44,9 @@ export const validateUpdateBookingForm = Yup.object().shape({
   }),
   credit_score: Yup.object().shape({
     id: Yup.string().required('Credit Score is 650 or higher or not is mandatory'),
+  }),
+  booking_type: Yup.object().shape({
+    id: Yup.string().required('Booking Type is mandatory'),
   }),
   updated_by: Yup.string().required('Updated by is mandatory'),
 });

@@ -6,7 +6,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import {City, State} from "country-state-city";
 import ReactSelect from "@/components/react-select";
-import {billRangeOptions, creditScoreOptions} from "@/constants/booking";
+import {billRangeOptions, bookingTypeOptions, creditScoreOptions} from "@/constants/booking";
 
 type Props = {
     values: any,
@@ -280,6 +280,35 @@ const ConsultationForm = (props: Props) => {
           );
         }}
       </Field>
+      <Field name="booking_type">
+        {({field, form}) => {
+          return (
+            <div className={fieldValidate(field, form)} style={{ marginBottom: "14px" }}>
+              <label className="form-label">
+                {fieldValidateBool(field, form) ? errors.booking_type.id : "Consultation Type"}
+              </label>
+              <ReactSelect
+                isMulti={false}
+                isCreateable={false}
+                isDisabled={isLoadingSave}
+                defaultValue={values.booking_type}
+                options={bookingTypeOptions}
+                getOptionLabel="name"
+                getOptionValue="id"
+                isSearchable={false}
+                placeholder="Your Consultation Type.. "
+                handleChange={value => {
+                  form.setFieldValue(
+                    field.name, value, true,
+                  );
+                }}
+                handleBlur={handleBlur}
+                classes="react-msd"
+              />
+            </div>
+          );
+        }}
+      </Field>
       <div className="form-wrap form-button offset-1">
         <button
           type="button"
@@ -290,7 +319,7 @@ const ConsultationForm = (props: Props) => {
         >
           <span className="form-loading-button">
             <span className="form-button-text">
-              Book Now
+              Submit Now
             </span>
             {isSubmitting || isLoadingSave && (
               <SpinnerCircular size={20} сolor="#d7b8c0" thickness={200}/>

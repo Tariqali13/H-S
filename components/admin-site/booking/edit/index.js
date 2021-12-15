@@ -14,7 +14,7 @@ import { ProcessingModal } from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 import {validateUpdateBookingForm} from "@/adminSite/booking/validation";
 import _omit from "lodash.omit";
-import { billRangeOptions, creditScoreOptions} from '@/constants/booking';
+import {billRangeOptions, bookingTypeOptions, creditScoreOptions} from '@/constants/booking';
 
 const EditBooking = () => {
   const router = useRouter();
@@ -49,6 +49,8 @@ const EditBooking = () => {
     range => range.value === _get(bookingData, 'data.bill_range', ''));
   const findCreditScore = creditScoreOptions.find(
     range => range.value === _get(bookingData, 'data.credit_score', ''));
+  const findBookingType = bookingTypeOptions.find(type =>
+    type.value === _get(bookingData, 'data.booking_type', ''));
   return (
     <SecureTemplate title="Edit Booking">
       <FormHeader heading="Edit Booking" />
@@ -65,6 +67,7 @@ const EditBooking = () => {
           address: _get(bookingData, 'data.address', ''),
           product_id: _get(bookingData, 'data.product_id', {}),
           bill_range: findBillRange,
+          booking_type: findBookingType,
           credit_score: findCreditScore,
           updated_by: user_id,
         }}
@@ -77,6 +80,7 @@ const EditBooking = () => {
           }
           values.bill_range = values.bill_range.value;
           values.credit_score = values.credit_score.value;
+          values.booking_type = values.booking_type.value;
           await updateBooking({
             id: bookingId,
             data: _omit(values, 'stateObj', 'cityObj'),

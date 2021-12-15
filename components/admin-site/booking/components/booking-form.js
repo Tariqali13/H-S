@@ -22,7 +22,7 @@ import {GET_ALL_PRODUCTS} from "@/adminSite/products/queries";
 import {useQuery} from "react-query";
 import reactQueryConfig from "@/constants/react-query-config";
 import _get from 'lodash.get';
-import { billRangeOptions, creditScoreOptions, positionOptions} from '@/constants/booking';
+import { billRangeOptions, creditScoreOptions, bookingTypeOptions} from '@/constants/booking';
 
 type Props = {
   values: any,
@@ -454,6 +454,43 @@ const BookingForm = (props: Props) => {
                               {fieldValidateBool(field, form) && (
                                 <FormFeedback>
                                   {errors.product_id._id}
+                                </FormFeedback>
+                              )}
+                            </FormGroup>
+                          );}}
+                      </Field>
+                    </Col>
+                    <Col lg="6">
+                      <Field name="booking_type">
+                        {({field, form}) => {
+                          return (
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-country"
+                              >
+                                  Booking Type
+                              </label>
+                              <ReactSelect
+                                isMulti={false}
+                                isCreateable={false}
+                                isDisabled={isView || isLoadingSave}
+                                isLoading={isLoading || isFetching}
+                                defaultValue={values.booking_type}
+                                options={bookingTypeOptions}
+                                getOptionLabel="name"
+                                getOptionValue="id"
+                                isSearchable={false}
+                                placeholder="Select Booking Type"
+                                handleChange={value => {
+                                  form.setFieldValue(
+                                    field.name, value, true,
+                                  );}
+                                }
+                              />
+                              {fieldValidateBool(field, form) && (
+                                <FormFeedback>
+                                  {errors.booking_type._id}
                                 </FormFeedback>
                               )}
                             </FormGroup>

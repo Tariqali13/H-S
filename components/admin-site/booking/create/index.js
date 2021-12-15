@@ -34,6 +34,7 @@ const CreateBooking = () => {
           cityObj: {},
           address: "",
           bill_range: {},
+          booking_type: {},
           credit_score: creditScoreOptions[0],
           created_by: user_id,
         }}
@@ -46,6 +47,7 @@ const CreateBooking = () => {
           }
           values.bill_range = values.bill_range.value;
           values.credit_score = values.credit_score.value;
+          values.booking_type = values.booking_type.value;
           await createBooking(
             _omit(values, 'stateObj', 'cityObj'), {
               onSuccess: res => {

@@ -34,11 +34,13 @@ const Consultation = () => {
                 city: "",
                 cityObj: {},
                 address: "",
+                booking_type: {},
               }}
               validationSchema={validateCreateConsultationForm}
               onSubmit={async (values, actions) => {
                 values.bill_range = values.bill_range.value;
                 values.credit_score = values.credit_score.value;
+                values.booking_type = values.booking_type.value;
                 await createConsultation(
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {
