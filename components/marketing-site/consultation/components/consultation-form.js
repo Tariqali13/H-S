@@ -6,7 +6,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import {City, State} from "country-state-city";
 import ReactSelect from "@/components/react-select";
-import _get from "lodash.get";
+import {billRangeOptions, creditScoreOptions} from "@/constants/booking";
 
 type Props = {
     values: any,
@@ -114,6 +114,69 @@ const ConsultationForm = (props: Props) => {
                 onBlur={handleBlur}
                 disabled={isLoadingSave}
                 onlyCountries={['us']}
+              />
+            </div>
+          );
+        }}
+      </Field>
+      <Field name="bill_range">
+        {({field, form}) => {
+          return (
+            <div className={fieldValidate(field, form)} style={{ marginBottom: "14px" }}>
+              <label className="form-label">
+                {fieldValidateBool(field, form) ? errors.bill_range.id : "Monthly Utility Bill Range"}
+              </label>
+              <ReactSelect
+                isMulti={false}
+                isCreateable={false}
+                isDisabled={isLoadingSave}
+                defaultValue={values.bill_range}
+                options={billRangeOptions}
+                getOptionLabel="value"
+                getOptionValue="id"
+                isSearchable={false}
+                placeholder="Select Bill Range"
+                handleChange={value => {
+                  form.setFieldValue(
+                    field.name, value, true,
+                  );
+                }}
+                handleBlur={handleBlur}
+                classes="react-msd"
+                noOptionsMessage={() => (
+                  <div className="no-results">
+                                    No Bill Range found
+                  </div>
+                )}
+              />
+            </div>
+          );
+        }}
+      </Field>
+      <Field name="credit_score">
+        {({field, form}) => {
+          return (
+            <div className={fieldValidate(field, form)} style={{ marginBottom: "14px" }}>
+              <label className="form-label">
+                {fieldValidateBool(field, form) ? errors.credit_score.id : "Is Credit Score 650 or higher"}
+              </label>
+              <ReactSelect
+                isMulti={false}
+                isCreateable={false}
+                isDisabled={isLoadingSave}
+                defaultValue={values.credit_score}
+                options={creditScoreOptions}
+                getOptionLabel="name"
+                getOptionValue="id"
+                isSearchable={false}
+                placeholder="Is your Credit Score 650 or higher? "
+                handleChange={value => {
+                  form.setFieldValue(
+                    field.name, value, true,
+                  );
+                }}
+                handleBlur={handleBlur}
+                classes="react-msd"
               />
             </div>
           );

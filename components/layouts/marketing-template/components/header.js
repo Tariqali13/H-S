@@ -23,7 +23,7 @@ const Header = () => {
             <ul>
               <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
                 href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
-              <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>+080 264 995
+              <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-258-7330
               </li>
             </ul>
           </div>

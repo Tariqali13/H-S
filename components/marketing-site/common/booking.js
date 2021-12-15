@@ -36,9 +36,8 @@ const Booking = () => {
         <h2 className="w3ls_head">Book <span>Now</span></h2>
         <div className="contact-grids">
           <div className="col-md-12 contact-grid agileinfo-5">
-            <p>Lorem Ipsum is inting and typesetting in simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the is dummy text ever since the 1500s, when an unknown
-                            printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p className="text-center">Schedule a No-cost, No-obligation analysis from an expert
+                who can answer all of your questions and help you understand your options.</p>
             <Formik
               enableReinitialize={true}
               initialValues={{

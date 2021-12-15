@@ -6,6 +6,7 @@ import {Formik} from "formik";
 import {useMutation} from "react-query";
 import {CREATE_CONSULTATION} from "@/adminSite/consultation/queries";
 import _omit from "lodash.omit";
+import {creditScoreOptions} from "@/constants/booking";
 
 const Consultation = () => {
   const {
@@ -18,9 +19,7 @@ const Consultation = () => {
         <h2 className="w3ls_head">Consultation </h2>
         <div className="contact-grids">
           <div className="col-md-12 contact-grid agileinfo-5">
-            <p>Lorem Ipsum is inting and typesetting in simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the is dummy text ever since the 1500s, when an unknown
-                            printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p className="text-center">No-Cost, No-Obligation Solar Analysis from an Expert.</p>
             <Formik
               enableReinitialize={true}
               initialValues={{
@@ -28,6 +27,8 @@ const Consultation = () => {
                 last_name: "",
                 email: "",
                 phone_number: "",
+                bill_range: {},
+                credit_score: creditScoreOptions[0],
                 state: "",
                 stateObj: {},
                 city: "",
@@ -36,6 +37,8 @@ const Consultation = () => {
               }}
               validationSchema={validateCreateConsultationForm}
               onSubmit={async (values, actions) => {
+                values.bill_range = values.bill_range.value;
+                values.credit_score = values.credit_score.value;
                 await createConsultation(
                   _omit(values, 'stateObj', 'cityObj'), {
                     onSuccess: () => {

@@ -20,12 +20,9 @@ const Footer = () => {
         <div className="col-md-6 wthree-footer-top">
           <h3>ADD<span>RESS</span></h3>
           <ul>
-            <li><span className="glyphicon glyphicon-home" aria-hidden="true"></span> 7th Street, Melbourne
-                            City, Australia.
-            </li>
             <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
               href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
-            <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span> +080 264 995
+            <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-258-7330
             </li>
           </ul>
         </div>

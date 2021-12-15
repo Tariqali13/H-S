@@ -7,27 +7,27 @@ const Stats = () => {
         <div className="stats-info">
           <div className="col-md-3 col-sm-3 stats-grid slideanim">
             <div className='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='1200'
-              data-delay='.5' data-increment="1">1200
+              data-delay='.5' data-increment="1">24/7
             </div>
-            <h4 className="stats-info">Followers</h4>
+            <h4 className="stats-info"> Monitoring </h4>
           </div>
           <div className="col-md-3 col-sm-3 stats-grid slideanim">
             <div className='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='3000'
-              data-delay='.5' data-increment="1">3000
+              data-delay='.5' data-increment="1">100%
             </div>
-            <h4 className="stats-info">Support</h4>
+            <h4 className="stats-info">Satisfaction</h4>
           </div>
           <div className="col-md-3 col-sm-3 stats-grid slideanim">
             <div className='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='9000'
-              data-delay='.5' data-increment="10">9000
+              data-delay='.5' data-increment="10">Satisfaction
             </div>
-            <h4 className="stats-info">Clients</h4>
+            <h4 className="stats-info">Guarantee</h4>
           </div>
           <div className="col-md-3 col-sm-3 stats-grid slideanim">
-            <div className='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='169'
-              data-delay='.5' data-increment="1">169
+            <div className='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='1200'
+              data-delay='.5' data-increment="1">Finance
             </div>
-            <h4 className="stats-info">Awards</h4>
+            <h4 className="stats-info">Options Available</h4>
           </div>
           <div className="clearfix"></div>
         </div>

@@ -9,7 +9,7 @@ const  About = () => {
       <Banner/>
       <AboutMe />
       <Stats />
-      <Team />
+      {/*<Team />*/}
     </MarketingTemplate>
   );
 };

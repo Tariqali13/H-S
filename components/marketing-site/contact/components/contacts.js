@@ -17,10 +17,9 @@ const Contacts = () => {
         <h2 className="w3ls_head">Contact <span>us</span></h2>
         <div className="contact-grids">
           <div className="col-md-7 contact-grid agileinfo-5">
-            <h4>Your Message</h4>
-            <p>Lorem Ipsum is inting and typesetting in simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the is dummy text ever since the 1500s, when an unknown
-                            printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <h4>How Can We Serve You?</h4>
+            <p>It is our pleasure to serve you.
+              Please fill out the following form and someone will reach out to you shortly to assist you.</p>
             <Formik
               initialValues={{
                 full_name: "",
@@ -56,20 +55,16 @@ const Contacts = () => {
             <div className="contact-left">
               <h4> Address</h4>
               <div className="cont-info">
-                <h5>Address</h5>
-                <p>7th Street, Melbourne City, Australiae</p>
                 <h5>Email</h5>
-                <a href="mailto:example@mail.com"> example@mail.com</a>
+                <a href="mailto:example@mail.com">office@handselectriccompany.com </a>
                 <h5>Phone</h5>
-                <p> +080 264 995</p>
+                <p>435-258-7330 </p>
               </div>
             </div>
             <div className="contact-bottom wthree-5">
-              <h4>Get connected</h4>
-              <p>Lorem Ipsum is inting and typesetting in simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum has been the is dummy text ever since the 1500s, when
-                                an unknown printer took a galley of type and scrambled it to make a type specimen
-                                book.</p>
+              <h4>We want to hear from you</h4>
+              <p>If there is anything we can do to improve your experience or
+                serve you better please let us know.</p>
             </div>
           </div>
           <div className="clearfix"></div>

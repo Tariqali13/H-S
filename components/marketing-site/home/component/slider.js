@@ -20,7 +20,7 @@ const Slider = () => {
           </div>
           <Carousel.Caption>
             <div className="slider-caption">
-              <h3>House with Solar</h3>
+              <h3>Residential Solar</h3>
               <p>Industry Leading Equipment and Materials
               Ensure The Highest Quality Installation Possible</p>
             </div>
@@ -62,7 +62,7 @@ const Slider = () => {
           </div>
           <Carousel.Caption>
             <div className="slider-caption">
-              <h3>Electric Box</h3>
+              <h3>Electrical Services</h3>
               <p>Wide Array Of Electrical Services To Cover Your Needs</p>
             </div>
           </Carousel.Caption>
