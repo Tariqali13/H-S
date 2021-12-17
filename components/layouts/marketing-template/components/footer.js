@@ -10,11 +10,9 @@ const Footer = () => {
           <ul>
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About</Link></li>
-            <li><Link href="/product">Products</Link></li>
             <li><Link href="/services">Services</Link></li>
             <li><Link href="/contact">Contact</Link></li>
             <li><Link href="/consultation">Consultation</Link></li>
-
           </ul>
         </div>
         <div className="col-md-6 wthree-footer-top">

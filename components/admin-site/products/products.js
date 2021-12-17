@@ -55,8 +55,8 @@ const Products = () => {
     if (_get(productsData, 'total_number_of_products',
       0) < 10) {
       Router.push(
-        '/admin/products/create',
-        '/admin/products/create',
+        '/admin/services/create',
+        '/admin/services/create',
         { shallow: true },
       );
     } else {
@@ -88,16 +88,16 @@ const Products = () => {
 
   const handleView = id => {
     Router.push(
-      `/admin/products/${id}`,
-      `/admin/products/${id}`,
+      `/admin/services/${id}`,
+      `/admin/services/${id}`,
       { shallow: true },
     );
   };
 
   const handleEdit = id => {
     Router.push(
-      `/admin/products/${id}/edit`,
-      `/admin/products/${id}/edit`,
+      `/admin/services/${id}/edit`,
+      `/admin/services/${id}/edit`,
       { shallow: true },
     );
   };
@@ -121,14 +121,14 @@ const Products = () => {
     });
   };
   return (
-    <SecureTemplate title="Products">
+    <SecureTemplate title="Services">
       <Stats />
       <DynamicTable
-        heading="Products"
+        heading="Services"
         tableHeadings={tableHeadings}
         isCreateButton={true}
         handleCreate={handleCreate}
-        createButtonText="Create Product"
+        createButtonText="Add Service"
         paginationData={paginationData}
         handleNext={handleNext}
         handlePrevious={handlePrevious}

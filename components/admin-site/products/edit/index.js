@@ -17,18 +17,18 @@ import { validateUpdateProductForm} from
 
 const EditProduct = () => {
   const router = useRouter();
-  const { productId } = router.query;
+  const { serviceId } = router.query;
   const {
     mutate: updateProduct,
     isLoading: isLoadingSave,
   } = useMutation(UPDATE_PRODUCT);
   const { user_id } = getLocalStorageValues();
-  const isEnabled = productId !== undefined;
+  const isEnabled = serviceId !== undefined;
   const {
     data: productData,
     isLoading,
   } = useQuery(['PRODUCT_BY_ID',
-    { productId }], GET_PRODUCT_BY_ID, {
+    { serviceId }], GET_PRODUCT_BY_ID, {
     ...reactQueryConfig,
     enabled: isEnabled,
     onError: err => {
@@ -37,8 +37,8 @@ const EditProduct = () => {
     },
   });
   return (
-    <SecureTemplate title="Edit Product">
-      <FormHeader heading="Edit Product" />
+    <SecureTemplate title="Edit Service">
+      <FormHeader heading="Edit Service" />
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -52,14 +52,14 @@ const EditProduct = () => {
         onSubmit={async (values, actions) => {
           values.image_id = values.image_id._id;
           await updateProduct({
-            id: productId,
+            id: serviceId,
             data: values,
           }, {
             onSuccess: res => {
               Message.success(res);
               Router.push(
-                "/admin/products",
-                "/admin/products",
+                "/admin/services",
+                "/admin/services",
                 { shallow: true },
               );
             },

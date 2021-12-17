@@ -18,8 +18,8 @@ const CreateProduct = () => {
   } = useMutation(CREATE_PRODUCT);
   const { user_id } = getLocalStorageValues();
   return (
-    <SecureTemplate title="Create Product">
-      <FormHeader heading="Create Product" />
+    <SecureTemplate title="Add Service">
+      <FormHeader heading="Add Service" />
       <Formik
         initialValues={{
           title: "",
@@ -34,8 +34,8 @@ const CreateProduct = () => {
             onSuccess: res => {
               Message.success(res);
               Router.push(
-                "/admin/products",
-                "/admin/products",
+                "/admin/services",
+                "/admin/services",
                 { shallow: true },
               );
             },

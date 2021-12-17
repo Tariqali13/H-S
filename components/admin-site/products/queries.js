@@ -18,11 +18,11 @@ export const GET_ALL_PRODUCTS = async (key: any) => {
 export const GET_PRODUCT_BY_ID = async (key: any) => {
   const params = _get(key, 'queryKey[1]', {});
   const res = await axios.get(
-    baseURL + `/v1/product/${params.productId}`);
+    baseURL + `/v1/product/${params.serviceId}`);
   return res?.data;
 };
-export const DELETE_PRODUCT = async productId => {
-  const res = await axios.delete(`${baseURL}/v1/product/${productId}`);
+export const DELETE_PRODUCT = async serviceId => {
+  const res = await axios.delete(`${baseURL}/v1/product/${serviceId}`);
   return res?.data;
 };
 export const UPDATE_PRODUCT = async data => {

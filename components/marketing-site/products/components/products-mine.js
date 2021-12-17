@@ -74,7 +74,8 @@ const ProductsMine = (props: Props) => {
   return (
     <div className="agile-prod">
       <div className="container">
-        <h2 className="w3ls_head">Prod<span>ucts</span></h2>
+        <h2 className="w3ls_head">Serv<span>ices</span></h2>
+        <p className="text-center">We Provide Professional Residential and Commercial Solar and Electrical Services.</p>
         {!isError &&
         _get(productsData, 'data', []).map((product, i) => {
           if (i % 2 === 0) {

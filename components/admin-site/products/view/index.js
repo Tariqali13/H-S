@@ -13,12 +13,12 @@ import { ProcessingModal } from "@/components/modal";
 
 const ViewProduct = () => {
   const router = useRouter();
-  const { productId } = router.query;
-  const isEnabled = productId !== undefined;
+  const { serviceId } = router.query;
+  const isEnabled = serviceId !== undefined;
   const {
     data: ProductData,
     isLoading,
-  } = useQuery(['PRODUCT_BY_ID', { productId }],
+  } = useQuery(['PRODUCT_BY_ID', { serviceId }],
     GET_PRODUCT_BY_ID, {
       ...reactQueryConfig,
       enabled: isEnabled,
@@ -28,8 +28,8 @@ const ViewProduct = () => {
       },
     });
   return (
-    <SecureTemplate title="View Product">
-      <FormHeader heading="View Product" />
+    <SecureTemplate title="View Service">
+      <FormHeader heading="View Service" />
       <Formik
         enableReinitialize={true}
         initialValues={{

@@ -33,8 +33,8 @@ const routes = isAdmin =>{
         layout: "/admin",
       },
       {
-        path: "/products",
-        name: "Products",
+        path: "/services",
+        name: "Services",
         icon: "ni ni-collection text-yellow",
         layout: "/admin",
       },
