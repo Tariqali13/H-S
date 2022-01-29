@@ -83,7 +83,7 @@ const SecureTemplate = (props: Props) => {
         logo={{
           innerLink: "/admin/dashboard",
           outterLink: "/admin/dashboard",
-          imgSrc: "/images/logo.jpg",
+          imgSrc: "/images/high-logo.png",
           imgAlt: "...",
         }}
       />

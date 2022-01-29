@@ -12,7 +12,7 @@ const Header = () => {
       <div className="w3layouts-top-strip">
         <div className="container">
           <div className="logo" >
-            <img src="/images/logo.jpg" />
+            <img src="/images/high-logo.png"  width={150}/>
             {/*<h1><a href="index.html"><span>Solar </span>Panel</a></h1>*/}
           </div>
           <div className="w3ls-social-icons">
@@ -23,7 +23,7 @@ const Header = () => {
             <ul>
               <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
                 href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
-              <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-258-7330
+              <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-890-7500
               </li>
             </ul>
           </div>

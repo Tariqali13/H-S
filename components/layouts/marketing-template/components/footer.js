@@ -20,7 +20,7 @@ const Footer = () => {
           <ul>
             <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
               href="mailto:office@handselectriccompany.com">office@handselectriccompany.com</a></li>
-            <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-258-7330
+            <li><span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>435-890-7500
             </li>
           </ul>
         </div>

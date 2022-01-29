@@ -58,7 +58,7 @@ const Contacts = () => {
                 <h5>Email</h5>
                 <a href="mailto:example@mail.com">office@handselectriccompany.com </a>
                 <h5>Phone</h5>
-                <p>435-258-7330 </p>
+                <p>435-890-7500 </p>
               </div>
             </div>
             <div className="contact-bottom wthree-5">

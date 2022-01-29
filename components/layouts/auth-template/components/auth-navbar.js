@@ -27,7 +27,7 @@ const AuthNavBar = () => {
               <img
                 className="navbar-brand-login-img"
                 alt="..."
-                src={"/images/logo.jpg"}
+                src={"/images/high-logo.png"}
               />
             </NavbarBrand>
           </span>
