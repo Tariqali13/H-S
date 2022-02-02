@@ -4,8 +4,8 @@ const Advantage = () => {
   return (
     <div className="what-w3ls">
       <div className="container">
-        <h3 className="w3ls_head">Rainwater Harvesting<br/>
-          <span> with Residential Solar</span> </h3>
+        <h3 className="w3ls_head">Benefits of Solar<br/>
+          <span> With H&S Electric Company</span> </h3>
         <p className="para custom-para">Equip your home with state of the art solar and save money.</p>
         <div className="what-grids">
           <div className="col-md-6 what-grid">
@@ -20,9 +20,8 @@ const Advantage = () => {
                 <i className="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></i>
               </div>
               <div className="what-right">
-                <h4>Rainwater Harvesting</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aut dignissimos ea est,
-                                    impedit incidunt, laboriosam </p>
+                <h4>Environmentally Friendly</h4>
+                <p>Clean energy to save hundreds of tons of CO2</p>
               </div>
               <div className="clearfix"></div>
             </div>
@@ -31,9 +30,8 @@ const Advantage = () => {
                 <i className="glyphicon glyphicon-flash" aria-hidden="true"></i>
               </div>
               <div className="what-right">
-                <h4>Home Energy Saving</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aut dignissimos ea est,
-                                    impedit incidunt, laboriosam </p>
+                <h4>Energy Savings</h4>
+                <p>Save money on electricity and get rid of your power bill</p>
               </div>
               <div className="clearfix"></div>
             </div>
@@ -42,9 +40,8 @@ const Advantage = () => {
                 <i className="glyphicon glyphicon-fire" aria-hidden="true"></i>
               </div>
               <div className="what-right">
-                <h4>Wind Power</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aut dignissimos ea est,
-                                    impedit incidunt, laboriosam </p>
+                <h4>Tax Credits</h4>
+                <p>Take advantage of state and federal incentives</p>
               </div>
               <div className="clearfix"></div>
             </div>
