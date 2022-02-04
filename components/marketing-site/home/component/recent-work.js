@@ -52,7 +52,7 @@ const RecentWork = (props: Props) => {
               </div>
             </div>
           ))}
-          {!isError && <h1>No Recent Work</h1>}
+          {isError && <h1>No Recent Work</h1>}
           <div className="clearfix"></div>
         </div>
       </div>
