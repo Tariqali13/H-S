@@ -15,7 +15,12 @@ import moment from "moment";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 
-const Products = () => {
+type Props = {
+  isRecentWork: boolean,
+}
+const Products = (props: Props) => {
+  const { isRecentWork = false } = props;
+  console.log("isRecentWork", isRecentWork);
   const { user_id } = getLocalStorageValues();
   const [deleteModal, setDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState({});
@@ -27,6 +32,7 @@ const Products = () => {
   const [productQueryParams, setProductQueryParams] = useState({
     page_no: 1,
     records_per_page: 10,
+    type: isRecentWork ? "recent_work" : "service",
   });
   const [paginationData, setPaginationData] = useState({});
   const {
@@ -52,19 +58,36 @@ const Products = () => {
       },
     });
   const handleCreate = () => {
-    if (_get(productsData, 'total_number_of_products',
-      0) < 10) {
-      Router.push(
-        '/admin/services/create',
-        '/admin/services/create',
-        { shallow: true },
-      );
+    if (isRecentWork) {
+      if (_get(productsData, 'total_number_of_products',
+        0) < 3) {
+        Router.push(
+          '/admin/recent-works/create',
+          '/admin/recent-works/create',
+          { shallow: true },
+        );
+      } else {
+        const otherOptions = {
+          message: "Maximum 3 Recent Work are allowed",
+        };
+        Message.error(null, otherOptions);
+      }
     } else {
-      const otherOptions = {
-        message: "Maximum 10 Products are allowed",
-      };
-      Message.error(null, otherOptions);
+      if (_get(productsData, 'total_number_of_products',
+        0) < 10) {
+        Router.push(
+          '/admin/services/create',
+          '/admin/services/create',
+          { shallow: true },
+        );
+      } else {
+        const otherOptions = {
+          message: "Maximum 10 Products are allowed",
+        };
+        Message.error(null, otherOptions);
+      }
     }
+
   };
 
   const handleNext = currentPage => {
@@ -87,11 +110,19 @@ const Products = () => {
   };
 
   const handleView = id => {
-    Router.push(
-      `/admin/services/${id}`,
-      `/admin/services/${id}`,
-      { shallow: true },
-    );
+    if (isRecentWork) {
+      Router.push(
+        `/admin/recent-works/${id}`,
+        `/admin/recent-works/${id}`,
+        { shallow: true },
+      );
+    } else {
+      Router.push(
+        `/admin/services/${id}`,
+        `/admin/services/${id}`,
+        { shallow: true },
+      );
+    }
   };
 
   const handleEdit = id => {
@@ -121,14 +152,14 @@ const Products = () => {
     });
   };
   return (
-    <SecureTemplate title="Services">
+    <SecureTemplate title={isRecentWork ? "Recent Works" : "Services"}>
       <Stats />
       <DynamicTable
-        heading="Services"
+        heading={isRecentWork ? "Recent Works" : "Services"}
         tableHeadings={tableHeadings}
         isCreateButton={true}
         handleCreate={handleCreate}
-        createButtonText="Add Service"
+        createButtonText={`Add ${isRecentWork ? "Recent Work" : "Service"}`}
         paginationData={paginationData}
         handleNext={handleNext}
         handlePrevious={handlePrevious}
@@ -170,7 +201,7 @@ const Products = () => {
         handleConfirmButton={handleConfirmDelete}
       >
         <p>
-          Are you sure you want to delete Product
+          Are you sure you want to delete {isRecentWork ? "Recent Work" : 'Service'}
           <strong> {productToDelete?.title}</strong>
         </p>
       </ConfirmationModal>

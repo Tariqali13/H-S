@@ -39,6 +39,12 @@ const routes = isAdmin =>{
         layout: "/admin",
       },
       {
+        path: "/recent-works",
+        name: "Recent Works",
+        icon: "ni ni-bag-17 text-yellow",
+        layout: "/admin",
+      },
+      {
         path: "/testimonials",
         name: "Testimonials",
         icon: "ni ni-satisfied text-black",

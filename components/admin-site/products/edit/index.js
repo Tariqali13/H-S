@@ -14,8 +14,11 @@ import { ProcessingModal } from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
 import { validateUpdateProductForm} from
   "@/adminSite/products/validation";
-
-const EditProduct = () => {
+type Props = {
+  isRecentWork: boolean,
+}
+const EditProduct = (props: Props) => {
+  const { isRecentWork = false } = props;
   const router = useRouter();
   const { serviceId } = router.query;
   const {
@@ -37,8 +40,8 @@ const EditProduct = () => {
     },
   });
   return (
-    <SecureTemplate title="Edit Service">
-      <FormHeader heading="Edit Service" />
+    <SecureTemplate title={`Edit ${isRecentWork ? "Recent Work" : "Service"}`}>
+      <FormHeader heading={`Edit ${isRecentWork ? "Recent Work" : "Service"}`} />
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -57,11 +60,19 @@ const EditProduct = () => {
           }, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                "/admin/services",
-                "/admin/services",
-                { shallow: true },
-              );
+              if (isRecentWork) {
+                Router.push(
+                  "/admin/recent-works",
+                  "/admin/recent-works",
+                  {shallow: true},
+                );
+              } else {
+                Router.push(
+                  "/admin/services",
+                  "/admin/services",
+                  { shallow: true },
+                );
+              }
             },
             onError: err => {
               Message.error(err);

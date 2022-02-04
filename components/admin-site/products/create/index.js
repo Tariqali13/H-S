@@ -11,20 +11,26 @@ import Router from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
 
-const CreateProduct = () => {
+type Props = {
+    isRecentWork: boolean,
+}
+const CreateProduct = (props: Props) => {
+  const { isRecentWork } = props;
   const {
     mutate: createProduct,
     isLoading: isLoadingSave,
   } = useMutation(CREATE_PRODUCT);
   const { user_id } = getLocalStorageValues();
   return (
-    <SecureTemplate title="Add Service">
-      <FormHeader heading="Add Service" />
+    <SecureTemplate title={`Add ${isRecentWork ? "Recent Work" : "Service"}`}>
+      <FormHeader heading={`Add ${isRecentWork ? "Recent Work" : "Service"}`} />
       <Formik
+        enableReinitialize={true}
         initialValues={{
           title: "",
           description: "",
           image_id: {},
+          type: isRecentWork ? 'recent_work' : "service",
           created_by: user_id,
         }}
         validationSchema={validateCreateProductForm}
@@ -33,11 +39,19 @@ const CreateProduct = () => {
           await createProduct(values, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                "/admin/services",
-                "/admin/services",
-                { shallow: true },
-              );
+              if (isRecentWork) {
+                Router.push(
+                  "/admin/recent-works",
+                  "/admin/recent-works",
+                  { shallow: true },
+                );
+              } else {
+                Router.push(
+                  "/admin/services",
+                  "/admin/services",
+                  { shallow: true },
+                );
+              }
             },
             onError: err => {
               Message.error(err);

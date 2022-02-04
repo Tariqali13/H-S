@@ -10,8 +10,11 @@ import { useRouter } from "next/router";
 import { Message } from "@/components/alert/message";
 import _get from 'lodash.get';
 import { ProcessingModal } from "@/components/modal";
-
-const ViewProduct = () => {
+type Props = {
+    isRecentWork: boolean,
+}
+const ViewProduct = (props: Props) => {
+  const { isRecentWork = false } = props;
   const router = useRouter();
   const { serviceId } = router.query;
   const isEnabled = serviceId !== undefined;
@@ -28,8 +31,8 @@ const ViewProduct = () => {
       },
     });
   return (
-    <SecureTemplate title="View Service">
-      <FormHeader heading="View Service" />
+    <SecureTemplate title={`View ${isRecentWork ? "Recent Work" : "View"}`}>
+      <FormHeader heading= {`View ${isRecentWork ? "Recent Work" : "Viiew"}`}/>
       <Formik
         enableReinitialize={true}
         initialValues={{

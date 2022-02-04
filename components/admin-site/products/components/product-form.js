@@ -87,7 +87,7 @@ const ProductForm = (props: Props) => {
             <CardBody>
               <Form>
                 <h6 className="heading-small text-muted mb-4">
-                  Product information
+                  Information
                 </h6>
                 <div className="pl-lg-4">
                   <Row>
@@ -105,7 +105,7 @@ const ProductForm = (props: Props) => {
                               <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title for product"
+                                placeholder="Title"
                                 type="text"
                                 name="title"
                                 disabled={isView || isLoadingSave}
@@ -146,7 +146,7 @@ const ProductForm = (props: Props) => {
                                 handleChange={value =>
                                   form.setFieldValue(field.name, value, true)
                                 }
-                                placeholder="Description for product"
+                                placeholder="Description"
                                 disabled={isView || isLoadingSave}
                               />
                               {fieldValidateBool(field, form) && (
@@ -168,7 +168,7 @@ const ProductForm = (props: Props) => {
                 <hr className="my-4 mt-5"/>
                 <div className="pl-lg-4">
                   <h6 className="heading-small text-muted mb-4">
-                    Product Image
+                    Image
                   </h6>
                   {!isView &&
                   !_get(values, 'image_id.file_url', '') && (
