@@ -12,7 +12,7 @@ const Home = props => {
       <Clients />
       <Advantage />
       <Stats/>
-      <RecentWork />
+      <RecentWork {...props} />
       <Testimonials {...props} />
       <Booking />
     </MarketingTemplate>

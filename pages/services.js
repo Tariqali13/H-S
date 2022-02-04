@@ -12,7 +12,7 @@ const ProductsMain = props => {
 export async function getServerSideProps() {
   const productsRes = await http_req(
     // eslint-disable-next-line max-len
-    baseURL + `/v1/product/all-products?page_no=1&records_per_page=2`,
+    baseURL + `/v1/product/all-products?page_no=1&records_per_page=2&type=service`,
     'get',
   );
   const productsResp = productsRes?.data;

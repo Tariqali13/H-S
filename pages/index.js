@@ -15,11 +15,18 @@ export async function getServerSideProps() {
     baseURL + `/v1/testimonial/all-testimonials`,
     'get',
   );
+  const productsRes = await http_req(
+    // eslint-disable-next-line max-len
+    baseURL + `/v1/product/all-products?page_no=1&records_per_page=2&type=recent_work`,
+    'get',
+  );
+  const productsResp = productsRes?.data;
   const testimonialsResp = testimonialRes?.data;
   return {
     props: {
       allRes: {
         testimonialsRes: testimonialsResp,
+        productsRes: productsResp,
       },
     },
   };

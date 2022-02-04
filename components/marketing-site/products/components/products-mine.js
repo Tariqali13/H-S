@@ -20,6 +20,7 @@ const ProductsMine = (props: Props) => {
   const [productQueryParams, setProductQueryParams] = useState({
     page_no: 1,
     records_per_page: 2,
+    type: 'service',
   });
   const [paginationData, setPaginationData] = useState({});
   const {
