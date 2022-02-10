@@ -15,10 +15,10 @@ const Header = () => {
             <img src="/images/high-logo.png"  width={150}/>
             {/*<h1><a href="index.html"><span>Solar </span>Panel</a></h1>*/}
           </div>
-          <div className="w3ls-social-icons">
-            <a className="facebook" href="#"><i className="fa fa-facebook"></i></a>
-            <a className="instagram" href="#"><i className="fa fa-instagram"></i></a>
-          </div>
+          {/*<div className="w3ls-social-icons">*/}
+          {/*  <a className="facebook" href="#"><i className="fa fa-facebook"></i></a>*/}
+          {/*  <a className="instagram" href="#"><i className="fa fa-instagram"></i></a>*/}
+          {/*</div>*/}
           <div className="agileits-contact-info text-right">
             <ul>
               <li><span className="glyphicon glyphicon-envelope" aria-hidden="true"></span><a

@@ -16,7 +16,6 @@ export const http_req = async (
       ...res?.data,
     };
   } catch (err) {
-    console.log("err",err)
     const noDataFound = {
       data: [],
       message: "No response found",
