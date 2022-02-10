@@ -16,7 +16,7 @@ const RecentWork = (props: Props) => {
   const { allRes } = props;
   const [productQueryParams, setProductQueryParams] = useState({
     page_no: 1,
-    records_per_page: 2,
+    records_per_page: 3,
     type: 'recent_work',
   });
   const [paginationData, setPaginationData] = useState({});
