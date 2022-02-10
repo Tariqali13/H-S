@@ -23,10 +23,10 @@ const MarketingHead = (props: Props) => {
       <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
       <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
       <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-      <link href="/css/skdslider.css" rel="stylesheet"/>
-      <script src="/js/skdslider.min.js"/>
+      {/*<link href="/css/skdslider.css" rel="stylesheet"/>*/}
+      {/*<script src="/js/skdslider.min.js"/>*/}
       {/* eslint-disable-next-line max-len */}
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>
+      {/*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>*/}
     </Head>
   );
 };

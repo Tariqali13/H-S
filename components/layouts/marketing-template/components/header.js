@@ -46,7 +46,7 @@ const Header = () => {
             <ul className="nav navbar-nav">
               <li><Link href="/"><a className={pathname === "/" && "active"}>Home</a></Link></li>
               <li><Link href="/about"><a className={pathname === "/about" && "active"} >About</a></Link></li>
-              <li><Link href="/services"><a className={pathname === "/products" && "active"}> Services</a></Link></li>
+              <li><Link href="/services"><a className={pathname === "/services" && "active"}> Services</a></Link></li>
               <li><Link href="/contact"><a className={pathname === "/contact" && "active"}>Contact</a></Link></li>
               <li><Link href="/consultation"><a className={pathname === "/consultation" && "active"}>Consultation</a></Link></li>
               <li><Link href="/admin/login"><a className={pathname === "/admin/login" && "active"}>Login</a></Link></li>
