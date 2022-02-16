@@ -1,51 +1,46 @@
 import React from 'react';
 import SecureTemplate from "@/layouts/secure-template";
 import { FormHeader } from "@/adminSite/common";
-import { VideoFormMulti } from '../components';
+import { FolderForm } from '../components';
 import { Formik } from 'formik';
-import { validateCreateVideoForm } from '../validation';
-import { CREATE_VIDEO_MULTI } from '../queries';
+import { validateCreateFolderForm } from '../validation';
+import { CREATE_FOLDER } from '../queries';
 import { useMutation } from "react-query";
 import {Message} from "@/components/alert/message";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
 
-const  CreateVideo = () => {
-  const router = useRouter();
-  const { folderId } = router.query;
+const CreateFolder = () => {
   const {
-    mutate: createVideoMulti,
+    mutate: createfolder,
     isLoading: isLoadingSave,
-  } = useMutation(CREATE_VIDEO_MULTI);
+  } = useMutation(CREATE_FOLDER);
   const { user_id } = getLocalStorageValues();
   return (
-    <SecureTemplate title="Add Video">
-      <FormHeader heading="Add Video" />
+    <SecureTemplate title="Add Folders">
+      <FormHeader heading="Add Folders" />
       <Formik
         enableReinitialize={true}
         initialValues={{
           title: "",
-          folder_id: folderId,
-          image_id: {},
           description: "",
-          videos_data: [],
+          image_id: {},
           created_by: user_id,
         }}
-        validationSchema={validateCreateVideoForm}
+        validationSchema={validateCreateFolderForm}
         onSubmit={async (values, actions) => {
-          values.videos_data = values.videos_data.map(video => video._id);
           if (values?.image_id?._id) {
             values.image_id = values.image_id._id;
           } else {
             delete values.image_id;
           }
-          await createVideoMulti(values, {
+          await createfolder(values, {
             onSuccess: res => {
               Message.success(res);
               Router.push(
-                `/admin/h-s-academy/${folderId}`,
-                `/admin/h-s-academy/${folderId}`,
+                "/admin/h-s-academy",
+                "/admin/h-s-academy",
                 { shallow: true },
               );
             },
@@ -58,7 +53,7 @@ const  CreateVideo = () => {
       >
         {formikProps => {
           return (
-            <VideoFormMulti
+            <FolderForm
               {...formikProps}
               isLoadingSave={isLoadingSave}
             />
@@ -69,4 +64,4 @@ const  CreateVideo = () => {
   );
 };
 
-export default CreateVideo;
+export default CreateFolder;

@@ -19,11 +19,12 @@ import _get from 'lodash.get';
 import {UPDATE_STORAGE_FILE} from "@/adminSite/testimonial/queries";
 import {Message} from "@/components/alert/message";
 import UppyFileUploader from "@/components/uppy-file-uploader";
-import { videoTypes } from "@/constants/file-types";
+import {imageTypes, videoTypes} from "@/constants/file-types";
 import {ProcessingModal} from "@/components/modal";
 import { GET_VIDEO_COUNT } from '../queries';
 import ReactQuill from "@/components/react-quill";
 import ReactPlayer from 'react-player/lazy';
+import LazyLoadImages from "@/components/images";
 
 type Props = {
   values: any,
@@ -92,7 +93,27 @@ const VideoFormMulti = (props: Props) => {
       Message.error(null, otherOptions);
     }
   };
-
+  const [imageUploadModal, setImageModalOpen] = useState(false);
+  const toggleImageModal = () => setImageModalOpen(!imageUploadModal);
+  const handleUploadDoneImage = data => {
+    setFieldValue('image_id', data, true);
+  };
+  const handleRemoveImage = async id => {
+    await updateFile(id, {
+      onSuccess: () => {
+        setFieldValue('image_id', {}, true);
+      },
+      onError: () => {
+        const otherOptions = {
+          message: "Error in removing file",
+        };
+        Message.error(null, otherOptions);
+      },
+    });
+  };
+  const handleUploadImage = () => {
+    setImageModalOpen(true);
+  };
   return (
     <Container className="mt--7" fluid>
       <Row>
@@ -231,6 +252,72 @@ const VideoFormMulti = (props: Props) => {
                       ))}
                     </Row>
                   </div>
+                  <hr className="my-4 mt-3"/>
+                  <div className="pl-lg-4">
+                    <h6 className="heading-small text-muted mb-4">
+                      Video Thumbnail Image
+                    </h6>
+                    {!isView &&
+                    !_get(values, 'image_id.file_url', '') && (
+                      <Row>
+                        <Col>
+                          <Button
+                            block
+                            color="primary"
+                            className="btn-icon btn-3 my-4"
+                            size="lg"
+                            onClick={handleUploadImage}
+                          >
+                            <span className="btn-inner--text">
+                          Upload Folder Image
+                            </span>
+                            <span className="btn-inner--icon">
+                              <i className="ni ni-camera-compact"/>
+                            </span>
+                          </Button>
+                          {_get(errors, 'image_id', '') && (
+                            <FormFeedback>
+                              {errors.image_id._id}
+                            </FormFeedback>
+                          )}
+                        </Col>
+                      </Row>
+                    )}
+                    <Row>
+                      {_get(values,
+                        'image_id.file_url',
+                        '') && (
+                        <Col lg="4">
+                          {!isView && (
+                            <Badge
+                              bg="danger"
+                              className="badge-circle bg-danger
+                            text-white image-badge badge-floating border-white"
+                              onClick={() => handleRemoveImage(_get(values,
+                                'image_id._id',
+                                ''))
+                              }
+                            >
+                              <i className="ni ni-fat-remove"/>
+                            </Badge>
+                          )}
+                          <FormGroup>
+                            <LazyLoadImages
+                              isHeight={true}
+                              isWidth={true}
+                              height={200}
+                              width={200}
+                              url={_get(values,
+                                'image_id.file_url',
+                                '')
+                              }
+                              className="img-fluid rounded shadow"
+                            />
+                          </FormGroup>
+                        </Col>
+                      )}
+                    </Row>
+                  </div>
                 </div>
                 <hr className="my-4"/>
                 {!isView && (
@@ -266,6 +353,18 @@ const VideoFormMulti = (props: Props) => {
         setOpenImageModal={setVideoModalOpen}
         handleUploadDone={handleUploadDone}
         setIsLoadingMultiFiles={setIsLoadingMultiFiles}
+      />
+      <UppyFileUploader
+        maxFileSize={100}
+        maxNumberOfFiles={1}
+        acceptFileTypes={imageTypes}
+        open={imageUploadModal}
+        isMulti={false}
+        axiosMethod="post"
+        handleClose={toggleImageModal}
+        uploadUrl={"storage-file"}
+        setOpenImageModal={setImageModalOpen}
+        performFunc={handleUploadDoneImage}
       />
       {(isLoadingUpdateFile || isMultiFilesUploading) && <ProcessingModal />}
     </Container>

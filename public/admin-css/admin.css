@@ -16242,3 +16242,6 @@ button:focus, :focus {
 .avatar-image {
     position: relative !important;
 }
+.cursor-pointer {
+    cursor: pointer;
+}

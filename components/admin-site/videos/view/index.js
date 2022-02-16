@@ -13,7 +13,7 @@ import {ProcessingModal} from "@/components/modal";
 
 const ViewVideo = () => {
   const router = useRouter();
-  const { videoId } = router.query;
+  const { videoId, folderId } = router.query;
   const isEnabled = videoId !== undefined;
   const {
     data: videoData,
@@ -35,6 +35,8 @@ const ViewVideo = () => {
           title: _get(videoData, 'data.title', ''),
           description: _get(videoData, 'data.description', ''),
           video_id: _get(videoData, 'data.video_id', {}),
+          image_id: _get(videoData, 'data.image_id', {}),
+          folder_id: _get(videoData, 'data.folder_id', folderId),
         }}
         onSubmit={() => {}}
       >

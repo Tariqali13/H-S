@@ -38,8 +38,9 @@ const SecureTemplate = (props: Props) => {
         '/admin/profile',
         '/admin/profile/edit',
         '/admin/dashboard',
-        '/admin/training-videos',
-        `/admin/training-videos/[videoId]/view`,
+        '/admin/h-s-academy',
+        '/admin/h-s-academy/[folderId]',
+        `/admin/h-s-academy/[folderId]/[videoId]/view`,
       ];
       if (!_get(res, 'data.is_admin')) {
         if (!pathsAllowed.includes(pathname)) {
@@ -47,7 +48,7 @@ const SecureTemplate = (props: Props) => {
         }
       }
       if (_get(res, 'data.is_admin')) {
-        if (pathname === '/admin/training-videos/[videoId]/view') {
+        if (pathname === '/admin/h-s-academy/[folderId]/[videoId]/view') {
           Router.push('/admin/dashboard', '/admin/dashboard', { shallow: true });
         }
       }

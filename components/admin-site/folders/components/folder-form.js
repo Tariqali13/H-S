@@ -18,26 +18,26 @@ import _get from 'lodash.get';
 import {UPDATE_STORAGE_FILE} from "@/adminSite/testimonial/queries";
 import {Message} from "@/components/alert/message";
 import UppyFileUploader from "@/components/uppy-file-uploader";
-import {imageTypes, videoTypes} from "@/constants/file-types";
+import {imageTypes} from "@/constants/file-types";
 import {ProcessingModal} from "@/components/modal";
 import ReactQuill from "@/components/react-quill";
 import ReactPlayer from "react-player/lazy";
 import LazyLoadImages from "@/components/images";
 
 type Props = {
-  values: any,
-  errors: any,
-  dirty: boolean,
-  isSubmitting: boolean,
-  handleChange: Function,
-  handleBlur: Function,
-  handleSubmit: Function,
-  isLoadingSave: boolean,
-  isView: boolean,
-  buttonText: string,
-  setFieldValue: any,
+    values: any,
+    errors: any,
+    dirty: boolean,
+    isSubmitting: boolean,
+    handleChange: Function,
+    handleBlur: Function,
+    handleSubmit: Function,
+    isLoadingSave: boolean,
+    isView: boolean,
+    buttonText: string,
+    setFieldValue: any,
 };
-const VideoForm = (props: Props) => {
+const FolderForm = (props: Props) => {
   const {
     values,
     errors,
@@ -51,35 +51,13 @@ const VideoForm = (props: Props) => {
     buttonText,
     setFieldValue,
   } = props;
-  console.log("values", values);
   const {
     mutate: updateFile,
     isLoading: isLoadingUpdateFile,
   } = useMutation(UPDATE_STORAGE_FILE);
-  const [videoUploadModal, setVideoModalOpen] = useState(false);
-  const toggleVideoModal = () => setVideoModalOpen(!videoUploadModal);
-  const handleUploadDone = data => {
-    setFieldValue('video_id', data, true);
-  };
-  const handleRemoveVideo = async id => {
-    await updateFile(id, {
-      onSuccess: () => {
-        setFieldValue('video_id', {}, true);
-      },
-      onError: () => {
-        const otherOptions = {
-          message: "Error in removing file",
-        };
-        Message.error(null, otherOptions);
-      },
-    });
-  };
-  const handleUploadVideo = () => {
-    setVideoModalOpen(true);
-  };
   const [imageUploadModal, setImageModalOpen] = useState(false);
   const toggleImageModal = () => setImageModalOpen(!imageUploadModal);
-  const handleUploadDoneImage = data => {
+  const handleUploadDone = data => {
     setFieldValue('image_id', data, true);
   };
   const handleRemoveImage = async id => {
@@ -106,7 +84,7 @@ const VideoForm = (props: Props) => {
             <CardBody>
               <Form>
                 <h6 className="heading-small text-muted mb-4">
-                Video information
+                                    Folder information
                 </h6>
                 <div className="pl-lg-4">
                   <Row>
@@ -119,7 +97,7 @@ const VideoForm = (props: Props) => {
                                 className="form-control-label"
                                 htmlFor="input-username"
                               >
-                                  Title
+                                                                Title
                               </label>
                               <Input
                                 className="form-control-alternative"
@@ -157,7 +135,7 @@ const VideoForm = (props: Props) => {
                                 className="form-control-label"
                                 htmlFor="input-username"
                               >
-                                  Description
+                                                                Description
                               </label>
                               <ReactQuill
                                 className="form-control-alternative"
@@ -168,7 +146,7 @@ const VideoForm = (props: Props) => {
                                 handleChange={value =>
                                   form.setFieldValue(field.name, value, true)
                                 }
-                                placeholder="description for video"
+                                placeholder="description for folder"
                                 disabled={isView || isLoadingSave}
                               />
                               {fieldValidateBool(field, form) && (
@@ -189,68 +167,10 @@ const VideoForm = (props: Props) => {
                   <hr className="my-4 mt-3"/>
                   <div className="pl-lg-4">
                     <h6 className="heading-small text-muted mb-4">
-                      Video
+                                            Folder Image
                     </h6>
                     {!isView &&
-                    !_get(values, 'video_id.file_url', '') && (
-                      <Row>
-                        <Col>
-                          <Button
-                            block
-                            color="primary"
-                            className="btn-icon btn-3 my-4"
-                            size="lg"
-                            onClick={handleUploadVideo}
-                          >
-                            <span className="btn-inner--text">
-                          Upload Videos
-                            </span>
-                            <span className="btn-inner--icon">
-                              <i className="ni ni-camera-compact"/>
-                            </span>
-                          </Button>
-                          {_get(errors, 'video_id', '') && (
-                            <FormFeedback>
-                              {errors.video_id._id}
-                            </FormFeedback>
-                          )}
-                        </Col>
-                      </Row>
-                    )}
-                    <Row>
-                      {_get(values,
-                        'video_id.file_url',
-                        '') && (
-                        <Col lg="4">
-                          {!isView && (
-                            <Badge
-                              bg="danger"
-                              className="badge-circle bg-danger
-                            text-white Video-badge badge-floating border-white"
-                              onClick={() => handleRemoveVideo(_get(values,
-                                'video_id._id',
-                                ''))
-                              }
-                            >
-                              <i className="ni ni-fat-remove"/>
-                            </Badge>
-                          )}
-                          <div className="img-fluid rounded shadow" style={{ width: "100%", height: "100%"}}>
-                            <ReactPlayer controls={true} url={_get(values,
-                              'video_id.file_url',
-                              '')}/>
-                          </div>
-                        </Col>
-                      )}
-                    </Row>
-                  </div>
-                  <hr className="my-4 mt-3"/>
-                  <div className="pl-lg-4">
-                    <h6 className="heading-small text-muted mb-4">
-                      Video Thumbnail Image
-                    </h6>
-                    {!isView &&
-                    !_get(values, 'image_id.file_url', '') && (
+                                        !_get(values, 'image_id.file_url', '') && (
                       <Row>
                         <Col>
                           <Button
@@ -334,18 +254,6 @@ const VideoForm = (props: Props) => {
         </Col>
       </Row>
       <UppyFileUploader
-        maxFileSize={1000}
-        maxNumberOfFiles={1}
-        acceptFileTypes={videoTypes}
-        open={videoUploadModal}
-        isMulti={false}
-        axiosMethod="post"
-        handleClose={toggleVideoModal}
-        uploadUrl={"storage-file"}
-        setOpenImageModal={setVideoModalOpen}
-        performFunc={handleUploadDone}
-      />
-      <UppyFileUploader
         maxFileSize={100}
         maxNumberOfFiles={1}
         acceptFileTypes={imageTypes}
@@ -355,11 +263,11 @@ const VideoForm = (props: Props) => {
         handleClose={toggleImageModal}
         uploadUrl={"storage-file"}
         setOpenImageModal={setImageModalOpen}
-        performFunc={handleUploadDoneImage}
+        performFunc={handleUploadDone}
       />
       {(isLoadingUpdateFile) && <ProcessingModal />}
     </Container>
   );
 };
 
-export {VideoForm};
+export {FolderForm};

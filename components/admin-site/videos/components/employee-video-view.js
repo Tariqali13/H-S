@@ -28,8 +28,8 @@ const EmployeeVideoView = (props: Props) => {
         };
         Message.success(null, otherOption);
         Router.push(
-          "/admin/training-videos",
-          "/admin/training-videos",
+          "/admin/h-s-academy",
+          "/admin/h-s-academy",
           { shallow: true },
         );
       },

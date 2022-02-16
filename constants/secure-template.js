@@ -21,7 +21,7 @@ const routes = isAdmin =>{
         layout: "/admin",
       },
       {
-        path: "/training-videos",
+        path: "/h-s-academy",
         name: "H&S ACADEMY",
         icon: "ni ni-button-play text-yellow",
         layout: "/admin",
@@ -66,7 +66,7 @@ const routes = isAdmin =>{
         layout: "/admin",
       },
       {
-        path: "/training-videos",
+        path: "/h-s-academy",
         name: "H&S ACADEMY",
         icon: "ni ni-image text-yellow",
         layout: "/admin",

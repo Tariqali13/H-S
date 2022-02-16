@@ -1,34 +1,34 @@
 import React from 'react';
 import SecureTemplate from "@/layouts/secure-template";
 import { FormHeader } from "@/adminSite/common";
-import { VideoForm } from '../components';
+import {FolderForm} from '../components';
 import { Formik } from 'formik';
 import {useMutation, useQuery} from "react-query";
 import {
-  UPDATE_VIDEO,
-  GET_VIDEO_BY_ID,
-} from "@/adminSite/videos/queries";
+  UPDATE_FOLDER,
+  GET_FOLDER_BY_ID,
+} from "@/adminSite/folders/queries";
 import reactQueryConfig from "@/constants/react-query-config";
 import Router, { useRouter } from "next/router";
 import { Message } from "@/components/alert/message";
 import _get from 'lodash.get';
 import { ProcessingModal } from "@/components/modal";
 import {getLocalStorageValues} from "@/constants/local-storage";
-import {validateUpdateVideoForm} from "@/adminSite/videos/validation";
+import {validateUpdateFolderForm} from "@/adminSite/folders/validation";
 
-const EditGallery = () => {
+const EditFolder = () => {
   const router = useRouter();
-  const { videoId, folderId } = router.query;
+  const { folderId } = router.query;
   const {
-    mutate: updateVideo,
+    mutate: updateFolder,
     isLoading: isLoadingSave,
-  } = useMutation(UPDATE_VIDEO);
+  } = useMutation(UPDATE_FOLDER);
   const { user_id } = getLocalStorageValues();
-  const isEnabled = videoId !== undefined;
+  const isEnabled = folderId !== undefined;
   const {
-    data: videoData,
+    data: folderData,
     isLoading,
-  } = useQuery(['VIDEO_BY_ID', { videoId }], GET_VIDEO_BY_ID, {
+  } = useQuery(['FOLDER_BY_ID', { folderId }], GET_FOLDER_BY_ID, {
     ...reactQueryConfig,
     enabled: isEnabled,
     onError: err => {
@@ -36,37 +36,33 @@ const EditGallery = () => {
       router.back();
     },
   });
-  console.log("videoData", videoData);
   return (
-    <SecureTemplate title="Edit Video">
-      <FormHeader heading="Edit Video" />
+    <SecureTemplate title="Edit Folder">
+      <FormHeader heading="Edit Folder" />
       <Formik
         enableReinitialize={true}
         initialValues={{
-          title: _get(videoData, 'data.title', ''),
-          description: _get(videoData, 'data.description', ''),
-          video_id: _get(videoData, 'data.video_id', {}),
-          image_id: _get(videoData, 'data.image_id', {}),
-          folder_id: _get(videoData, 'data.folder_id', folderId),
+          title: _get(folderData, 'data.title', ''),
+          description: _get(folderData, 'data.description', ''),
+          image_id: _get(folderData, 'data.image_id', {}),
           updated_by: user_id,
         }}
-        validationSchema={validateUpdateVideoForm}
+        validationSchema={validateUpdateFolderForm}
         onSubmit={async (values, actions) => {
-          values.video_id = values.video_id._id;
           if (values?.image_id?._id) {
             values.image_id = values.image_id._id;
           } else {
             delete values.image_id;
           }
-          await updateVideo({
-            id: videoId,
+          await updateFolder({
+            id: folderId,
             data: values,
           }, {
             onSuccess: res => {
               Message.success(res);
               Router.push(
-                `/admin/h-s-academy/${folderId}`,
-                `/admin/h-s-academy/${folderId}`,
+                `/admin/h-s-academy`,
+                `/admin/h-s-academy`,
                 { shallow: true },
               );
             },
@@ -79,7 +75,7 @@ const EditGallery = () => {
       >
         {formikProps => {
           return (
-            <VideoForm
+            <FolderForm
               {...formikProps}
               isView={false}
               isLoadingSave={isLoadingSave}
@@ -92,4 +88,4 @@ const EditGallery = () => {
   );
 };
 
-export default EditGallery;
+export default EditFolder;
