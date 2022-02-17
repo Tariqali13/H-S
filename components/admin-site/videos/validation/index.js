@@ -28,3 +28,9 @@ export const validateUpdateVideoForm = Yup.object().shape({
   }),
   updated_by: Yup.string().required('Updated by is mandatory'),
 });
+
+export const validateUpdateOrder = Yup.object().shape({
+  desired_location: Yup.object().shape({
+    value: Yup.string().required('Desired Location is mandatory'),
+  }),
+});

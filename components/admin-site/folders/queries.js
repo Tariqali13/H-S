@@ -9,16 +9,6 @@ export const CREATE_FOLDER = async data => {
   return res?.data;
 };
 
-export const CREATE_VIDEO_MULTI = async data => {
-  const res = await axios.post(`${baseURL}/v1/video/multiple`, data);
-  return res?.data;
-};
-
-export const CREATE_EMPLOYEE_PROGRESS = async data => {
-  const res = await axios.post(`${baseURL}/v1/employee-progress/create-progress`, data);
-  return res?.data;
-};
-
 export const GET_ALL_FOLDERS = async (key: any) => {
   const params = _get(key, 'queryKey[1]', {});
   const res = await axios.get(

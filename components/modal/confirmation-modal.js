@@ -13,6 +13,7 @@ type Props = {
   isConfirmButton: boolean,
   handleConfirmButton: () => void,
   confirmButtonText: string,
+  disabledConfirmButton?: boolean,
 };
 
 const ConfirmationModal = (props: Props) => {
@@ -27,6 +28,7 @@ const ConfirmationModal = (props: Props) => {
     handleConfirmButton,
     isCancelButton,
     isConfirmButton,
+    disabledConfirmButton = false,
   } = props;
   return (
     <Modal toggle={toggleModal} isOpen={modalOpen} centered={true}>
@@ -55,7 +57,7 @@ const ConfirmationModal = (props: Props) => {
           </Button>
         )}
         {isConfirmButton && (
-          <Button color="primary" type="button" onClick={handleConfirmButton}>
+          <Button color="primary" type="button" disabled={disabledConfirmButton} onClick={handleConfirmButton}>
             {confirmButtonText || "Confirm"}
           </Button>
         )}

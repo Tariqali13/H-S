@@ -36,7 +36,6 @@ const EditGallery = () => {
       router.back();
     },
   });
-  console.log("videoData", videoData);
   return (
     <SecureTemplate title="Edit Video">
       <FormHeader heading="Edit Video" />
@@ -48,6 +47,7 @@ const EditGallery = () => {
           video_id: _get(videoData, 'data.video_id', {}),
           image_id: _get(videoData, 'data.image_id', {}),
           folder_id: _get(videoData, 'data.folder_id', folderId),
+          type: 'video',
           updated_by: user_id,
         }}
         validationSchema={validateUpdateVideoForm}
@@ -64,11 +64,7 @@ const EditGallery = () => {
           }, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                `/admin/h-s-academy/${folderId}`,
-                `/admin/h-s-academy/${folderId}`,
-                { shallow: true },
-              );
+              Router.back();
             },
             onError: err => {
               Message.error(err);

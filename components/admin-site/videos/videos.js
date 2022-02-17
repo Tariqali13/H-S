@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {useMutation, useQuery} from "react-query";
-import {DELETE_VIDEO, GET_ALL_VIDEOS, GET_EMPLOYEE_PROGRESS_BY_ID} from "@/adminSite/videos/queries";
+import {DELETE_VIDEO, GET_ALL_VIDEOS, GET_EMPLOYEE_PROGRESS_BY_ID, GET_VIDEO_BY_ID, REPOSITION_DATA} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
 import Pagination from "@/utils/pagination";
 import Router from "next/router";
@@ -9,11 +9,26 @@ import {Message} from "@/components/alert/message";
 import {Stats} from "@/adminSite/common";
 import { TablePagination} from "@/components/table";
 import {ConfirmationModal, ProcessingModal} from "@/components/modal";
-import { GET_FOLDER_BY_ID } from '@/adminSite/folders/queries';
 import TemplateContext from "@/layouts/secure-template/context";
 import { useRouter } from "next/router";
-import {Button, Card, CardBody, CardFooter, CardHeader, CardImg, Col, Container, Row, Spinner} from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardImg,
+  Col,
+  Container, FormFeedback,
+  FormGroup,
+  Row,
+  Spinner,
+} from "reactstrap";
 import ReactHtmlParser from "react-html-parser";
+import {Field, Formik} from "formik";
+import {validateUpdateOrder} from "@/adminSite/videos/validation";
+import ReactSelect from "@/components/react-select";
+import {fieldValidateBool} from "@/utils/form";
 
 const Videos = () => {
   const router = useRouter();
@@ -21,6 +36,9 @@ const Videos = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [videoToDelete, setVideoToDelete] = useState({});
   const toggleDeleteModal = () => setDeleteModal(!deleteModal);
+  const [orderModal, setOrderModal] = useState(false);
+  const [videoToOrder, setVideoToOrder] = useState({});
+  const toggleOrderModal = () => setOrderModal(!orderModal);
   const {
     userData,
   } = useContext(TemplateContext);
@@ -29,6 +47,7 @@ const Videos = () => {
     mutate: deleteVideo,
     isLoading: isLoadingDelete,
   } = useMutation(DELETE_VIDEO);
+  const { mutate: repositionData, isLoading: isLoadingOrder} = useMutation(REPOSITION_DATA);
   const [videoQueryParams, setVideoQueryParams] = useState({
     page_no: 1,
     records_per_page: 100,
@@ -57,7 +76,7 @@ const Videos = () => {
       setPaginationData({});
     },
   });
-  const { data: folderData} = useQuery(['FOLDER_BY_ID', { folderId }], GET_FOLDER_BY_ID, {
+  const { data: folderData} = useQuery(['VIDEO_BY_ID', { videoId: folderId }], GET_VIDEO_BY_ID, {
     ...reactQueryConfig,
     enabled: enabled,
   });
@@ -79,7 +98,22 @@ const Videos = () => {
       );
     } else {
       const otherOptions = {
-        message: "Maximum 15 Videos are allowed per folder",
+        message: "Maximum 15 Videos / Folders are allowed per folder",
+      };
+      Message.error(null, otherOptions);
+    }
+  };
+
+  const handleCreateFolder = () => {
+    if (_get(videoData, 'total_number_of_videos', 0) < 15) {
+      Router.push(
+        `/admin/h-s-academy/${folderId}/folder-create`,
+        `/admin/h-s-academy/${folderId}/folder-create`,
+        { shallow: true },
+      );
+    } else {
+      const otherOptions = {
+        message: "Maximum 15 Videos / Folders are allowed per folder",
       };
       Message.error(null, otherOptions);
     }
@@ -104,30 +138,48 @@ const Videos = () => {
     });
   };
 
-  const handleView = (e, id) => {
+  const handleView = (e, id, type) => {
     e.stopPropagation();
-    if (_get(userData, 'is_admin', false)) {
+    if (type === 'video') {
+      if (_get(userData, 'is_admin', false)) {
+        Router.push(
+          `/admin/h-s-academy/${folderId}/${id}`,
+          `/admin/h-s-academy/${folderId}/${id}`,
+          { shallow: true },
+        );
+      } else {
+        Router.push(
+          `/admin/h-s-academy/${folderId}/${id}/view`,
+          `/admin/h-s-academy/${folderId}/${id}/view`,
+          { shallow: true },
+        );
+      }
+    }
+    if (type === 'folder') {
       Router.push(
-        `/admin/h-s-academy/${folderId}/${id}`,
-        `/admin/h-s-academy/${folderId}/${id}`,
-        { shallow: true },
-      );
-    } else {
-      Router.push(
-        `/admin/h-s-academy/${folderId}/${id}/view`,
-        `/admin/h-s-academy/${folderId}/${id}/view`,
+        `/admin/h-s-academy/${id}`,
+        `/admin/h-s-academy/${id}`,
         { shallow: true },
       );
     }
   };
 
-  const handleEdit = (e, id) => {
+  const handleEdit = (e, id, type) => {
     e.stopPropagation();
-    Router.push(
-      `/admin/h-s-academy/${folderId}/${id}/edit`,
-      `/admin/h-s-academy/${folderId}/${id}/edit`,
-      { shallow: true },
-    );
+    if (type === 'video') {
+      Router.push(
+        `/admin/h-s-academy/${folderId}/${id}/edit`,
+        `/admin/h-s-academy/${folderId}/${id}/edit`,
+        {shallow: true},
+      );
+    }
+    if (type === 'folder') {
+      Router.push(
+        `/admin/h-s-academy/${id}/edit`,
+        `/admin/h-s-academy/${id}/edit`,
+        { shallow: true },
+      );
+    }
   };
 
   const handleDelete = (e, id) => {
@@ -149,6 +201,25 @@ const Videos = () => {
       },
     });
   };
+
+  const handleRouteBack = () => {
+    Router.back();
+  };
+  const handleReOrder = (e, id) => {
+    e.stopPropagation();
+    setOrderModal(true);
+    const findVideo = _get(videoData, 'data', []).find(
+      video => video._id === id);
+    setVideoToOrder(findVideo);
+  };
+
+  const generateLocations = Array.from({length: _get(videoData, 'total_number_of_videos', 0)}, (_, i) => {
+    return {
+      id: i + 1,
+      value: `${i + 1}`,
+    };
+  });
+  const locationToMap = generateLocations.filter(loc => loc.value != videoToOrder?.order_by);
   return (
     <>
       <Stats />
@@ -166,23 +237,41 @@ const Videos = () => {
                   Add Video
                   </Button>
                 )}
+                {_get(userData, 'is_admin', false) && (
+                  <Button
+                    className="float-right"
+                    color="primary"
+                    onClick={handleCreateFolder}
+                  >
+                      Add Folder
+                  </Button>
+                )}
                 <h3 className="mb-0">
-                  <button className="btn btn-primary" onClick={() => Router.push(`/admin/h-s-academy`)}>
+                  <button className="btn btn-primary" onClick={handleRouteBack}>
                     Back
-                  </button> {_get(folderData, 'data.title', 'Videos')} - All Videos</h3>
+                  </button> {_get(folderData, 'data.title', 'Videos')} - All Videos / Folders</h3>
               </CardHeader>
               <CardBody>
                 <Row>
-                  {_get(videoData, 'data', []).map((video, i) => (
-                    <Col md={4} key={i}>
-                      <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(video, '_id', ''))}>
+                  {(!isLoading || !isFetching) && _get(videoData, 'data', []).map((video, i) => (
+                    <Col md={4} key={i} className="d-flex">
+                      <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(video, '_id', ''), _get(video, 'type', ''))}>
                         <div className="w-100 text-center">
-                          <CardImg className="w-100" top width="100%" src={_get(video, 'image_id.file_url', '/img/video-svg.png')} alt="Card image cap" />
+                          {_get(userData, 'is_admin', false) && (
+                            <span className="card-menu btn mt-1" onClick={e => handleDelete(e, _get(video, '_id', ''), _get(video, 'type', ''))}> <i className="fa fa-trash" /></span>)}
+                          {_get(userData, 'is_admin', false) && (
+                            <span className="card-menu btn mt-1" style={{ marginRight: '54px' }} onClick={e => handleEdit(e, _get(video, '_id', ''), _get(video, 'type', ''))}> <i className="fa fa-edit" /></span>)}
+                          {_get(userData, 'is_admin', false) && _get(videoData, 'total_number_of_videos', 0) > 1 && (
+                            <span className="card-menu btn mt-1" style={{ marginRight: '100px' }} onClick={e => handleReOrder(e, _get(video, '_id', ''))}> <i className="fa fa-arrow-right"/></span>)}
+                          {_get(video, 'type', '') === 'video' && <CardImg className="w-100 card-images" top width="100%" src={_get(video, 'image_id.file_url', '/img/video-svg.png')} alt="Card image cap" />}
+                          {_get(video, 'type', '') === 'folder' && <CardImg className="w-100  card-images" top width="100%" src={_get(video, 'image_id.file_url', '/img/folder-svg.png')} alt="Card image cap" />}
                         </div>
                         <CardHeader className="border-0">
                           <h3 className="mb-0">Title: {video.title}</h3>
+                          <h3 className="mb-0">Type: {_get(video, 'type', '').toUpperCase()}</h3>
+                          {_get(video, 'type', '') === 'folder' && <h3 className="mb-0">Total Videos: {_get(video, 'total_videos', 0)}</h3>}
                           <br />
-                          {!_get(userData, 'is_admin', false) && (
+                          {!_get(userData, 'is_admin', false) && _get(video, 'type', '') === 'video' && (
                             <span>Is Watched: {_get(employeeProgressData, 'data.video_ids', []).includes(
                               _get(video, 'video_id._id')) &&
                                   <i className="ni ni-check-bold" />
@@ -193,12 +282,6 @@ const Videos = () => {
                           <h3 className="mb-0">Description: </h3>
                           <p>{ReactHtmlParser(_get(video, 'description', ''))}</p>
                         </CardBody>
-                        {_get(userData, 'is_admin', false) && (
-                          <CardFooter>
-                            <Button className="my-1" onClick={e => handleEdit(e, _get(video, '_id', ''))}>Edit</Button>
-                            <Button className="my-1" onClick={e => handleDelete(e, _get(video, '_id', ''))}>Delete</Button>
-                          </CardFooter>
-                        )}
                       </Card>
                     </Col>
                   ))}
@@ -229,48 +312,6 @@ const Videos = () => {
           </div>
         </Row>
       </Container>
-      {/*<DynamicTable*/}
-      {/*  heading="Training Folders"*/}
-      {/*  tableHeadings={_get(userData, 'is_admin', false) ?*/}
-      {/*    tableHeadings : tableHeadingsEmployee}*/}
-      {/*  isCreateButton={_get(userData, 'is_admin', false)}*/}
-      {/*  handleCreate={handleCreate}*/}
-      {/*  createButtonText="Add Training Video"*/}
-      {/*  paginationData={paginationData}*/}
-      {/*  handleNext={handleNext}*/}
-      {/*  handlePrevious={handlePrevious}*/}
-      {/*  handlePageSelect={handlePageSelect}*/}
-      {/*  isLoadingData={isLoading || isFetching}*/}
-      {/*  noDataFound={isError || _get(videoData, 'data', []).length === 0}*/}
-      {/*>*/}
-      {/*  {!isError && _get(videoData, 'data', []).map((video, i) => (*/}
-      {/*    <tr key={i}>*/}
-      {/*      <td scope="row">*/}
-      {/*        {_get(video, 'title', '-')}*/}
-      {/*      </td>*/}
-      {/*      {!_get(userData, 'is_admin', false) && (*/}
-      {/*        <td scope="row">*/}
-      {/*          {_get(employeeProgressData, 'data.video_ids', []).includes(*/}
-      {/*            _get(video, 'video_id._id')) &&*/}
-      {/*        <i className="ni ni-check-bold" />*/}
-      {/*          }*/}
-      {/*        </td>*/}
-      {/*      )}*/}
-      {/*      <td>*/}
-      {/*        {moment(_get(video, 'createdAt', '')).format('YYYY-MM-DD')}*/}
-      {/*      </td>*/}
-      {/*      <TableActions*/}
-      {/*        dataId={_get(video, '_id')}*/}
-      {/*        isView={true}*/}
-      {/*        handleView={handleView}*/}
-      {/*        isEdit={_get(userData, 'is_admin', false)}*/}
-      {/*        handleEdit={handleEdit}*/}
-      {/*        isDelete={_get(userData, 'is_admin', false)}*/}
-      {/*        handleDelete={handleDelete}*/}
-      {/*      />*/}
-      {/*    </tr>*/}
-      {/*  ))}*/}
-      {/*</DynamicTable>*/}
       <ConfirmationModal
         heading="Confirm Delete"
         modalOpen={deleteModal}
@@ -282,11 +323,103 @@ const Videos = () => {
         handleConfirmButton={handleConfirmDelete}
       >
         <p>
-          Are you sure you want to delete Video
+          Are you sure you want to delete {videoToDelete?.type === 'video' ? 'Video' : 'Folder'}
           <strong> {videoToDelete?.title}</strong>
         </p>
       </ConfirmationModal>
-      {isLoadingDelete && <ProcessingModal />}
+      <Formik
+        enableReinitialize={true}
+        initialValues={{
+          desired_location: '',
+        }}
+        validationSchema={validateUpdateOrder}
+        onSubmit={async (values, actions) => {
+          const dataToSend = {
+            desired_location: values.desired_location.value,
+            videoId: videoToOrder?._id,
+          };
+          if (folderId) {
+            dataToSend.folder_id = folderId;
+          }
+          if (values.desired_location.value > videoToOrder?.order_by) {
+            dataToSend.direction = 'right';
+          }
+          if (values.desired_location.value < videoToOrder?.order_by) {
+            dataToSend.direction = 'left';
+          }
+          await repositionData(dataToSend, {
+            onSuccess: res => {
+              Message.success(res);
+              refetch();
+              setOrderModal(false);
+              setVideoToOrder({});
+              actions.resetForm();
+            },
+            onError: err => {
+              Message.error(err);
+              actions.resetForm();
+            },
+          });
+        }}
+      >
+        {formikProps => {
+          return (
+            <ConfirmationModal
+              heading={`Re-Order ${videoToOrder?.type === 'video' ? 'Video' : 'Folder'}`}
+              modalOpen={orderModal}
+              toggleModal={toggleOrderModal}
+              handleCancelButton={toggleOrderModal}
+              isCancelButton={true}
+              isConfirmButton={true}
+              disabledConfirmButton={!formikProps.dirty || formikProps.isSubmitting}
+              confirmButtonText="Re-Order"
+              handleConfirmButton={formikProps.handleSubmit}
+            >
+              <p>
+                Current Order Index of {videoToOrder?.type === 'video' ? 'Video' : 'Folder'} is {videoToOrder?.order_by}
+              </p>
+              <Field name="desired_location">
+                {({field, form}) => {
+                  return (
+                    <FormGroup>
+                      <label
+                        className="form-control-label"
+                        htmlFor="input-country"
+                      >
+                          Select Desired Location
+                      </label>
+                      <ReactSelect
+                        isMulti={false}
+                        isCreateable={false}
+                        defaultValue={formikProps.values.desired_location}
+                        isDisabled={formikProps.isSubmitting}
+                        options={locationToMap}
+                        getOptionLabel="id"
+                        getOptionValue="value"
+                        isSearchable={false}
+                        placeholder="Select Desired Location"
+                        handleChange={value => {
+                          form.setFieldValue(
+                            field.name, value, true,
+                          );
+                        }}
+                        handleBlur={formikProps.handleBlur}
+                        // isLoading={isUserDataLoading}
+                        classes="react-msd"
+                      />
+                      {fieldValidateBool(field, form) && (
+                        <FormFeedback>
+                          {formikProps.errors.desired_location.value}
+                        </FormFeedback>
+                      )}
+                    </FormGroup>
+                  );
+                }}
+              </Field>
+            </ConfirmationModal>
+          );}}
+      </Formik>
+      {(isLoadingDelete || isLoadingOrder) && <ProcessingModal />}
     </>
   );
 };

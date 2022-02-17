@@ -1,5 +1,5 @@
 import React from "react";
-import {useRouter} from "next/router";
+import Router, {useRouter} from "next/router";
 import {useQuery} from "react-query";
 import {GET_VIDEO_BY_ID} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
@@ -13,7 +13,7 @@ import {ProcessingModal} from "@/components/modal";
 
 const ViewVideo = () => {
   const router = useRouter();
-  const { videoId, folderId } = router.query;
+  const { videoId, folderId, id } = router.query;
   const isEnabled = videoId !== undefined;
   const {
     data: videoData,
@@ -37,6 +37,7 @@ const ViewVideo = () => {
           video_id: _get(videoData, 'data.video_id', {}),
           image_id: _get(videoData, 'data.image_id', {}),
           folder_id: _get(videoData, 'data.folder_id', folderId),
+          type: _get(videoData, 'data.type', ''),
         }}
         onSubmit={() => {}}
       >

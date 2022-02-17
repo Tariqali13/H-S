@@ -56,3 +56,8 @@ export const GET_EMPLOYEE_PROGRESS_BY_ID = async (key: any) => {
     baseURL + `/v1/employee-progress/${params.employeeId}`, { params: params?.params });
   return res?.data;
 };
+
+export const REPOSITION_DATA = async data => {
+  const res = await axios.post(`${baseURL}/v1/reposition`, data);
+  return res?.data;
+};

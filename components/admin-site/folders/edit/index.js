@@ -5,9 +5,9 @@ import {FolderForm} from '../components';
 import { Formik } from 'formik';
 import {useMutation, useQuery} from "react-query";
 import {
-  UPDATE_FOLDER,
-  GET_FOLDER_BY_ID,
-} from "@/adminSite/folders/queries";
+  UPDATE_VIDEO,
+  GET_VIDEO_BY_ID,
+} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
 import Router, { useRouter } from "next/router";
 import { Message } from "@/components/alert/message";
@@ -22,13 +22,13 @@ const EditFolder = () => {
   const {
     mutate: updateFolder,
     isLoading: isLoadingSave,
-  } = useMutation(UPDATE_FOLDER);
+  } = useMutation(UPDATE_VIDEO);
   const { user_id } = getLocalStorageValues();
   const isEnabled = folderId !== undefined;
   const {
     data: folderData,
     isLoading,
-  } = useQuery(['FOLDER_BY_ID', { folderId }], GET_FOLDER_BY_ID, {
+  } = useQuery(['VIDEO_BY_ID', { videoId: folderId }], GET_VIDEO_BY_ID, {
     ...reactQueryConfig,
     enabled: isEnabled,
     onError: err => {
@@ -60,11 +60,7 @@ const EditFolder = () => {
           }, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                `/admin/h-s-academy`,
-                `/admin/h-s-academy`,
-                { shallow: true },
-              );
+              Router.back();
             },
             onError: err => {
               Message.error(err);

@@ -16245,3 +16245,24 @@ button:focus, :focus {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.card-images {
+    height: 200px;
+}
+.card-menu {
+    position: absolute;
+    z-index: 5;
+    right: 0px;
+    width: 20px;
+    height: 30px;
+    background: rgba(0,0,0,0.9);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-menu > i {
+    z-index: 10;
+    color: white;
+    font-size: 14px;
+}

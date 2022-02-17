@@ -11,7 +11,7 @@ import Router, { useRouter } from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
 
-const  CreateVideo = () => {
+const CreateVideo = () => {
   const router = useRouter();
   const { folderId } = router.query;
   const {
@@ -30,6 +30,7 @@ const  CreateVideo = () => {
           image_id: {},
           description: "",
           videos_data: [],
+          type: 'video',
           created_by: user_id,
         }}
         validationSchema={validateCreateVideoForm}
@@ -43,11 +44,7 @@ const  CreateVideo = () => {
           await createVideoMulti(values, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                `/admin/h-s-academy/${folderId}`,
-                `/admin/h-s-academy/${folderId}`,
-                { shallow: true },
-              );
+              Router.back();
             },
             onError: err => {
               Message.error(err);

@@ -7,13 +7,15 @@ import { CREATE_EMPLOYEE_PROGRESS } from '../queries';
 import { useMutation } from "react-query";
 import {getLocalStorageValues} from "@/constants/local-storage";
 import {Message} from "@/components/alert/message";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 type Props = {
     videoData: any,
 };
 const EmployeeVideoView = (props: Props) => {
   const { videoData } = props;
+  const router = useRouter();
+  const { folderId, id } = router.query;
   const { user_id } = getLocalStorageValues();
   const { mutate: createEmployeeProgress, isLoading } = useMutation(CREATE_EMPLOYEE_PROGRESS);
   const handleContinue = async () => {
@@ -27,11 +29,7 @@ const EmployeeVideoView = (props: Props) => {
           message: "Video marked as completed",
         };
         Message.success(null, otherOption);
-        Router.push(
-          "/admin/h-s-academy",
-          "/admin/h-s-academy",
-          { shallow: true },
-        );
+        Router.back();
       },
       onError: err => {
         Message.error(err);

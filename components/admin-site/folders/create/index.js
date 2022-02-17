@@ -4,19 +4,36 @@ import { FormHeader } from "@/adminSite/common";
 import { FolderForm } from '../components';
 import { Formik } from 'formik';
 import { validateCreateFolderForm } from '../validation';
-import { CREATE_FOLDER } from '../queries';
-import { useMutation } from "react-query";
+import {CREATE_VIDEO, GET_VIDEO_BY_ID} from '@/adminSite/videos/queries';
+import {useMutation, useQuery} from "react-query";
 import {Message} from "@/components/alert/message";
 import Router from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
+import { useRouter } from "next/router";
+import reactQueryConfig from "@/constants/react-query-config";
+import _get from 'lodash.get';
 
 const CreateFolder = () => {
+  const router = useRouter();
+  const { folderId } = router.query;
   const {
     mutate: createfolder,
     isLoading: isLoadingSave,
-  } = useMutation(CREATE_FOLDER);
+  } = useMutation(CREATE_VIDEO);
   const { user_id } = getLocalStorageValues();
+  const isEnabled = typeof folderId == 'string';
+  const {
+    data: folderData,
+    isLoading,
+  } = useQuery(['VIDEO_BY_ID', { videoId: folderId }], GET_VIDEO_BY_ID, {
+    ...reactQueryConfig,
+    enabled: isEnabled,
+    onError: err => {
+      Message.error(err);
+      router.back();
+    },
+  });
   return (
     <SecureTemplate title="Add Folders">
       <FormHeader heading="Add Folders" />
@@ -27,6 +44,8 @@ const CreateFolder = () => {
           description: "",
           image_id: {},
           created_by: user_id,
+          type: 'folder',
+          parent_count: _get(folderData, 'data.parent_count') >= 0 ? _get(folderData, 'data.parent_count', 0) + 1 : 0,
         }}
         validationSchema={validateCreateFolderForm}
         onSubmit={async (values, actions) => {
@@ -35,14 +54,13 @@ const CreateFolder = () => {
           } else {
             delete values.image_id;
           }
+          if (folderId) {
+            values.folder_id = folderId;
+          }
           await createfolder(values, {
             onSuccess: res => {
               Message.success(res);
-              Router.push(
-                "/admin/h-s-academy",
-                "/admin/h-s-academy",
-                { shallow: true },
-              );
+              Router.back();
             },
             onError: err => {
               Message.error(err);
@@ -59,7 +77,7 @@ const CreateFolder = () => {
             />
           );}}
       </Formik>
-      {isLoadingSave && <ProcessingModal />}
+      {(isLoadingSave || isLoading) && <ProcessingModal />}
     </SecureTemplate>
   );
 };
