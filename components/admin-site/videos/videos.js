@@ -264,7 +264,7 @@ const Videos = () => {
                           {_get(userData, 'is_admin', false) && _get(videoData, 'total_number_of_videos', 0) > 1 && (
                             <span className="card-menu btn mt-1" style={{ marginRight: '100px' }} onClick={e => handleReOrder(e, _get(video, '_id', ''))}> <i className="fa fa-arrow-right"/></span>)}
                           {_get(video, 'type', '') === 'video' && <CardImg className="w-100 card-images" top width="100%" src={_get(video, 'image_id.file_url', '/img/video-svg.png')} alt="Card image cap" />}
-                          {_get(video, 'type', '') === 'folder' && <CardImg className="w-100  card-images" top width="100%" src={_get(video, 'image_id.file_url', '/img/folder-svg.png')} alt="Card image cap" />}
+                          {_get(video, 'type', '') === 'folder' && <CardImg className="w-100  card-images" top width="100%" src={_get(video, 'image_id.file_url', '/img/folder-icon.jpg')} alt="Card image cap" />}
                         </div>
                         <CardHeader className="border-0">
                           <h3 className="mb-0">Title: {video.title}</h3>

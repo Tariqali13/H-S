@@ -199,11 +199,12 @@ const Folders = () => {
                             <span className="card-menu btn mt-1" style={{ marginRight: '54px' }} onClick={e => handleEdit(e, _get(folder, '_id', ''), _get(folder, 'type', ''))}> <i className="fa fa-edit" /></span>)}
                           {_get(userData, 'is_admin', false) && _get(folderData, 'total_number_of_videos', 0) > 1 && (
                             <span className="card-menu btn mt-1" style={{ marginRight: '100px' }} onClick={e => handleReOrder(e, _get(folder, '_id', ''))}> <i className="fa fa-arrow-right"/></span>)}
-                          <CardImg className="w-100  card-images" top width="100%" src={_get(folder, 'image_id.file_url', '/img/folder-svg.png')} alt="Card image cap" />
+                          {_get(folder, 'type', '') === 'video' && <CardImg className="w-100 card-images" top width="100%" src={_get(folder, 'image_id.file_url', '/img/video-svg.png')} alt="Card image cap" />}
+                          {_get(folder, 'type', '') === 'folder' && <CardImg className="w-100  card-images" top width="100%" src={_get(folder, 'image_id.file_url', '/img/folder-icon.jpg')} alt="Card image cap" />}
                         </div>
                         <CardHeader className="border-0">
                           <h3 className="mb-0">Title: {folder.title}</h3>
-                          <h3 className="mb-0">Type: {folder.type}</h3>
+                        72  <h3 className="mb-0">Type: {folder.type}</h3>
                           <h3 className="mb-0">Total Videos: {_get(folder, 'total_videos', 0)}</h3>
                         </CardHeader>
                         <CardBody className="pt-0">

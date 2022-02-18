@@ -51,7 +51,6 @@ const VideoForm = (props: Props) => {
     buttonText,
     setFieldValue,
   } = props;
-  console.log("values", values);
   const {
     mutate: updateFile,
     isLoading: isLoadingUpdateFile,

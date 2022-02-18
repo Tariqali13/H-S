@@ -4,12 +4,14 @@ import { FormHeader } from "@/adminSite/common";
 import { VideoFormMulti } from '../components';
 import { Formik } from 'formik';
 import { validateCreateVideoForm } from '../validation';
-import { CREATE_VIDEO_MULTI } from '../queries';
-import { useMutation } from "react-query";
+import {CREATE_VIDEO_MULTI, GET_VIDEO_BY_ID} from '../queries';
+import {useMutation, useQuery} from "react-query";
 import {Message} from "@/components/alert/message";
 import Router, { useRouter } from "next/router";
 import { getLocalStorageValues } from "@/constants/local-storage";
 import {ProcessingModal} from "@/components/modal";
+import _get from "lodash.get";
+import reactQueryConfig from "@/constants/react-query-config";
 
 const CreateVideo = () => {
   const router = useRouter();
@@ -19,6 +21,18 @@ const CreateVideo = () => {
     isLoading: isLoadingSave,
   } = useMutation(CREATE_VIDEO_MULTI);
   const { user_id } = getLocalStorageValues();
+  const isEnabled = typeof folderId == 'string';
+  const {
+    data: folderData,
+    isLoading,
+  } = useQuery(['VIDEO_BY_ID', { videoId: folderId }], GET_VIDEO_BY_ID, {
+    ...reactQueryConfig,
+    enabled: isEnabled,
+    onError: err => {
+      Message.error(err);
+      router.back();
+    },
+  });
   return (
     <SecureTemplate title="Add Video">
       <FormHeader heading="Add Video" />
@@ -31,6 +45,7 @@ const CreateVideo = () => {
           description: "",
           videos_data: [],
           type: 'video',
+          parent_count: _get(folderData, 'data.parent_count') >= 0 ? _get(folderData, 'data.parent_count', 0) + 1 : 0,
           created_by: user_id,
         }}
         validationSchema={validateCreateVideoForm}
@@ -61,7 +76,7 @@ const CreateVideo = () => {
             />
           );}}
       </Formik>
-      {isLoadingSave && <ProcessingModal />}
+      {(isLoadingSave || isLoading) && <ProcessingModal />}
     </SecureTemplate>
   );
 };

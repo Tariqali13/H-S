@@ -20,7 +20,6 @@ type Props = {
 }
 const Products = (props: Props) => {
   const { isRecentWork = false } = props;
-  console.log("isRecentWork", isRecentWork);
   const { user_id } = getLocalStorageValues();
   const [deleteModal, setDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState({});
