@@ -27,7 +27,7 @@ const RecentWork = (props: Props) => {
     isError,
   } = useQuery(['ALL_PRODUCTS', productQueryParams],
     GET_ALL_PRODUCTS, {
-      initialData: allRes?.productsRes,
+      // initialData: allRes?.productsRes,
       ...reactQueryConfig,
     });
   return (

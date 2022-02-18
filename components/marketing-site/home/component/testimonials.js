@@ -22,7 +22,7 @@ const Testimonials = (props: Props) => {
     isError,
   } = useQuery(['ALL_TESTIMONIALS', {}],
     GET_ALL_TESTIMONIALS, {
-      initialData: allRes?.testimonialsRes,
+      // initialData: allRes?.testimonialsRes,
       ...reactQueryConfig,
     });
   return (
