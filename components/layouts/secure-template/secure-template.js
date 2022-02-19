@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Header, Footer, SideBar } from './components';
 import { Container } from "reactstrap";
 import routes from "@/constants/secure-template";
@@ -68,6 +68,22 @@ const SecureTemplate = (props: Props) => {
   Router.events.on("routeChangeError", () => {
     setIsRouting(false);
   });
+  const enabledUseEffect = typeof _get(userData, 'data._id', null) === 'string';
+  useEffect(() => {
+    if (_get(userData, 'data.is_admin', false) === false && enabledUseEffect) {
+      // eslint-disable-next-line no-undef
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      // eslint-disable-next-line no-undef
+      document.addEventListener('keydown', event => {
+        if (event.keyCode === 123) {
+          return event.preventDefault();
+        }
+        else if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) || (event.ctrlKey && event.shiftKey && event.keyCode == 74)) {
+          return event.preventDefault();
+        }
+      });
+    }
+  }, [_get(userData, 'data')]);
   return (
     <TemplateProvider
       value={{

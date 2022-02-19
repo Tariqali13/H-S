@@ -84,14 +84,7 @@ const VideoFormMulti = (props: Props) => {
     });
   };
   const handleUploadVideos = () => {
-    if (_get(videoCount, 'data', 0) < 50) {
-      setVideoModalOpen(true);
-    } else {
-      const otherOptions = {
-        message: "Only 50 videos allowed.",
-      };
-      Message.error(null, otherOptions);
-    }
+    setVideoModalOpen(true);
   };
   const [imageUploadModal, setImageModalOpen] = useState(false);
   const toggleImageModal = () => setImageModalOpen(!imageUploadModal);
@@ -343,7 +336,7 @@ const VideoFormMulti = (props: Props) => {
       </Row>
       <UppyFileUploader
         maxFileSize={1000}
-        maxNumberOfFiles={50 - _get(videoCount, 'data', 0)}
+        maxNumberOfFiles={10}
         acceptFileTypes={videoTypes}
         open={videoUploadModal}
         isMulti={true}

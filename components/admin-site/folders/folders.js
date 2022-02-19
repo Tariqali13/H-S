@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useMutation, useQuery} from "react-query";
 import {DELETE_VIDEO, GET_ALL_VIDEOS, REPOSITION_DATA} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
@@ -75,18 +75,11 @@ const Folders = () => {
   });
 
   const handleCreate = () => {
-    if (_get(folderData, 'total_number_of_videos', 0) < 50) {
-      Router.push(
-        '/admin/h-s-academy/create',
-        '/admin/h-s-academy/create',
-        { shallow: true },
-      );
-    } else {
-      const otherOptions = {
-        message: "Maximum 50 Folders are allowed",
-      };
-      Message.error(null, otherOptions);
-    }
+    Router.push(
+      '/admin/h-s-academy/create',
+      '/admin/h-s-academy/create',
+      { shallow: true },
+    );
   };
 
   const handleNext = currentPage => {
@@ -168,6 +161,11 @@ const Folders = () => {
     };
   });
   const locationToMap = generateLocations.filter(loc => loc.value != videoToOrder?.order_by);
+  useEffect(() => {
+    if (refetch) {
+      refetch();
+    }
+  }, []);
   return (
     <>
       <Stats />
@@ -190,7 +188,7 @@ const Folders = () => {
               <CardBody>
                 <Row>
                   {(!isLoading || !isFetching) && _get(folderData, 'data', []).map((folder, i) => (
-                    <Col md={4} key={i} className="d-flex">
+                    <Col md={4} key={i} className="d-flex my-1">
                       <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(folder, '_id', ''))}>
                         <div className="w-100 text-center">
                           {_get(userData, 'is_admin', false) && (
@@ -204,7 +202,7 @@ const Folders = () => {
                         </div>
                         <CardHeader className="border-0">
                           <h3 className="mb-0">Title: {folder.title}</h3>
-                        72  <h3 className="mb-0">Type: {folder.type}</h3>
+                          <h3 className="mb-0">Type: {folder.type}</h3>
                           <h3 className="mb-0">Total Videos: {_get(folder, 'total_videos', 0)}</h3>
                         </CardHeader>
                         <CardBody className="pt-0">

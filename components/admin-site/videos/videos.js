@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useMutation, useQuery} from "react-query";
 import {DELETE_VIDEO, GET_ALL_VIDEOS, GET_EMPLOYEE_PROGRESS_BY_ID, GET_VIDEO_BY_ID, REPOSITION_DATA} from "@/adminSite/videos/queries";
 import reactQueryConfig from "@/constants/react-query-config";
@@ -105,18 +105,11 @@ const Videos = () => {
   };
 
   const handleCreateFolder = () => {
-    if (_get(videoData, 'total_number_of_videos', 0) < 15) {
-      Router.push(
-        `/admin/h-s-academy/${folderId}/folder-create`,
-        `/admin/h-s-academy/${folderId}/folder-create`,
-        { shallow: true },
-      );
-    } else {
-      const otherOptions = {
-        message: "Maximum 15 Videos / Folders are allowed per folder",
-      };
-      Message.error(null, otherOptions);
-    }
+    Router.push(
+      `/admin/h-s-academy/${folderId}/folder-create`,
+      `/admin/h-s-academy/${folderId}/folder-create`,
+      { shallow: true },
+    );
   };
 
   const handleNext = currentPage => {
@@ -220,6 +213,11 @@ const Videos = () => {
     };
   });
   const locationToMap = generateLocations.filter(loc => loc.value != videoToOrder?.order_by);
+  useEffect(() => {
+    if (refetch) {
+      refetch();
+    }
+  }, [router.pathname, folderId]);
   return (
     <>
       <Stats />
@@ -254,7 +252,7 @@ const Videos = () => {
               <CardBody>
                 <Row>
                   {(!isLoading || !isFetching) && _get(videoData, 'data', []).map((video, i) => (
-                    <Col md={4} key={i} className="d-flex">
+                    <Col md={4} key={i} className="d-flex my-1">
                       <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(video, '_id', ''), _get(video, 'type', ''))}>
                         <div className="w-100 text-center">
                           {_get(userData, 'is_admin', false) && (

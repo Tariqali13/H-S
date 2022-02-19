@@ -16248,6 +16248,7 @@ button:focus, :focus {
 
 .card-images {
     height: 200px;
+    object-fit: contain;
 }
 .card-menu {
     position: absolute;
