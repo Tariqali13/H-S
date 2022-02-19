@@ -71,6 +71,14 @@ const EmployeeVideoView = (props: Props) => {
                 <Row>
                   <ReactPlayer
                     controls={true}
+                    // Disable download button
+                    config={{ file: {
+                      attributes: {
+                        controlsList: 'nodownload',
+                      },
+                    }}}
+                    // Disable right click
+                    onContextMenu={e => e.preventDefault()}
                     url={_get(videoData,
                       'video_id.file_url',
                       '')}
