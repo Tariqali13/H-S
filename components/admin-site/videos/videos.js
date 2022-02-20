@@ -252,8 +252,13 @@ const Videos = () => {
               <CardBody>
                 <Row>
                   {(!isLoading || !isFetching) && _get(videoData, 'data', []).map((video, i) => (
-                    <Col md={4} key={i} className="d-flex my-1">
+                    <Col md={4} key={i} className={`d-flex my-1 ${!_get(userData, 'is_admin', false) && _get(video, 'is_blocked', false) && 'disabled-course'}`}>
                       <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(video, '_id', ''), _get(video, 'type', ''))}>
+                        {!_get(userData, 'is_admin', false) && _get(video, 'is_blocked', false) && (
+                          <div className="lock-wrap">
+                            <i className="fa fa-lock"/>
+                          </div>
+                        )}
                         <div className="w-100 text-center">
                           {_get(userData, 'is_admin', false) && (
                             <span className="card-menu btn mt-1" onClick={e => handleDelete(e, _get(video, '_id', ''), _get(video, 'type', ''))}> <i className="fa fa-trash" /></span>)}
@@ -268,11 +273,12 @@ const Videos = () => {
                           <h3 className="mb-0">Title: {video.title}</h3>
                           <h3 className="mb-0">Type: {_get(video, 'type', '').toUpperCase()}</h3>
                           {_get(video, 'type', '') === 'folder' && <h3 className="mb-0">Total Videos: {_get(video, 'total_videos', 0)}</h3>}
+                          {_get(video, 'type', '') === 'folder' && <h3 className="mb-0">Total Folders: {_get(video, 'total_folders', 0)}</h3>}
                           <br />
                           {!_get(userData, 'is_admin', false) && _get(video, 'type', '') === 'video' && (
                             <span>Is Watched: {_get(employeeProgressData, 'data.video_ids', []).includes(
-                              _get(video, 'video_id._id')) &&
-                                  <i className="ni ni-check-bold" />
+                              _get(video, 'video_id._id')) ?
+                              <i className="ni ni-check-bold" /> : 'Not Yet!'
                             }</span>
                           )}
                         </CardHeader>

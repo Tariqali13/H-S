@@ -45,6 +45,8 @@ const CreateFolder = () => {
           image_id: {},
           created_by: user_id,
           type: 'folder',
+          is_blocked: false,
+          unblock_after: '',
           parent_count: _get(folderData, 'data.parent_count') >= 0 ? _get(folderData, 'data.parent_count', 0) + 1 : 0,
         }}
         validationSchema={validateCreateFolderForm}
@@ -53,6 +55,9 @@ const CreateFolder = () => {
             values.image_id = values.image_id._id;
           } else {
             delete values.image_id;
+          }
+          if (values?.unblock_after?._id) {
+            values.unblock_after = values.unblock_after._id;
           }
           if (folderId) {
             values.folder_id = folderId;

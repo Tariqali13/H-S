@@ -188,8 +188,13 @@ const Folders = () => {
               <CardBody>
                 <Row>
                   {(!isLoading || !isFetching) && _get(folderData, 'data', []).map((folder, i) => (
-                    <Col md={4} key={i} className="d-flex my-1">
+                    <Col md={4} key={i} className={`d-flex my-1 ${!_get(userData, 'is_admin', false) && _get(folder, 'is_blocked', false) && 'disabled-course'}`}>
                       <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(folder, '_id', ''))}>
+                        {!_get(userData, 'is_admin', false) && _get(folder, 'is_blocked', false) && (
+                          <div className="lock-wrap">
+                            <i className="fa fa-lock"/>
+                          </div>
+                        )}
                         <div className="w-100 text-center">
                           {_get(userData, 'is_admin', false) && (
                             <span className="card-menu btn mt-1" onClick={e => handleDelete(e, _get(folder, '_id', ''), _get(folder, 'type', ''))}> <i className="fa fa-trash" /></span>)}
@@ -204,6 +209,7 @@ const Folders = () => {
                           <h3 className="mb-0">Title: {folder.title}</h3>
                           <h3 className="mb-0">Type: {folder.type}</h3>
                           <h3 className="mb-0">Total Videos: {_get(folder, 'total_videos', 0)}</h3>
+                          <h3 className="mb-0">Total Folders: {_get(folder, 'total_folders', 0)}</h3>
                         </CardHeader>
                         <CardBody className="pt-0">
                           <h3 className="mb-0">Description: </h3>
