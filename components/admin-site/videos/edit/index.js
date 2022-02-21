@@ -48,7 +48,7 @@ const EditGallery = () => {
           image_id: _get(videoData, 'data.image_id', {}),
           folder_id: _get(videoData, 'data.folder_id', folderId),
           is_blocked: _get(videoData, 'data.is_blocked', false),
-          unblock_after: _get(videoData, 'data.unblock_after', ''),
+          // unblock_after: _get(videoData, 'data.unblock_after', ''),
           type: 'video',
           updated_by: user_id,
         }}
@@ -60,9 +60,9 @@ const EditGallery = () => {
           } else {
             delete values.image_id;
           }
-          if (values?.unblock_after?._id) {
-            values.unblock_after = values.unblock_after._id;
-          }
+          // if (values?.unblock_after?._id) {
+          //   values.unblock_after = values.unblock_after._id;
+          // }
           await updateVideo({
             id: videoId,
             data: values,

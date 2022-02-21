@@ -47,7 +47,7 @@ const CreateVideo = () => {
           type: 'video',
           parent_count: _get(folderData, 'data.parent_count') >= 0 ? _get(folderData, 'data.parent_count', 0) + 1 : 0,
           is_blocked: false,
-          unblock_after: '',
+          // unblock_after: '',
           created_by: user_id,
         }}
         validationSchema={validateCreateVideoForm}
@@ -58,9 +58,9 @@ const CreateVideo = () => {
           } else {
             delete values.image_id;
           }
-          if (values?.unblock_after?._id) {
-            values.unblock_after = values.unblock_after._id;
-          }
+          // if (values?.unblock_after?._id) {
+          //   values.unblock_after = values.unblock_after._id;
+          // }
           await createVideoMulti(values, {
             onSuccess: res => {
               Message.success(res);

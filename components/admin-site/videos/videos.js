@@ -251,14 +251,14 @@ const Videos = () => {
               </CardHeader>
               <CardBody>
                 <Row>
-                  {(!isLoading || !isFetching) && _get(videoData, 'data', []).map((video, i) => (
+                  {!isLoading && !isFetching && _get(videoData, 'data', []).map((video, i) => (
                     <Col md={4} key={i} className={`d-flex my-1 ${!_get(userData, 'is_admin', false) && _get(video, 'is_blocked', false) && 'disabled-course'}`}>
                       <Card className="shadow cursor-pointer" onClick={e => handleView(e, _get(video, '_id', ''), _get(video, 'type', ''))}>
-                        {!_get(userData, 'is_admin', false) && _get(video, 'is_blocked', false) && (
-                          <div className="lock-wrap">
-                            <i className="fa fa-lock"/>
-                          </div>
-                        )}
+                        {/*{!_get(userData, 'is_admin', false) && _get(video, 'is_blocked', false) && (*/}
+                        {/*  <div className="lock-wrap">*/}
+                        {/*    <i className="fa fa-lock"/>*/}
+                        {/*  </div>*/}
+                        {/*)}*/}
                         <div className="w-100 text-center">
                           {_get(userData, 'is_admin', false) && (
                             <span className="card-menu btn mt-1" onClick={e => handleDelete(e, _get(video, '_id', ''), _get(video, 'type', ''))}> <i className="fa fa-trash" /></span>)}

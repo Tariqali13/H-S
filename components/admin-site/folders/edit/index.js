@@ -46,7 +46,7 @@ const EditFolder = () => {
           description: _get(folderData, 'data.description', ''),
           image_id: _get(folderData, 'data.image_id', {}),
           is_blocked: _get(folderData, 'data.is_blocked', false),
-          unblock_after: _get(folderData, 'data.unblock_after', ''),
+          // unblock_after: _get(folderData, 'data.unblock_after', ''),
           updated_by: user_id,
         }}
         validationSchema={validateUpdateFolderForm}
@@ -56,9 +56,9 @@ const EditFolder = () => {
           } else {
             delete values.image_id;
           }
-          if (values?.unblock_after?._id) {
-            values.unblock_after = values.unblock_after._id;
-          }
+          // if (values?.unblock_after?._id) {
+          //   values.unblock_after = values.unblock_after._id;
+          // }
           await updateFolder({
             id: folderId,
             data: values,
