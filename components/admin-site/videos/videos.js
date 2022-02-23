@@ -23,10 +23,11 @@ import {
   FormGroup,
   Row,
   Spinner,
+  Input,
 } from "reactstrap";
 import ReactHtmlParser from "react-html-parser";
 import {Field, Formik} from "formik";
-import {validateUpdateOrder} from "@/adminSite/videos/validation";
+import {validateUpdateOrder, validateUpdateOtherFolderOrder} from "@/adminSite/videos/validation";
 import ReactSelect from "@/components/react-select";
 import {fieldValidateBool} from "@/utils/form";
 
@@ -38,7 +39,14 @@ const Videos = () => {
   const toggleDeleteModal = () => setDeleteModal(!deleteModal);
   const [orderModal, setOrderModal] = useState(false);
   const [videoToOrder, setVideoToOrder] = useState({});
-  const toggleOrderModal = () => setOrderModal(!orderModal);
+
+  const [otherFolderReOrder, setOtherFolderReOrder] = useState(false);
+  const [otherFolder, setOtherFolder] = useState({});
+  const toggleOrderModal = () => {
+    setOrderModal(!orderModal);
+    setOtherFolderReOrder(false);
+    setOtherFolder({});
+  };
   const {
     userData,
   } = useContext(TemplateContext);
@@ -90,18 +98,11 @@ const Videos = () => {
       enabled: enabledProgressQuery,
     });
   const handleCreate = () => {
-    if (_get(videoData, 'total_number_of_videos', 0) < 15) {
-      Router.push(
-        `/admin/h-s-academy/${folderId}/create`,
-        `/admin/h-s-academy/${folderId}/create`,
-        { shallow: true },
-      );
-    } else {
-      const otherOptions = {
-        message: "Maximum 15 Videos / Folders are allowed per folder",
-      };
-      Message.error(null, otherOptions);
-    }
+    Router.push(
+      `/admin/h-s-academy/${folderId}/create`,
+      `/admin/h-s-academy/${folderId}/create`,
+      { shallow: true },
+    );
   };
 
   const handleCreateFolder = () => {
@@ -205,11 +206,32 @@ const Videos = () => {
       video => video._id === id);
     setVideoToOrder(findVideo);
   };
-
+  const {
+    data: allFoldersData,
+    isLoading: isLoadingFoldersData,
+  } = useQuery(['ALL_VIDEOS', { type: 'folder' }], GET_ALL_VIDEOS, {
+    ...reactQueryConfig,
+    enabled: otherFolderReOrder,
+  });
+  const enabledOtherFoldersOrder = _get(otherFolder, '_id') && otherFolderReOrder;
+  const {
+    data: otherFolderData,
+    isLoading: isLoadingOtherFolderData,
+  } = useQuery(['ALL_VIDEOS', { folder_id: _get(otherFolder, '_id') }], GET_ALL_VIDEOS, {
+    ...reactQueryConfig,
+    enabled: enabledOtherFoldersOrder,
+  });
+  const foldersDataToFind = _get(otherFolderData, 'data', []).filter(f => f._id !== folderId);
   const generateLocations = Array.from({length: _get(videoData, 'total_number_of_videos', 0)}, (_, i) => {
     return {
       id: i + 1,
       value: `${i + 1}`,
+    };
+  });
+  const getOtherFolderOrdersBy = _get(otherFolderData, 'data', []).map((f, i) => {
+    return {
+      id: i + 1,
+      value: `${f.order_by}`,
     };
   });
   const locationToMap = generateLocations.filter(loc => loc.value != videoToOrder?.order_by);
@@ -335,8 +357,10 @@ const Videos = () => {
         enableReinitialize={true}
         initialValues={{
           desired_location: '',
+          other_folder: otherFolderReOrder,
+          other_folder_id: {},
         }}
-        validationSchema={validateUpdateOrder}
+        validationSchema={otherFolderReOrder ? validateUpdateOtherFolderOrder: validateUpdateOrder}
         onSubmit={async (values, actions) => {
           const dataToSend = {
             desired_location: values.desired_location.value,
@@ -344,6 +368,11 @@ const Videos = () => {
           };
           if (folderId) {
             dataToSend.folder_id = folderId;
+          }
+          if (otherFolderReOrder) {
+            dataToSend.other_folder = otherFolderReOrder;
+            dataToSend.other_folder_id = _get(values, 'other_folder_id._id', '');
+            dataToSend.folder_id = _get(values, 'other_folder_id._id', '');
           }
           if (values.desired_location.value > videoToOrder?.order_by) {
             dataToSend.direction = 'right';
@@ -357,6 +386,8 @@ const Videos = () => {
               refetch();
               setOrderModal(false);
               setVideoToOrder({});
+              setOtherFolderReOrder(false);
+              setOtherFolder({});
               actions.resetForm();
             },
             onError: err => {
@@ -382,44 +413,165 @@ const Videos = () => {
               <p>
                 Current Order Index of {videoToOrder?.type === 'video' ? 'Video' : 'Folder'} is {videoToOrder?.order_by}
               </p>
-              <Field name="desired_location">
+              <Field name="other_folder">
                 {({field, form}) => {
                   return (
                     <FormGroup>
                       <label
-                        className="form-control-label"
-                        htmlFor="input-country"
+                        className="form-control-label mr-4"
+                        htmlFor="input-username"
                       >
-                          Select Desired Location
+                        Other Folder
                       </label>
-                      <ReactSelect
-                        isMulti={false}
-                        isCreateable={false}
-                        defaultValue={formikProps.values.desired_location}
-                        isDisabled={formikProps.isSubmitting}
-                        options={locationToMap}
-                        getOptionLabel="id"
-                        getOptionValue="value"
-                        isSearchable={false}
-                        placeholder="Select Desired Location"
-                        handleChange={value => {
-                          form.setFieldValue(
-                            field.name, value, true,
-                          );
+                      <Input
+                        className="form-control-alternative"
+                        id="input-username"
+                        type="checkbox"
+                        name="other_folder"
+                        disabled={formikProps.isSubmitting}
+                        onChange={e => {
+                          setOtherFolderReOrder(!otherFolderReOrder);
+                          formikProps.handleChange(e);
                         }}
-                        handleBlur={formikProps.handleBlur}
-                        // isLoading={isUserDataLoading}
-                        classes="react-msd"
+                        onBlur={formikProps.handleBlur}
+                        checked={formikProps.values.other_folder}
+                        invalid={fieldValidateBool(field, form)}
                       />
                       {fieldValidateBool(field, form) && (
                         <FormFeedback>
-                          {formikProps.errors.desired_location.value}
+                          {formikProps.errors.other_folder}
                         </FormFeedback>
                       )}
                     </FormGroup>
                   );
                 }}
               </Field>
+              {formikProps.values.other_folder && (
+                <Field name="other_folder_id">
+                  {({field, form}) => {
+                    return (
+                      <FormGroup>
+                        <label
+                          className="form-control-label"
+                          htmlFor="input-country"
+                        >
+                              Select Folder
+                        </label>
+                        <ReactSelect
+                          isMulti={false}
+                          isCreateable={false}
+                          defaultValue={formikProps.values.other_folder_id}
+                          isDisabled={formikProps.isSubmitting || isLoadingFoldersData}
+                          options={foldersDataToFind}
+                          getOptionLabel="title"
+                          getOptionValue="_id"
+                          isLoading={isLoadingFoldersData}
+                          isSearchable={false}
+                          placeholder="Select Folder"
+                          handleChange={value => {
+                            form.setFieldValue(
+                              field.name, value, true,
+                            );
+                            form.setFieldValue(
+                              'desired_location', '', true,
+                            );
+                            setOtherFolder(value);
+                          }}
+                          handleBlur={formikProps.handleBlur}
+                          // isLoading={isUserDataLoading}
+                          classes="react-msd"
+                        />
+                        {fieldValidateBool(field, form) && (
+                          <FormFeedback>
+                            {formikProps.errors.other_folder_id._id}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    );
+                  }}
+                </Field>
+              )}
+              {formikProps.values.other_folder && _get(otherFolder, '_id') && (
+                <Field name="desired_location">
+                  {({field, form}) => {
+                    return (
+                      <FormGroup>
+                        <label
+                          className="form-control-label"
+                          htmlFor="input-country"
+                        >
+                              Select Desired Location
+                        </label>
+                        <ReactSelect
+                          isMulti={false}
+                          isCreateable={false}
+                          defaultValue={formikProps.values.desired_location}
+                          isDisabled={formikProps.isSubmitting || isLoadingOtherFolderData}
+                          options={getOtherFolderOrdersBy}
+                          isLoading={isLoadingOtherFolderData}
+                          getOptionLabel="id"
+                          getOptionValue="value"
+                          isSearchable={false}
+                          placeholder="Select Desired Location"
+                          handleChange={value => {
+                            form.setFieldValue(
+                              field.name, value, true,
+                            );
+                          }}
+                          handleBlur={formikProps.handleBlur}
+                          // isLoading={isUserDataLoading}
+                          classes="react-msd"
+                        />
+                        {fieldValidateBool(field, form) && (
+                          <FormFeedback>
+                            {formikProps.errors.desired_location.value}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    );
+                  }}
+                </Field>
+              )}
+              {!formikProps.values.other_folder && (
+                <Field name="desired_location">
+                  {({field, form}) => {
+                    return (
+                      <FormGroup>
+                        <label
+                          className="form-control-label"
+                          htmlFor="input-country"
+                        >
+                          Select Desired Location
+                        </label>
+                        <ReactSelect
+                          isMulti={false}
+                          isCreateable={false}
+                          defaultValue={formikProps.values.desired_location}
+                          isDisabled={formikProps.isSubmitting}
+                          options={locationToMap}
+                          getOptionLabel="id"
+                          getOptionValue="value"
+                          isSearchable={false}
+                          placeholder="Select Desired Location"
+                          handleChange={value => {
+                            form.setFieldValue(
+                              field.name, value, true,
+                            );
+                          }}
+                          handleBlur={formikProps.handleBlur}
+                          // isLoading={isUserDataLoading}
+                          classes="react-msd"
+                        />
+                        {fieldValidateBool(field, form) && (
+                          <FormFeedback>
+                            {formikProps.errors.desired_location.value}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    );
+                  }}
+                </Field>
+              )}
             </ConfirmationModal>
           );}}
       </Formik>

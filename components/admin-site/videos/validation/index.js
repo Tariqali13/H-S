@@ -48,3 +48,17 @@ export const validateUpdateOrder = Yup.object().shape({
     value: Yup.string().required('Desired Location is mandatory'),
   }),
 });
+
+export const validateUpdateOtherFolderOrder = Yup.object().shape({
+  other_folder: Yup.boolean().required(),
+  other_folder_id: Yup
+    .object().when("other_folder", {
+      is: true,
+      then: Yup.object().shape({
+        _id: Yup.string().required('Other Folder is mandatory'),
+      }),
+    }),
+  desired_location: Yup.object().shape({
+    value: Yup.string().optional(),
+  }),
+});
