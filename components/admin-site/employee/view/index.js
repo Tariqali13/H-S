@@ -50,7 +50,7 @@ const ViewEmployee = () => {
     });
   return (
     <SecureTemplate title="View Employee">
-      <FormHeader heading={`View Employee - Progress ${_get(employeeData, 'data.employee_progress', 0)}%`} />
+      <FormHeader heading={`View Employee - Progress ${parseFloat(_get(employeeData, 'data.employee_progress', 0)).toFixed(2)}%`} />
       <Formik
         enableReinitialize={true}
         initialValues={{

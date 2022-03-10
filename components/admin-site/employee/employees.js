@@ -186,7 +186,7 @@ const Employees = () => {
                 {_get(findPosition, 'name', '-')}
               </td>
               <td>
-                {_get(employee, 'employee_progress', '0')}%
+                {parseFloat(_get(employee, 'employee_progress', '0')).toFixed(2)}%
               </td>
               <td>
                 <input
