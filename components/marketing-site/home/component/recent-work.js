@@ -39,7 +39,7 @@ const RecentWork = (props: Props) => {
         </div>
 
         <div className="agileits-w3layouts-rides-grids">
-          <div className="row" style={{ display: "flex" }}>
+          <div className="row our-mission-row" style={{ display: "flex" }}>
             {!isError &&
           _get(productsData, 'data', []).map((product, i) => (
             <div className="col-sm-4 rides-grid">

@@ -2764,3 +2764,9 @@ h4.stats-info {
     width: 100%;
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    .our-mission-row {
+        display: block !important;
+    }
+}
